@@ -1,0 +1,261 @@
+SWAPOPT MASTER PROFILE
+======================
+
+Candidate:
+Swapnil Herwadkar
+
+Target Roles:
+- Data Analyst
+- Business Data Analyst
+- BI Analyst
+- Product Analyst
+- Customer Analytics Analyst
+- Marketing Analytics Analyst
+- Operations Analyst
+- Reporting Analyst
+- Junior/Mid-level Data Science roles where business analytics is important
+
+Avoid / Lower Priority Roles:
+- Senior roles requiring 7+ years
+- Principal/Lead positions
+- Pure Software Engineering
+- Heavy Data Engineering requiring production ownership
+- Pure ML Research
+- Roles requiring unrelated certifications
+- Highly niche domains where domain experience dominates analytics ability
+
+
+EXPERIENCE PROFILE
+==================
+
+Experience Level:
+Approximately 3+ years analytics experience.
+
+Core strengths:
+- SQL querying
+- Data analysis
+- Dashboard development
+- Business intelligence
+- KPI reporting
+- Data storytelling
+- Stakeholder communication
+- Data cleaning
+- Data validation
+- Process improvement
+- Business insights generation
+- Predictive analytics exposure
+
+Technical Skills:
+Languages:
+- SQL
+- Python
+- R
+
+BI / Visualization:
+- Power BI
+- Tableau
+- Excel
+- Dashboards
+- KPI reporting
+
+Data:
+- Data warehouses
+- ETL concepts
+- Data pipelines exposure
+- Data modeling
+- Data quality checks
+
+Analytics:
+- Exploratory analysis
+- Regression
+- Classification
+- Machine Learning basics
+- Forecasting
+- Statistical analysis
+- Hypothesis testing
+
+
+PROJECT PORTFOLIO
+=================
+
+1. FIFA 2026 Sponsorship Analytics
+
+Relevant for:
+- sports analytics
+- marketing analytics
+- business intelligence
+- sponsorship analytics
+
+Shows:
+- dashboard creation
+- business insights
+- data storytelling
+- KPI analysis
+
+
+2. Ad Click Prediction Machine Learning
+
+Relevant for:
+- marketing analytics
+- customer analytics
+- product analytics
+- experimentation
+
+Shows:
+- predictive modeling
+- Python
+- ML workflow
+- classification models
+
+
+3. Airbnb Dallas Listings Analysis
+
+Relevant for:
+- marketplace analytics
+- operations analytics
+- pricing analytics
+
+Shows:
+- exploratory analysis
+- location trends
+- business recommendations
+
+
+4. Sustainability Index Analysis
+
+Relevant for:
+- ESG analytics
+- reporting
+- enterprise analytics
+
+Shows:
+- metric creation
+- analytical frameworks
+
+
+5. ARV / HIV-HRDT Distribution Analysis
+
+Relevant for:
+- healthcare analytics
+- supply chain analytics
+- operational reporting
+
+Shows:
+- inventory insights
+- distribution optimization
+
+
+6. ABS Inventory Analysis
+
+Relevant for:
+- operations
+- supply chain
+- inventory analytics
+
+Shows:
+- reporting
+- optimization
+- business process improvement
+
+
+HIRING PROFILE
+==============
+
+Strong Match Companies:
+- Technology
+- Retail
+- E-commerce
+- Consulting
+- Healthcare analytics
+- Energy analytics
+- Finance analytics
+- Enterprise BI teams
+
+Strong Match Work:
+- Building dashboards
+- SQL analysis
+- Creating reports
+- Finding business insights
+- Working with stakeholders
+- Improving processes using data
+- Analytics automation
+
+
+Potential Weak Areas:
+Do not exaggerate:
+- Production software engineering
+- Advanced ML engineering
+- Cloud architecture ownership
+- Data engineering ownership
+- Industry-specific expertise not demonstrated
+
+
+VISA / LOCATION
+===============
+
+Candidate requires H-1B sponsorship.
+
+Prioritize:
+- Full-time roles
+- Companies likely to sponsor
+- Larger organizations
+- Data-focused teams
+
+Penalize:
+- Government roles
+- Contract-only positions
+- Temporary roles
+- Employers unlikely to sponsor
+
+
+SCORING PHILOSOPHY
+==================
+
+Do not optimize only for ATS keywords.
+
+Main question:
+"Does it make logical sense for this employer to hire Swapnil?"
+
+A good opportunity:
+- Skills align
+- Experience level aligns
+- Resume story is believable
+- Interview explanation is defensible
+
+Strong Target:
+80%+ tailored match
+AND hiring logic 7+/10
+
+Possible Target:
+65-79%
+OR manageable gaps
+
+Weak Target:
+Below 65%
+OR major domain/seniority mismatch
+
+100% match should almost never happen.
+
+75-85% with strong hiring logic is a realistic excellent opportunity.
+
+
+APPLICATION STRATEGY
+====================
+
+Recommend:
+"Apply today with tailored resume"
+when:
+- strong technical match
+- correct seniority
+- sponsorship risk acceptable
+
+Recommend:
+"Quick apply only"
+when:
+- possible but competitive
+- tailoring ROI is low
+
+Recommend:
+"Skip"
+when:
+- time is better spent elsewhere

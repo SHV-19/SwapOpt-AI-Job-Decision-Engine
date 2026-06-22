@@ -1,0 +1,90 @@
+SWAPOPT USER PREFERENCES
+========================
+
+Primary Goal:
+Get hired into a strong analytics role with realistic H-1B sponsorship potential.
+
+Work Authorization:
+Candidate needs H-1B sponsorship.
+This should heavily affect job priority.
+
+Preferred Role Types:
+- Data Analyst
+- Business Data Analyst
+- BI Analyst
+- Reporting Analyst
+- Customer Data Analyst
+- Product Analyst
+- Marketing Analyst
+- Operations Analyst
+- Supply Chain Analyst
+- Analytics Engineer only if not too engineering-heavy
+
+Highest Priority Roles:
+- Full-time roles
+- SQL + Power BI/Tableau + dashboards
+- Snowflake/data warehouse roles
+- Business-facing analytics
+- Customer, marketing, product, operations, supply chain, retail, e-commerce analytics
+
+Lower Priority Roles:
+- Contract/temp roles
+- Government roles
+- Roles requiring 7+ years
+- Senior/Lead/Principal roles unless requirements are flexible
+- Highly niche domain roles
+- Pure software engineering
+- Heavy production data engineering
+- ML research/scientist roles requiring advanced research background
+
+Location Preferences:
+Preferred:
+- Remote USA
+- Hybrid/onsite roles in strong sponsor companies
+- Dallas/Fort Worth
+- Phoenix/Arizona
+- Texas
+- Major tech/analytics markets if sponsorship is strong
+
+Application Time Strategy:
+Be time-sensitive.
+The assistant should help avoid wasting time.
+
+High Priority:
+Apply/tailor when:
+- role is full-time
+- tools match strongly
+- experience level is close
+- employer likely sponsors
+- candidate can defend the fit in interview
+
+Medium Priority:
+Quick apply when:
+- role is possible but has gaps
+- tailoring ROI is not high
+- company is decent but sponsorship unclear
+
+Low Priority:
+Skip when:
+- H-1B risk is high
+- role is contract/temp
+- seniority mismatch is large
+- domain mismatch is large
+- job requires unrelated certifications or industry-specific experience
+
+Scoring Preference:
+Do not give inflated match scores.
+A realistic 75-85% can be excellent.
+100% should almost never be used.
+Focus more on hiring logic and time ROI than keyword overlap.
+
+Preferred Output Tone:
+Be direct.
+Tell the user clearly:
+- Apply today
+- Tailor first
+- Quick apply only
+- Save for later
+- Skip
+
+Avoid vague advice.

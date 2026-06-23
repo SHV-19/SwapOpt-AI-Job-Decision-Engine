@@ -21,7 +21,7 @@ const profile = {
   preferences: fs.readFileSync("./profile/SwapOpt_Preferences.txt", "utf8")
 };
 
-console.log("SwapOpt Brain loaded");
+console.log("🧠 SwapOpt Brain loaded");
 
 function cleanJobText(text) {
   return String(text || "").slice(0, 30000);
@@ -104,8 +104,11 @@ swapopt_verdict.apply_score must always be a number from 1-10.
 "tailored_match_percent":0,
 
 "hiring_logic_score":0,
+"tailoring_intensity_score":0,
+"tailoring_intensity_level":"",
+"tailoring_strategy_summary":"",
+"tailoring_time_recommendation":"",
 
-"technical_match_score":0,
 "responsibility_match_score":0,
 "experience_level_score":0,
 "domain_transfer_score":0,
@@ -152,6 +155,27 @@ swapopt_verdict.apply_score must always be a number from 1-10.
 "salary_risk_warning":""
 }
 }
+
+Tailoring Intensity Rules:
+
+If hiring_logic_score is high, decide how much customization is worth doing.
+
+9-10:
+Heavy tailoring.
+Rewrite summary, reorder projects, adjust bullets.
+
+7-8:
+Medium tailoring.
+Change keywords and emphasize relevant projects.
+
+5-6:
+Light tailoring.
+Small ATS edits only.
+
+Below 5:
+Do not waste time.
+
+Explain the effort/time tradeoff.
 
 
 SwapOpt Final Verdict Rules:
@@ -425,6 +449,91 @@ Rules:
   }
 });
 
+app.post("/application-help", async (req, res) => {
+  try {
+    const { pageText, url } = req.body;
+
+    const prompt = `
+You are SwapOpt Application Assistant.
+
+Help Swapnil answer job application questions.
+
+Generate truthful answers only.
+
+Candidate:
+${profile.masterProfile}
+
+Preferences:
+${profile.preferences}
+
+URL:
+${url}
+
+JOB:
+${cleanJobText(pageText)}
+
+Return JSON:
+
+{
+"job_title":"",
+"company":"",
+
+"why_company":"",
+"why_role":"",
+
+"tell_me_about_yourself":"",
+"relevant_experience_answer":"",
+
+"skills_answers":[
+{
+"skill":"",
+"answer":""
+}
+],
+
+"project_examples":[
+{
+"question":"",
+"answer":""
+}
+],
+
+"behavioral_answers":[
+{
+"question":"",
+"answer":""
+}
+],
+
+"additional_information_box":"",
+
+"questions_to_ask_recruiter":[],
+
+"final_application_strategy":""
+}
+
+Rules:
+- Do not invent experience
+- Keep answers natural
+- Avoid sounding AI generated
+- Use Swapnil's real projects
+- Make answers application-form ready
+- Professional but human tone
+`;
+
+    res.json(await askAI(prompt));
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error:"Application helper failed",
+      details:err.message
+    });
+
+  }
+});
 
 app.get("/", (req, res) => {
   res.json({
@@ -432,11 +541,16 @@ app.get("/", (req, res) => {
     message: "SwapOpt optimized backend running",
     brainCharacters: profile.masterProfile.length,
     preferenceCharacters: profile.preferences.length,
-    endpoints: ["/analyze", "/tailor", "/resume-draft"]
+    endpoints: [
+"/analyze",
+"/tailor",
+"/resume-draft",
+"/application-help"
+]
   });
 });
 
 
 app.listen(PORT, () => {
-  console.log(`SwapOpt backend running http://localhost:${PORT}`);
+  console.log(`🚀 SwapOpt backend running http://localhost:${PORT}`);
 });

@@ -403,6 +403,17 @@ Location: ${currentJobResult.location || "Unknown"}
 Current Resume Match: ${currentJobResult.current_match_percent ?? "N/A"}%
 Potential After Tailoring: ${currentJobResult.tailored_match_percent ?? "N/A"}%
 Hiring Confidence: ${currentJobResult.hiring_logic_score ?? "N/A"}/10
+Tailoring Severity:
+${currentJobResult.tailoring_intensity_score ?? "N/A"}/10
+
+Tailoring Level:
+${currentJobResult.tailoring_intensity_level || "N/A"}
+
+Recommended Tailoring Effort:
+${currentJobResult.tailoring_time_recommendation || "N/A"}
+
+Tailoring Strategy:
+${currentJobResult.tailoring_strategy_summary || "N/A"}
 Decision: ${currentJobResult.decision || "N/A"}
 Target Level: ${currentJobResult.target_level || "N/A"}
 Next Action: ${currentJobResult.next_action || "N/A"}
@@ -448,8 +459,15 @@ saveJobButton.addEventListener("click", () => {
       const jobs = stored.savedJobs || [];
 
       jobs.unshift({
+
+
+
         id: crypto.randomUUID(),
+        fullAnalysis: currentJobResult,
+        tailorAnalysis: currentTailorResult,
+        resumeDraft: currentResumeDraft,
         company: currentJobResult.company,
+
         title: currentJobResult.job_title,
         location: currentJobResult.location,
         url: tab?.url || "",
@@ -518,7 +536,37 @@ function renderJobs(jobs, title, subtitle) {
 
         <div style="margin-top:8px;font-size:11px;color:#aaa;">Saved: ${escapeHtml(job.savedAt)}</div>
         <div style="margin-top:4px;font-size:11px;color:#aaa;">Updated: ${escapeHtml(job.updatedAt || job.savedAt)}</div>
-        ${job.url ? `<div style="margin-top:8px;"><a href="${escapeHtml(job.url)}" target="_blank">Open Job</a></div>` : ""}
+        <div style="margin-top:8px;display:grid;gap:6px;">
+  ${
+    job.fullAnalysis
+      ? `<button class="viewAnalysisButton" data-id="${escapeHtml(job.id)}">
+          View Saved Analysis
+        </button>`
+      : ""
+  }
+
+  ${
+    job.tailorAnalysis
+      ? `<button class="viewTailorButton" data-id="${escapeHtml(job.id)}">
+          View Tailoring Strategy
+        </button>`
+      : ""
+  }
+
+  ${
+    job.resumeDraft
+      ? `<button class="viewResumeButton" data-id="${escapeHtml(job.id)}">
+          View Resume Draft
+        </button>`
+      : ""
+  }
+
+  ${
+    job.url
+      ? `<a href="${escapeHtml(job.url)}" target="_blank">Open Job</a>`
+      : ""
+  }
+</div>
       </div>
     `).join("")}
   `;
@@ -526,6 +574,40 @@ function renderJobs(jobs, title, subtitle) {
   document.querySelectorAll(".statusButton").forEach((button) => {
     button.addEventListener("click", () => updateJobStatus(button.dataset.id, button.dataset.status));
   });
+document.querySelectorAll(".viewAnalysisButton").forEach((button) => {
+  button.addEventListener("click", () => {
+    const job = jobs.find(j => j.id === button.dataset.id);
+
+    if (job?.fullAnalysis) {
+      currentJobResult = job.fullAnalysis;
+      renderAnalysisResult(job.fullAnalysis);
+    }
+  });
+});
+
+
+document.querySelectorAll(".viewTailorButton").forEach((button) => {
+  button.addEventListener("click", () => {
+    const job = jobs.find(j => j.id === button.dataset.id);
+
+    if (job?.tailorAnalysis) {
+      currentTailorResult = job.tailorAnalysis;
+      renderTailorResult(job.tailorAnalysis);
+    }
+  });
+});
+
+
+document.querySelectorAll(".viewResumeButton").forEach((button) => {
+  button.addEventListener("click", () => {
+    const job = jobs.find(j => j.id === button.dataset.id);
+
+    if (job?.resumeDraft) {
+      currentResumeDraft = job.resumeDraft;
+      renderResumeDraft(job.resumeDraft);
+    }
+  });
+});
 }
 
 viewJobsButton.addEventListener("click", () => {

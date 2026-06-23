@@ -1,153 +1,157 @@
-# SwapOpt AI — Job Decision Engine 🚀
+# SwapOpt AI — Job Decision Engine
 
-> I had no other choice... so I built an AI to judge my job applications before they judged me.
+> I did not build this to apply to more jobs.  
+> I built this to decide which jobs deserve my time.
 
-SwapOpt is an AI-powered browser assistant that analyzes job opportunities and helps answer a question most job tools ignore:
+SwapOpt is a personal AI-powered job decision assistant that analyzes job opportunities and helps make smarter application decisions.
 
-**"Should I spend my time applying for this role?"**
+The original problem was not:
 
-Instead of only optimizing resumes, SwapOpt evaluates whether an opportunity actually makes sense based on experience, goals, expectations, and personal constraints.
+"Can I apply?"
 
+The harder question was:
 
----
-
-## 💡 Why I Built This
-
-Most job search tools focus on one question:
-
-> "How do I make my resume match this job?"
-
-But during my own search, I realized my bigger problem was decision making.
-
-Every job posting created more questions:
-
-- Is this role actually aligned with my experience?
-- Am I competitive for this position?
-- What should I highlight?
-- Is the expected salary realistic?
-- Are there potential concerns I should think about?
-- Is this worth a customized application?
-
-So I built something optimized around my workflow.
-
+"Should I apply?"
 
 ---
 
-## ✨ What SwapOpt Does
+## Why I Built This
 
-SwapOpt analyzes a job posting and provides:
+Job searching became less about submitting applications and more about making decisions:
 
-### 🎯 Application Decision Score
-A quick indication of whether the opportunity deserves time and effort.
+- Is this role actually aligned with my background?
+- Is the experience requirement realistic?
+- How much should I customize my resume?
+- What parts of my experience should I highlight?
+- Is the salary expectation reasonable?
+- Are there sponsorship or accessibility risks?
+- Is this posting worth serious effort?
 
-### 📄 Resume Fit Analysis
-Compares skills, experience, and requirements.
+Generic job tools optimize for everyone.
 
-### 🧠 AI Strategy Suggestions
-Recommends what strengths to emphasize while applying.
-
-### 💰 Compensation Insights
-Provides salary expectation guidance.
-
-### ⚠️ Risk Evaluation
-Highlights potential mismatches or concerns.
-
-### 🔍 Job Understanding
-Transforms long job descriptions into actionable insights.
-
+I wanted something optimized around my own decision-making process.
 
 ---
 
-## 🛠️ How It Works
+## What SwapOpt Does
 
-```
-Job Posting
-      |
-      v
-Browser Extension
-      |
-      v
-Personal Context + AI Analysis
-      |
-      v
-Decision Report
-      |
-      v
-Apply smarter
-```
+SwapOpt reads a job posting and provides:
 
+### Job Decision Analysis
+- Overall apply recommendation
+- Fit scoring
+- Hiring probability reasoning
+- Career alignment
+- Risk factors
+- Opportunity evaluation
+
+### Resume Strategy
+- Current match estimation
+- Potential match after tailoring
+- Keywords to emphasize
+- Projects to highlight
+- Skills positioning
+- Overclaim warnings
+
+### Smart Tailoring Logic
+
+Instead of customizing every resume blindly:
+
+- 9/10 hiring fit → Deep tailoring recommended
+- 7-8/10 → Moderate customization
+- 5-6/10 → Quick ATS improvements
+- Below 5 → Save time
+
+The goal is effort optimization.
 
 ---
 
-## 🧰 Tech Stack
+## Application Assistant
 
+SwapOpt also generates application support:
+
+- "Why this company?"
+- "Why this role?"
+- Relevant experience answers
+- Skill-based responses
+- Behavioral examples
+- Recruiter questions
+
+Answers are generated from my actual experience and projects.
+
+No fake experience.
+
+---
+
+## Tech Stack
+
+**Frontend**
+- Chrome Extension
 - JavaScript
-- Browser Extension APIs
+- HTML/CSS
+
+**Backend**
 - Node.js
 - Express.js
 - OpenAI API
-- Prompt Engineering
 
-
----
-
-## 🤖 AI Assisted Development
-
-This project was also an experiment in modern AI-assisted building.
-
-I am not a traditional software engineer.
-
-The goal was not to replace technical understanding with AI, but to use AI as a collaborator:
-
-- define the problem
-- design the workflow
-- break features into smaller parts
-- debug issues
-- iterate quickly
-
-AI handled some syntax.
-
-I handled the decisions.
-
+**AI Layer**
+- Personalized profile context
+- Resume intelligence
+- Job description reasoning
+- Structured JSON outputs
 
 ---
 
-## 🔐 Privacy Note
+## Architecture
 
-Personal profile data, resumes, and user context files are intentionally excluded from this repository.
-
-The idea is:
-
-**Public code. Private context.**
-
-
----
-
-## 🎥 Demo
-
-Demo video:
-
-[Add demo link here]
-
-
----
-
-## 🌱 Future Improvements
-
-Potential next steps:
-
-- Multiple user profiles
-- Improved scoring logic
-- Better analytics dashboard
-- Job tracking history
-- Resume generation workflow
-- More integrations
-
+```text
+Job Posting
+     |
+     v
+Chrome Extension
+     |
+     v
+Node.js Backend
+     |
+     v
+Personal AI Context + OpenAI
+     |
+     v
+Decision / Resume / Application Strategy
+```
 
 ---
 
-## Final Thought
+## Features
 
-AI is not just about replacing tasks.
+✔ Job fit analysis  
+✔ Resume tailoring strategy  
+✔ ATS keyword suggestions  
+✔ Salary reasoning  
+✔ H-1B/access risk awareness  
+✔ Saved job tracker  
+✔ Application answer generation  
+✔ CSV export  
 
-Sometimes the most interesting use case is building tools that understand how you personally think and work.
+---
+
+## Demo
+
+Video Demo:
+(Add YouTube link)
+
+Full Build Story:
+(Add Medium link)
+
+---
+
+## Note
+
+This project was built as an experiment in using AI as a decision-support system.
+
+The goal was never to replace human judgment.
+
+The goal was to remove repetitive analysis, reduce wasted effort, and spend more time making better decisions.
+
+Built by Swapnil Herwadkar.

@@ -7,11 +7,13 @@
       body {
         margin: 0;
         font-family: Inter, Arial, sans-serif;
-        width: 430px;
+        width: 100%;
+        min-width: 320px;
+        overflow-x: hidden;
         background: #0f0f0f;
         color: #eeeeee;
       }
-      .app { padding: 14px; }
+      .app { padding: 14px; width: 100%; }
       .header {
         background: linear-gradient(135deg, #151515, #202020);
         border: 1px solid #303030;
@@ -39,17 +41,18 @@
       }
       .button-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
+        grid-template-columns: 1fr;
+        gap: 10px;
         margin-bottom: 12px;
       }
       button {
+        width: 100%;
         border: 1px solid #333333;
         border-radius: 12px;
-        padding: 11px 10px;
+        padding: 12px 10px;
         background: #181818;
         color: #eeeeee;
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 700;
         cursor: pointer;
       }
@@ -69,6 +72,7 @@
         min-height: 80px;
         font-size: 13px;
         line-height: 1.45;
+        width: 100%;
         overflow-wrap: break-word;
       }
       a { color: #eeeeee; }
@@ -88,34 +92,27 @@
         <div class="brand">SWAPOPT AI</div>
         <div class="title">Job Intelligence</div>
         <div class="subtitle">
-           Decide where to apply, how much effort to spend, and how to position yourself.
+          Analyze fit, H-1B risk, tailoring ROI, resume strategy, and saved jobs.
         </div>
       </div>
 
 <div class="button-grid">
-<button id="analyzeButton" class="primary">Analyze Job</button>
-<button id="tailorButton">Tailor Plan</button>
-<button id="resumeDraftButton">Draft Resume</button>
-<button id="coverLetterButton">Cover Letter</button>
-<button id="networkButton">Find People</button>
-<button id="applicationHelpButton">App Answers</button>
-
-<button id="copyInsightButton">Copy AI Context</button>
-
-<button id="saveJobButton">Save Decision</button>
-
-<button id="viewJobsButton">Recent Jobs</button>
-<button id="viewAllJobsButton">Job Tracker</button>
-<button id="viewArchivedButton">Archived</button>
-
-<button id="exportJobsButton">Export CSV</button>
+  <button id="analyzeButton" class="primary">Analyze Fit</button>
+  <button id="tailorButton">Tailor Strategy</button>
+  <button id="resumeDraftButton">Resume Draft</button>
+  <button id="copyInsightButton">Copy Insight</button>
+  <button id="saveJobButton">Save Job</button>
+  <button id="viewJobsButton">Last 5 Jobs</button>
+  <button id="viewAllJobsButton">View All</button>
+  <button id="viewArchivedButton">Archive</button>
+  <button id="exportJobsButton">Export CSV</button>
 </div>
 
       <div id="result" class="result">
         Ready. Open a job posting and choose an action.
       </div>
 
-      <div class="footer">Built to apply smarter, not faster.</div>
+      <div class="footer">Local private assistant | Backend required</div>
       <script src="app.js"></script>
     </div>
   </body>

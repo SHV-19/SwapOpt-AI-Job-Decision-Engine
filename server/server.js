@@ -535,6 +535,132 @@ Rules:
   }
 });
 
+app.post("/cover-letter", async (req, res) => {
+  try {
+    const { pageText, url } = req.body;
+
+    const prompt = `
+Create a short customized cover letter.
+
+Candidate:
+${profile.masterProfile}
+
+Preferences:
+${profile.preferences}
+
+URL:
+${url}
+
+JOB:
+${cleanJobText(pageText)}
+
+Return JSON:
+{
+"company":"",
+"role":"",
+"cover_letter":""
+}
+
+Rules:
+- Follow Swapnil's existing cover letter style
+- Human, simple language
+- Around 180-220 words
+- No exaggeration
+- No generic AI excitement
+- Mention relevant skills/projects only
+- Focus on business impact
+- Suitable for copying into job applications
+- End with Swapnil Herwadkar
+`;
+
+    res.json(await askAI(prompt));
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error:"Cover letter failed",
+      details:err.message
+    });
+  }
+});
+
+app.post("/network", async (req, res) => {
+  try {
+    const { pageText, url } = req.body;
+
+    const prompt = `
+You are SwapOpt Network Assistant.
+
+Help Swapnil identify relevant people to contact for this job.
+
+Do NOT invent real names or fake email addresses.
+
+Candidate:
+${profile.masterProfile}
+
+Preferences:
+${profile.preferences}
+
+URL:
+${url}
+
+JOB:
+${cleanJobText(pageText)}
+
+Return JSON:
+{
+"job_title":"",
+"company":"",
+"location":"",
+"department_or_team":"",
+"people_to_find":[
+{
+"target_type":"",
+"why_relevant":"",
+"linkedin_search_query":"",
+"priority":"",
+"what_to_look_for":""
+}
+],
+"linkedin_connection_notes":{
+"recruiter_note":"",
+"hiring_manager_note":"",
+"team_member_note":"",
+"alumni_note":""
+},
+"cold_message":{
+"subject":"",
+"message":""
+},
+"email_finding_guidance":{
+"likely_email_patterns":[],
+"safe_sources_to_check":[],
+"warning":""
+},
+"networking_strategy":""
+}
+
+Rules:
+- Prioritize relevance to the job title, team, location, and company
+- Do not make up names
+- Do not make up emails
+- Keep LinkedIn notes under 300 characters
+- Notes should sound human, not desperate
+- Focus on analytics/data/BI relevance
+- Give practical search queries Swapnil can copy into LinkedIn
+`;
+
+    res.json(await askAI(prompt));
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "Network helper failed",
+      details: err.message
+    });
+  }
+});
+
 app.get("/", (req, res) => {
   res.json({
     status: "ok",
@@ -545,7 +671,9 @@ app.get("/", (req, res) => {
 "/analyze",
 "/tailor",
 "/resume-draft",
-"/application-help"
+"/application-help",
+"/cover-letter",
+"/network"
 ]
   });
 });

@@ -2,6 +2,9 @@ const resultDiv = document.getElementById("result");
 const analyzeButton = document.getElementById("analyzeButton");
 const tailorButton = document.getElementById("tailorButton");
 const resumeDraftButton = document.getElementById("resumeDraftButton");
+const coverLetterButton = document.getElementById("coverLetterButton");
+const networkButton = document.getElementById("networkButton");
+const applicationHelpButton = document.getElementById("applicationHelpButton");
 const copyInsightButton = document.getElementById("copyInsightButton");
 const saveJobButton = document.getElementById("saveJobButton");
 const viewJobsButton = document.getElementById("viewJobsButton");
@@ -12,6 +15,9 @@ const exportJobsButton = document.getElementById("exportJobsButton");
 let currentJobResult = null;
 let currentTailorResult = null;
 let currentResumeDraft = null;
+let currentCoverLetter = null;
+let currentNetworkResult = null;
+let currentApplicationHelp = null;
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -322,7 +328,20 @@ async function getCurrentPageText() {
 }
 
 async function sendJobToBackend(endpoint, loadingText) {
-  const buttons = [analyzeButton, tailorButton, resumeDraftButton, copyInsightButton, saveJobButton, viewJobsButton, viewAllJobsButton, viewArchivedButton, exportJobsButton];
+  const buttons = [
+  analyzeButton,
+  tailorButton,
+  resumeDraftButton,
+  coverLetterButton,
+  networkButton,
+  applicationHelpButton,
+  copyInsightButton,
+  saveJobButton,
+  viewJobsButton,
+  viewAllJobsButton,
+  viewArchivedButton,
+  exportJobsButton
+];
   buttons.forEach((b) => b.disabled = true);
 
   resultDiv.style.background = "#171717";
@@ -382,6 +401,62 @@ resumeDraftButton.addEventListener("click", async () => {
     chrome.storage.local.set({ lastSwapOptResumeDraft: data });
     currentResumeDraft = data;
     renderResumeDraft(data);
+  } catch (error) {
+    resultDiv.innerHTML = `<b>Error</b><p>${escapeHtml(error.message)}</p>`;
+  }
+});
+
+coverLetterButton.addEventListener("click", async () => {
+  try {
+    const data = await sendJobToBackend("cover-letter", "Generating cover letter...");
+    currentCoverLetter = data;
+
+    resultDiv.innerHTML = section("Cover Letter", `
+      <p style="white-space:pre-line;color:#ddd;">${escapeHtml(data.cover_letter || "No cover letter generated.")}</p>
+    `);
+  } catch (error) {
+    resultDiv.innerHTML = `<b>Error</b><p>${escapeHtml(error.message)}</p>`;
+  }
+});
+
+networkButton.addEventListener("click", async () => {
+  try {
+    const data = await sendJobToBackend("network", "Finding relevant people...");
+    currentNetworkResult = data;
+
+    resultDiv.innerHTML = `
+      ${section("People to Find", `<ul>${listItems((data.people_to_find || []).map(p => `${p.target_type}: ${p.linkedin_search_query} — ${p.why_relevant}`))}</ul>`)}
+      ${section("LinkedIn Notes", `
+        <b>Recruiter:</b><p>${escapeHtml(data.linkedin_connection_notes?.recruiter_note || "")}</p>
+        <b>Hiring Manager:</b><p>${escapeHtml(data.linkedin_connection_notes?.hiring_manager_note || "")}</p>
+        <b>Team Member:</b><p>${escapeHtml(data.linkedin_connection_notes?.team_member_note || "")}</p>
+        <b>Alumni:</b><p>${escapeHtml(data.linkedin_connection_notes?.alumni_note || "")}</p>
+      `)}
+      ${section("Cold Message", `
+        <b>Subject:</b> ${escapeHtml(data.cold_message?.subject || "")}
+        <p>${escapeHtml(data.cold_message?.message || "")}</p>
+      `)}
+      ${section("Networking Strategy", `<p>${escapeHtml(data.networking_strategy || "")}</p>`)}
+    `;
+  } catch (error) {
+    resultDiv.innerHTML = `<b>Error</b><p>${escapeHtml(error.message)}</p>`;
+  }
+});
+
+applicationHelpButton.addEventListener("click", async () => {
+  try {
+    const data = await sendJobToBackend("application-help", "Generating application answers...");
+    currentApplicationHelp = data;
+
+    resultDiv.innerHTML = `
+      ${section("Why Company", `<p>${escapeHtml(data.why_company || "")}</p>`)}
+      ${section("Why Role", `<p>${escapeHtml(data.why_role || "")}</p>`)}
+      ${section("Tell Me About Yourself", `<p>${escapeHtml(data.tell_me_about_yourself || "")}</p>`)}
+      ${section("Relevant Experience", `<p>${escapeHtml(data.relevant_experience_answer || "")}</p>`)}
+      ${section("Additional Information", `<p>${escapeHtml(data.additional_information_box || "")}</p>`)}
+      ${section("Questions to Ask Recruiter", `<ul>${listItems(data.questions_to_ask_recruiter)}</ul>`)}
+      ${section("Final Strategy", `<p>${escapeHtml(data.final_application_strategy || "")}</p>`)}
+    `;
   } catch (error) {
     resultDiv.innerHTML = `<b>Error</b><p>${escapeHtml(error.message)}</p>`;
   }
@@ -467,8 +542,10 @@ saveJobButton.addEventListener("click", () => {
         tailorAnalysis: currentTailorResult,
         resumeDraft: currentResumeDraft,
         company: currentJobResult.company,
-
-        title: currentJobResult.job_title,
+	coverLetter: currentCoverLetter,
+	networkResult: currentNetworkResult,
+	applicationHelp: currentApplicationHelp,
+	title: currentJobResult.job_title,
         location: currentJobResult.location,
         url: tab?.url || "",
         currentMatch: currentJobResult.current_match_percent,

@@ -1,5 +1,19 @@
 # 🚀 SwapOpt AI — Job Decision Engine
 
+## 📸 Demo
+
+### Job Decision Engine
+![Job Analysis](assets/analyze-job.png)
+
+### AI Resume Tailoring Strategy
+![Resume Strategy](assets/resume-strategy.png)
+
+### Smart Networking Prioritization
+![Networking](assets/networking.png)
+
+### Application Tracker
+![Tracker](assets/job-tracker.png)
+
 Most job tools help you apply faster.
 
 I wanted to build something that helps me decide whether I should apply at all.

@@ -426,6 +426,19 @@ networkButton.addEventListener("click", async () => {
 
     resultDiv.innerHTML = `
       ${section("People to Find", `<ul>${listItems((data.people_to_find || []).map(p => `${p.target_type}: ${p.linkedin_search_query} — ${p.why_relevant}`))}</ul>`)}
+	${section("Networking Priority", `
+  	<b>${escapeHtml(data.networking_priority_level || "Unknown")}</b>
+  	(${escapeHtml(data.networking_priority_score ?? "N/A")}/10)
+  	<p>${escapeHtml(data.hunter_usage_reason || "")}</p>
+	`)}
+
+	${section("Hunter Contacts", `
+  	<ul>
+    	${listItems((data.discovered_contacts || []).map(c =>
+      	`${c.name || "Unknown"} | ${c.position || "Unknown role"} | ${c.email || "No email"} | Confidence: ${c.confidence || "N/A"}`
+    	))}
+  	</ul>
+	`)}
       ${section("LinkedIn Notes", `
         <b>Recruiter:</b><p>${escapeHtml(data.linkedin_connection_notes?.recruiter_note || "")}</p>
         <b>Hiring Manager:</b><p>${escapeHtml(data.linkedin_connection_notes?.hiring_manager_note || "")}</p>

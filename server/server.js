@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import fs from "fs";
 import OpenAI from "openai";
+import axios from "axios";
 
 dotenv.config();
 
@@ -25,6 +26,25 @@ console.log("🧠 SwapOpt Brain loaded");
 
 function cleanJobText(text) {
   return String(text || "").slice(0, 30000);
+}
+
+async function hunterSearch(domain) {
+  if (!process.env.HUNTER_API_KEY || !domain) return [];
+
+  try {
+    const response = await axios.get("https://api.hunter.io/v2/domain-search", {
+      params: {
+        domain,
+        api_key: process.env.HUNTER_API_KEY,
+        limit: 10
+      }
+    });
+
+    return response.data.data.emails || [];
+  } catch (err) {
+    console.log("Hunter failed:", err.message);
+    return [];
+  }
 }
 
 async function askAI(prompt) {
@@ -268,7 +288,6 @@ recommend applying carefully.
 
 Explicit no sponsorship:
 mark risk clearly but don't erase fit.
-
 
 Compensation Rules:
 
@@ -611,6 +630,7 @@ Return JSON:
 {
 "job_title":"",
 "company":"",
+"company_domain":"",
 "location":"",
 "department_or_team":"",
 "people_to_find":[
@@ -637,20 +657,55 @@ Return JSON:
 "safe_sources_to_check":[],
 "warning":""
 },
+"networking_priority_score":0,
+"networking_priority_level":"",
+"should_use_hunter":false,
+"hunter_usage_reason":"",
 "networking_strategy":""
 }
 
 Rules:
-- Prioritize relevance to the job title, team, location, and company
-- Do not make up names
-- Do not make up emails
-- Keep LinkedIn notes under 300 characters
-- Notes should sound human, not desperate
-- Focus on analytics/data/BI relevance
-- Give practical search queries Swapnil can copy into LinkedIn
+- Extract the most likely official company domain, for example walmart.com or nike.com
+
+Hunter Usage Rules:
+
+Use Hunter only when networking is likely worth the credit.
+
+HIGH / should_use_hunter true:
+- strong fit role
+- high-value company
+- likely competitive posting
+- hiring manager/recruiter outreach may improve chances
+- role matches Swapnil's target path
+
+MEDIUM:
+- use LinkedIn search first
+- Hunter only if application is strong or company is priority
+
+LOW / should_use_hunter false:
+- weak fit
+- quick apply only
+- unclear company
+- low priority role
+- generic posting
+- not worth spending Hunter credits
 `;
 
-    res.json(await askAI(prompt));
+    const answer = await askAI(prompt);
+
+const hunterPeople = answer.should_use_hunter
+  ? await hunterSearch(answer.company_domain)
+  : [];
+
+    answer.discovered_contacts = hunterPeople.slice(0, 5).map((p) => ({
+      name: `${p.first_name || ""} ${p.last_name || ""}`.trim(),
+      position: p.position || "",
+      email: p.value || "",
+      confidence: p.confidence || "",
+      type: p.type || ""
+    }));
+
+    res.json(answer);
 
   } catch (err) {
     console.error(err);

@@ -1,157 +1,256 @@
-# SwapOpt AI — Job Decision Engine
+# 🚀 SwapOpt AI — Job Decision Engine
 
-> I did not build this to apply to more jobs.  
-> I built this to decide which jobs deserve my time.
+Most job tools help you apply faster.
 
-SwapOpt is a personal AI-powered job decision assistant that analyzes job opportunities and helps make smarter application decisions.
+I wanted to build something that helps me decide whether I should apply at all.
 
-The original problem was not:
+SwapOpt AI is a Chrome Extension powered by AI that analyzes job opportunities and helps make smarter application decisions based on fit, effort, career value, and strategy.
 
-"Can I apply?"
+Instead of asking:
 
-The harder question was:
+"How do I apply to more jobs?"
 
-"Should I apply?"
+SwapOpt asks:
 
----
-
-## Why I Built This
-
-Job searching became less about submitting applications and more about making decisions:
-
-- Is this role actually aligned with my background?
-- Is the experience requirement realistic?
-- How much should I customize my resume?
-- What parts of my experience should I highlight?
-- Is the salary expectation reasonable?
-- Are there sponsorship or accessibility risks?
-- Is this posting worth serious effort?
-
-Generic job tools optimize for everyone.
-
-I wanted something optimized around my own decision-making process.
+"Which jobs actually deserve my time?"
 
 ---
 
-## What SwapOpt Does
+## 💡 Why I Built This
 
-SwapOpt reads a job posting and provides:
+While thinking about productivity, I realized a lot of time is lost not just doing work, but deciding what work deserves attention.
 
-### Job Decision Analysis
-- Overall apply recommendation
-- Fit scoring
-- Hiring probability reasoning
-- Career alignment
+Job searching has the same problem.
+
+Every application requires decisions:
+
+- Is this role realistic for me?
+- How much should I tailor my resume?
+- Is this company worth extra effort?
+- Should I network?
+- What should I highlight?
+
+SwapOpt became my personal AI layer to reduce repetitive decisions and focus effort where it matters.
+
+---
+
+# ✨ Features
+
+## 🎯 Job Intelligence Analysis
+
+Analyzes job postings beyond simple keyword matching.
+
+Evaluates:
+
+- Resume alignment
+- Experience match
+- Skill transferability
+- Career upside
+- Posting quality
+- H-1B/access risk
+- Competition difficulty
+
+Generates:
+
+- Apply score
+- Decision recommendation
+- Strength factors
 - Risk factors
-- Opportunity evaluation
-
-### Resume Strategy
-- Current match estimation
-- Potential match after tailoring
-- Keywords to emphasize
-- Projects to highlight
-- Skills positioning
-- Overclaim warnings
-
-### Smart Tailoring Logic
-
-Instead of customizing every resume blindly:
-
-- 9/10 hiring fit → Deep tailoring recommended
-- 7-8/10 → Moderate customization
-- 5-6/10 → Quick ATS improvements
-- Below 5 → Save time
-
-The goal is effort optimization.
 
 ---
 
-## Application Assistant
+## 🧠 Smart Resume Tailoring Strategy
 
-SwapOpt also generates application support:
+Not every job deserves the same effort.
 
-- "Why this company?"
-- "Why this role?"
-- Relevant experience answers
-- Skill-based responses
-- Behavioral examples
-- Recruiter questions
+SwapOpt recommends:
 
-Answers are generated from my actual experience and projects.
+**High Priority**
+- Deep customization
+- Project repositioning
+- Resume restructuring
 
-No fake experience.
+**Medium Priority**
+- Keyword optimization
+- Relevant experience emphasis
+
+**Low Priority**
+- Quick apply or skip
 
 ---
 
-## Tech Stack
+## 📄 Resume Draft Assistant
+
+Creates role-specific resume suggestions while keeping experience truthful.
+
+Principles:
+
+- No fake experience
+- No overclaiming
+- ATS optimized
+- Maintains authentic career story
+
+---
+
+## ✉️ Cover Letter Assistant
+
+Generates short personalized cover letters designed for application forms.
+
+Focus:
+
+- Human tone
+- Relevant skills
+- Business impact
+- Role alignment
+
+---
+
+## 📝 Application Answer Assistant
+
+Helps answer:
+
+- Why this company?
+- Why this role?
+- Tell me about yourself
+- Relevant experience questions
+- Behavioral prompts
+
+---
+
+## 🤝 Networking Intelligence
+
+Networking takes time.
+
+SwapOpt decides if outreach is worth it.
+
+Priority Levels:
+
+**HIGH**
+- Spend time networking
+- Find recruiters/hiring managers
+
+**MEDIUM**
+- LinkedIn research recommended
+
+**LOW**
+- Apply without extra effort
+
+---
+
+## 🔎 Hunter Integration
+
+Uses Hunter API intelligently.
+
+Before using limited searches, SwapOpt evaluates:
+
+"Is this opportunity worth spending a contact search?"
+
+If yes:
+
+- Finds relevant contacts
+- Generates LinkedIn notes
+- Creates outreach messages
+
+---
+
+## 📌 Job Tracker
+
+Save and manage opportunities:
+
+- Interested
+- Applied
+- Interview
+- Rejected
+- Archived
+
+Export applications to CSV.
+
+---
+
+# 🛠️ Tech Stack
 
 **Frontend**
-- Chrome Extension
+- Chrome Extension Manifest V3
 - JavaScript
 - HTML/CSS
+- Chrome Storage API
 
 **Backend**
 - Node.js
 - Express.js
+
+**AI**
 - OpenAI API
 
-**AI Layer**
-- Personalized profile context
-- Resume intelligence
-- Job description reasoning
-- Structured JSON outputs
+**Integrations**
+- Hunter API
 
 ---
 
-## Architecture
+# ⚙️ Setup
 
-```text
-Job Posting
-     |
-     v
-Chrome Extension
-     |
-     v
-Node.js Backend
-     |
-     v
-Personal AI Context + OpenAI
-     |
-     v
-Decision / Resume / Application Strategy
+Clone repository:
+
+```bash
+git clone <repo-url>
+cd swapopt-job-match
+```
+
+Install dependencies:
+
+```bash
+cd server
+npm install
+```
+
+Create `.env`
+
+```env
+OPENAI_API_KEY=your_key
+HUNTER_API_KEY=your_key
+PORT=8787
+```
+
+Start backend:
+
+```bash
+node server.js
+```
+
+Load extension:
+
+```
+Chrome Extensions
+→ Developer Mode
+→ Load Unpacked
+→ Select extension folder
 ```
 
 ---
 
-## Features
+# 🔒 Privacy
 
-✔ Job fit analysis  
-✔ Resume tailoring strategy  
-✔ ATS keyword suggestions  
-✔ Salary reasoning  
-✔ H-1B/access risk awareness  
-✔ Saved job tracker  
-✔ Application answer generation  
-✔ CSV export  
+Private information is stored locally.
 
----
+Excluded from GitHub:
 
-## Demo
-
-Video Demo:
-(Add YouTube link)
-
-Full Build Story:
-(Add Medium link)
+- API keys
+- Personal profile files
+- Resume documents
+- Environment variables
 
 ---
 
-## Note
+# 🎯 Philosophy
 
-This project was built as an experiment in using AI as a decision-support system.
+Applying everywhere creates noise.
 
-The goal was never to replace human judgment.
+Over-optimizing every application wastes time.
 
-The goal was to remove repetitive analysis, reduce wasted effort, and spend more time making better decisions.
+SwapOpt focuses on applying intentionally.
 
-Built by Swapnil Herwadkar.
+Work smarter, not just faster.
+
+---
+
+Built by Swapnil Herwadkar

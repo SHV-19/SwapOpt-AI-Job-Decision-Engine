@@ -14,6 +14,25 @@
 ### Application Tracker
 ![Tracker](assets/job-tracker.png)
 
+## 🎥 Demo & Case Study
+
+### Video Walkthrough
+▶️ YouTube Demo: https://youtu.be/DdXxfTfMTFI?si=Fl8sJmzI5eqZFc8I
+
+A complete walkthrough showing SwapOpt AI analyzing live job postings, generating resume strategies, cover letters, application answers, networking recommendations, and managing job decisions.
+
+### Technical Case Study
+📝 Medium Article: https://medium.com/@swapnilherwadkar/i-had-no-other-choice-so-i-built-an-ai-to-judge-my-job-applications-0367e561eba5
+
+Detailed breakdown covering:
+- Problem statement and motivation
+- Chrome Extension architecture
+- AI prompt engineering approach
+- OpenAI integration
+- Resume/job matching logic
+- Networking intelligence workflow
+- Lessons learned while building an AI career assistant
+
 Most job tools help you apply faster.
 
 I wanted to build something that helps me decide whether I should apply at all.

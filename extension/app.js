@@ -185,7 +185,7 @@ ${section("Compensation Intelligence", `
     `)}
 
     ${section("Score Breakdown", `
-      ${scoreLine("Technical Match", data.technical_match_score)}
+      ${scoreLine("Technical Match", data.technical_match_score ?? data.responsibility_match_score ?? "—")}
       ${scoreLine("Responsibility Fit", data.responsibility_match_score)}
       ${scoreLine("Experience Level", data.experience_level_score)}
       ${scoreLine("Domain Transfer", data.domain_transfer_score)}

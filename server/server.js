@@ -129,6 +129,7 @@ swapopt_verdict.apply_score must always be a number from 1-10.
 "tailoring_strategy_summary":"",
 "tailoring_time_recommendation":"",
 
+"technical_match_score":0,
 "responsibility_match_score":0,
 "experience_level_score":0,
 "domain_transfer_score":0,

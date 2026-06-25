@@ -47,6 +47,52 @@ async function hunterSearch(domain) {
   }
 }
 
+function filterRelevantHunterContacts(contacts) {
+  const preferred = [
+    "data",
+    "analytics",
+    "business intelligence",
+    "bi ",
+    "insights",
+    "reporting",
+    "strategy",
+    "product",
+    "machine learning",
+    "talent acquisition",
+    "recruiter",
+    "recruitment"
+  ];
+
+  const avoid = [
+    "sales",
+    "legal",
+    "finance",
+    "campus",
+    "operations",
+    "admin",
+    "administration",
+    "vp",
+    "vice president"
+  ];
+
+  return (contacts || [])
+    .map((p) => {
+      const title = String(p.position || "").toLowerCase();
+
+      const preferredScore = preferred.some((word) => title.includes(word)) ? 2 : 0;
+      const avoidPenalty = avoid.some((word) => title.includes(word)) ? -3 : 0;
+      const confidenceScore = Number(p.confidence || 0) / 100;
+
+      return {
+        ...p,
+        relevanceScore: preferredScore + avoidPenalty + confidenceScore
+      };
+    })
+    .filter((p) => p.relevanceScore > 0)
+    .sort((a, b) => b.relevanceScore - a.relevanceScore)
+    .slice(0, 5);
+}
+
 async function askAI(prompt) {
   const response = await client.responses.create({
     model: process.env.OPENAI_MODEL || "gpt-4.1-mini",
@@ -690,6 +736,47 @@ LOW / should_use_hunter false:
 - low priority role
 - generic posting
 - not worth spending Hunter credits
+
+
+Contact Selection Rules:
+
+Do NOT simply return senior people.
+
+Rank contacts by likelihood of helping Swapnil get noticed.
+
+Priority order:
+1. Hiring managers in the same function
+2. Current employees doing similar work
+3. Recruiters supporting this function
+4. Alumni or adjacent analytics professionals
+
+Prefer titles containing:
+- Data
+- Analytics
+- Business Intelligence
+- Insights
+- Reporting
+- Strategy
+- Product
+- Machine Learning
+- Talent Acquisition
+
+Avoid unless directly relevant:
+- VP
+- Director outside function
+- Sales
+- Legal
+- Finance
+- Operations
+- Campus
+- Administration
+
+For each person explain:
+"Why this person is useful"
+
+Networking goal:
+conversation + referral potential, not finding executives.
+
 `;
 
     const answer = await askAI(prompt);
@@ -698,7 +785,7 @@ const hunterPeople = answer.should_use_hunter
   ? await hunterSearch(answer.company_domain)
   : [];
 
-    answer.discovered_contacts = hunterPeople.slice(0, 5).map((p) => ({
+answer.discovered_contacts = filterRelevantHunterContacts(hunterPeople).map((p) => ({
       name: `${p.first_name || ""} ${p.last_name || ""}`.trim(),
       position: p.position || "",
       email: p.value || "",

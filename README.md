@@ -17,7 +17,7 @@
 ## 🎥 Demo & Case Study
 
 ### Video Walkthrough
-▶️ YouTube Demo: https://youtu.be/eeqZPgQ6wG0?si=E_Ov5_8gDeKVB6Kg
+▶️ YouTube Demo: [https://youtu.be/eeqZPgQ6wG0?si=E_Ov5_8gDeKVB6Kg](https://www.youtube.com/watch?v=eeqZPgQ6wG0)
 
 A complete walkthrough showing SwapOpt AI analyzing live job postings, generating resume strategies, cover letters, application answers, networking recommendations, and managing job decisions.
 

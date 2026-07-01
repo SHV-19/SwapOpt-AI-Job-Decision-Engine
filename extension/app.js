@@ -445,10 +445,14 @@ networkButton.addEventListener("click", async () => {
         <b>Team Member:</b><p>${escapeHtml(data.linkedin_connection_notes?.team_member_note || "")}</p>
         <b>Alumni:</b><p>${escapeHtml(data.linkedin_connection_notes?.alumni_note || "")}</p>
       `)}
-      ${section("Cold Message", `
-        <b>Subject:</b> ${escapeHtml(data.cold_message?.subject || "")}
-        <p>${escapeHtml(data.cold_message?.message || "")}</p>
-      `)}
+      ${section("LinkedIn Message", `
+  <p>${escapeHtml(data.linkedin_message || "")}</p>
+	`)}
+
+${section("Email Message", `
+  <b>Subject:</b> ${escapeHtml(data.email_message?.subject || "")}
+  <p>${escapeHtml(data.email_message?.body || "")}</p>
+`)}
       ${section("Networking Strategy", `<p>${escapeHtml(data.networking_strategy || "")}</p>`)}
     `;
   } catch (error) {

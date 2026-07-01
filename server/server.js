@@ -48,7 +48,22 @@ async function hunterSearch(domain) {
 }
 
 function filterRelevantHunterContacts(contacts) {
-  const preferred = [
+  const preferredStrong = [
+    "recruiter",
+    "technical recruiter",
+    "talent acquisition",
+    "data analyst",
+    "senior data analyst",
+    "lead data analyst",
+    "analytics manager",
+    "data analytics manager",
+    "business intelligence manager",
+    "bi manager",
+    "reporting manager",
+    "insights manager"
+  ];
+
+  const preferredMedium = [
     "data",
     "analytics",
     "business intelligence",
@@ -56,11 +71,8 @@ function filterRelevantHunterContacts(contacts) {
     "insights",
     "reporting",
     "strategy",
-    "product",
-    "machine learning",
-    "talent acquisition",
-    "recruiter",
-    "recruitment"
+    "product analytics",
+    "machine learning"
   ];
 
   const avoid = [
@@ -72,23 +84,27 @@ function filterRelevantHunterContacts(contacts) {
     "admin",
     "administration",
     "vp",
-    "vice president"
+    "vice president",
+    "executive",
+    "chief",
+    "founder"
   ];
 
   return (contacts || [])
     .map((p) => {
       const title = String(p.position || "").toLowerCase();
 
-      const preferredScore = preferred.some((word) => title.includes(word)) ? 2 : 0;
-      const avoidPenalty = avoid.some((word) => title.includes(word)) ? -3 : 0;
+      const strongScore = preferredStrong.some((word) => title.includes(word)) ? 5 : 0;
+      const mediumScore = preferredMedium.some((word) => title.includes(word)) ? 2 : 0;
+      const avoidPenalty = avoid.some((word) => title.includes(word)) ? -5 : 0;
       const confidenceScore = Number(p.confidence || 0) / 100;
 
       return {
         ...p,
-        relevanceScore: preferredScore + avoidPenalty + confidenceScore
+        relevanceScore: strongScore + mediumScore + avoidPenalty + confidenceScore
       };
     })
-    .filter((p) => p.relevanceScore > 0)
+    .filter((p) => p.relevanceScore >= 2)
     .sort((a, b) => b.relevanceScore - a.relevanceScore)
     .slice(0, 5);
 }
@@ -165,6 +181,13 @@ swapopt_verdict.apply_score must always be a number from 1-10.
 "job_title":"",
 "company":"",
 "location":"",
+
+"hard_eligibility_gate":{
+  "has_hard_blocker":false,
+  "blocker_type":"",
+  "blocker_reason":"",
+  "recommended_action":""
+},
 
 "current_match_percent":0,
 "tailored_match_percent":0,
@@ -347,6 +370,34 @@ Estimate using:
 - tools
 - industry
 - company size
+
+Hard Eligibility Gate Rules:
+
+Before scoring, check for hard blockers.
+
+Hard blockers include:
+- Active Secret clearance required
+- Active Top Secret clearance required
+- Active TS/SCI required
+- US citizenship required when candidate does not meet it
+- No sponsorship / must already have unrestricted work authorization
+- Required license/certification candidate does not have
+- Mandatory relocation candidate does not accept
+
+Important:
+"Ability to obtain clearance" is NOT the same as "active clearance required."
+
+If a hard blocker exists:
+- hard_eligibility_gate.has_hard_blocker = true
+- hard_eligibility_gate.blocker_type must identify the blocker
+- hard_eligibility_gate.blocker_reason must explain why it blocks the application
+- hard_eligibility_gate.recommended_action must be "Skip"
+- swapopt_verdict.apply_score must never exceed 3
+- swapopt_verdict.decision_label must be "Skip"
+- decision must be "Skip"
+- next_action must be "Skip unless the blocker is incorrect"
+- Ignore strong technical fit when assigning the final recommendation
+- swapopt_verdict.final_advice must clearly explain the blocker
 
 Goal:
 maximize salary without pricing out.
@@ -679,6 +730,7 @@ Return JSON:
 "company":"",
 "company_domain":"",
 "location":"",
+
 "department_or_team":"",
 "people_to_find":[
 {
@@ -695,9 +747,10 @@ Return JSON:
 "team_member_note":"",
 "alumni_note":""
 },
-"cold_message":{
-"subject":"",
-"message":""
+"linkedin_message":"",
+"email_message":{
+  "subject":"",
+  "body":""
 },
 "email_finding_guidance":{
 "likely_email_patterns":[],
@@ -740,42 +793,77 @@ LOW / should_use_hunter false:
 
 Contact Selection Rules:
 
-Do NOT simply return senior people.
+Hunter Contact Rules:
 
-Rank contacts by likelihood of helping Swapnil get noticed.
+Only show Hunter contacts if they are relevant to the role.
 
-Priority order:
-1. Hiring managers in the same function
-2. Current employees doing similar work
-3. Recruiters supporting this function
-4. Alumni or adjacent analytics professionals
+Best contacts:
+1. Recruiters / Talent Acquisition
+2. Analytics or Data hiring managers
+3. BI / Reporting / Insights managers
+4. Senior or Lead Data Analysts
+5. Adjacent analytics team members
 
-Prefer titles containing:
-- Data
-- Analytics
-- Business Intelligence
-- Insights
-- Reporting
-- Strategy
-- Product
-- Machine Learning
-- Talent Acquisition
+Avoid showing:
+- unrelated directors
+- VPs
+- sales
+- legal
+- finance
+- campus operations
+- executives
 
-Avoid unless directly relevant:
-- VP
-- Director outside function
-- Sales
-- Legal
-- Finance
-- Operations
-- Campus
-- Administration
+If Hunter contacts are weak or unrelated, say:
+"No strong Hunter contacts found. Use LinkedIn search instead."
 
-For each person explain:
-"Why this person is useful"
+Quality matters more than quantity.
 
-Networking goal:
-conversation + referral potential, not finding executives.
+Outreach Writing Rules:
+
+Write like Swapnil.
+
+Tone:
+- Direct
+- Curious
+- Punchy
+- Slightly witty
+- Confident, not desperate
+- Human, not corporate
+- No AI clichés
+- No "hope you're doing well"
+- No "I would appreciate any advice"
+- No generic networking fluff
+
+LinkedIn message:
+- Under 600 characters
+- One paragraph
+- Mention the role
+- Mention SwapOpt AI or one relevant project
+- End with one simple ask
+
+Email:
+- Subject under 8 words
+- Body under 150 words
+- Mention the role
+- Mention SwapOpt AI naturally
+- Show why this person is relevant
+- End with one clear question
+- Do not directly ask for referral.
+
+Important:
+
+Always populate every JSON field.
+
+Never leave linkedin_message empty.
+Never leave email_message.subject empty.
+Never leave email_message.body empty.
+
+If Hunter returns no relevant contacts:
+- Set discovered_contacts to an empty array.
+- Explain in networking_strategy why Hunter was skipped or why LinkedIn is the better option.
+
+Do not invent names.
+Do not invent email addresses.
 
 `;
 

@@ -606,10 +606,33 @@ function renderJobs(jobs, title, subtitle) {
       <div style="font-size:11px;letter-spacing:1.5px;color:#999;">SWAPOPT TRACKER</div>
       <div style="font-size:20px;font-weight:800;color:#e6e6e6;margin-top:5px;">${escapeHtml(title)}</div>
       <div style="font-size:13px;color:#bbb;margin-top:6px;">${escapeHtml(subtitle)}</div>
-    </div>
+</div>
 
-    ${jobs.map((job) => `
-      <div style="background:#171717;border:1px solid #303030;padding:12px;border-radius:12px;margin-top:10px;">
+<input
+  id="jobSearchInput"
+  placeholder="Search company, role, location, status..."
+  style="width:100%;margin-top:10px;padding:10px;border-radius:10px;border:1px solid #333;background:#111;color:#eee;"
+/>
+
+${jobs.map((job) => {
+  const similarJobs = jobs.filter(j =>
+    j.id !== job.id &&
+    String(j.company || "").toLowerCase() === String(job.company || "").toLowerCase() &&
+    (
+      String(j.title || "").toLowerCase().includes(String(job.title || "").toLowerCase().slice(0, 12)) ||
+      String(job.title || "").toLowerCase().includes(String(j.title || "").toLowerCase().slice(0, 12))
+    )
+  );
+
+  const seenCount = similarJobs.length + 1;
+  const previousStatuses = [...new Set(similarJobs.map(j => j.status).filter(Boolean))];
+
+  let repostRisk = "Low";
+  if (seenCount >= 3) repostRisk = "High";
+  else if (seenCount === 2) repostRisk = "Moderate";
+
+  return `
+      <div data-job-card style="background:#171717;border:1px solid #303030;padding:12px;border-radius:12px;margin-top:10px;">
         <b>${escapeHtml(job.title)}</b><br>
         <span style="font-size:12px;color:#aaa;">${escapeHtml(job.company)} | ${escapeHtml(job.location)}</span>
 
@@ -618,7 +641,10 @@ function renderJobs(jobs, title, subtitle) {
           Hiring: ${escapeHtml(job.hiringScore)}/10<br>
           Decision: ${escapeHtml(job.decision)}<br>
           Target: ${escapeHtml(job.target)}<br>
-          Status: <b>${escapeHtml(job.status || "Interested")}</b>
+          Status: <b>${escapeHtml(job.status || "Interested")}</b><br>
+Seen Similar: <b>${escapeHtml(seenCount)}</b><br>
+Previous Statuses: ${escapeHtml(previousStatuses.length ? previousStatuses.join(", ") : "None")}<br>
+Repost Risk: <b>${escapeHtml(repostRisk)}</b>
         </div>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;">
@@ -662,12 +688,26 @@ function renderJobs(jobs, title, subtitle) {
   }
 </div>
       </div>
-    `).join("")}
+    `;
+}).join("")}
   `;
 
-  document.querySelectorAll(".statusButton").forEach((button) => {
-    button.addEventListener("click", () => updateJobStatus(button.dataset.id, button.dataset.status));
+const searchInput = document.getElementById("jobSearchInput");
+
+document.querySelectorAll(".statusButton").forEach((button) => {
+  button.addEventListener("click", () => updateJobStatus(button.dataset.id, button.dataset.status));
+});
+
+if (searchInput) {
+  searchInput.addEventListener("input", () => {
+    const q = searchInput.value.toLowerCase();
+
+    document.querySelectorAll("[data-job-card]").forEach((card) => {
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(q) ? "block" : "none";
+    });
   });
+}
 document.querySelectorAll(".viewAnalysisButton").forEach((button) => {
   button.addEventListener("click", () => {
     const job = jobs.find(j => j.id === button.dataset.id);

@@ -28,6 +28,16 @@ A complete walkthrough showing SwapOpt AI analyzing live job postings, generatin
 
 📄 [SwapOpt AI Design and Development Report](docs/SwapOpt_AI_Design_and_Development_Report_v1.0.pdf)
 
+## Documentation
+
+- Technical Design Report
+- System Architecture
+- AI Decision Engine
+- OpenAI Integration
+- Hunter.io Integration
+- Application Workflow
+- Engineering Challenges
+
 Detailed breakdown covering:
 - Problem statement and motivation
 - Chrome Extension architecture

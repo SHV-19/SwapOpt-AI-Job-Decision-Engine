@@ -26,7 +26,7 @@ A complete walkthrough showing SwapOpt AI analyzing live job postings, generatin
 
 ## Technical Documentation
 
-📄 [SwapOpt AI Design and Development Report](docs/SwapOpt_AI_Design_and_Development_Report_v1.0.pdf)
+📄 [SwapOpt AI Design and Development Report](Technical Documentation/SwapOpt_AI_Design_and_Development_Report_v1.0.pdf)
 
 Detailed breakdown covering:
 - Problem statement and motivation

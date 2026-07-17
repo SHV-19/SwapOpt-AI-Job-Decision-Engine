@@ -218,6 +218,10 @@ function renderTailorResult(data) {
     </div>
 
     ${section("Tailoring Worth", `<b>${escapeHtml(data.tailoring_worth_score ?? "—")}/10</b>${bar(data.tailoring_worth_score)}`)}
+${section(
+  "Recommended Effort",
+  `<b>${escapeHtml(data.tailoring_effort || "Not determined")}</b>`
+)}
     ${section("Resume Strategy", `<p style="margin:0;color:#ddd;">${escapeHtml(data.resume_strategy)}</p>`)}
     ${section("Recommended Resume Angle", `<p style="margin:0;color:#ddd;">${escapeHtml(data.recommended_resume_angle)}</p>`)}
     ${section("Summary Direction", `<p style="margin:0;color:#ddd;">${escapeHtml(data.summary_direction)}</p>`)}
@@ -327,7 +331,7 @@ async function getCurrentPageText() {
   return result;
 }
 
-async function sendJobToBackend(endpoint, loadingText) {
+async function sendJobToBackend(endpoint, loadingText, extraData = {}) {
   const buttons = [
   analyzeButton,
   tailorButton,
@@ -356,14 +360,15 @@ async function sendJobToBackend(endpoint, loadingText) {
       throw new Error("Could not read enough job text. Open the full job description page and try again.");
     }
 
-    const response = await fetch(`http://localhost:8787/${endpoint}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        url: page.url,
-        pageText: `${page.title}\n\n${page.text}`
-      })
-    });
+const response = await fetch(`http://localhost:8787/${endpoint}`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    url: page.url,
+    pageText: `${page.title}\n\n${page.text}`,
+    ...extraData
+  })
+});
 
     const data = await response.json();
     if (!response.ok) throw new Error(data.details || data.error || "Backend request failed.");
@@ -386,7 +391,25 @@ analyzeButton.addEventListener("click", async () => {
 
 tailorButton.addEventListener("click", async () => {
   try {
-    const data = await sendJobToBackend("tailor", "Generating tailoring strategy...");
+    if (!currentJobResult) {
+      throw new Error("Analyze the job first so SwapOpt can use the verdict score.");
+    }
+
+    const verdictScore = Number(
+      currentJobResult.swapopt_verdict?.apply_score ??
+      currentJobResult.apply_score
+    );
+
+    if (!Number.isFinite(verdictScore)) {
+      throw new Error("No valid SwapOpt verdict score was found. Analyze the job again.");
+    }
+
+    const data = await sendJobToBackend(
+      "tailor",
+      "Generating tailoring strategy...",
+      { verdictScore }
+    );
+
     chrome.storage.local.set({ lastSwapOptTailorResult: data });
     currentTailorResult = data;
     renderTailorResult(data);
@@ -397,7 +420,25 @@ tailorButton.addEventListener("click", async () => {
 
 resumeDraftButton.addEventListener("click", async () => {
   try {
-    const data = await sendJobToBackend("resume-draft", "Generating resume draft...");
+ 
+if (!currentJobResult) {
+  throw new Error("Analyze the job first so SwapOpt can use the verdict score.");
+}
+
+const verdictScore = Number(
+  currentJobResult.swapopt_verdict?.apply_score ??
+  currentJobResult.apply_score
+);
+
+if (!Number.isFinite(verdictScore)) {
+  throw new Error("No valid SwapOpt verdict score was found.");
+}
+
+const data = await sendJobToBackend(
+  "resume-draft",
+  "Generating resume draft...",
+  { verdictScore }
+);
     chrome.storage.local.set({ lastSwapOptResumeDraft: data });
     currentResumeDraft = data;
     renderResumeDraft(data);
@@ -485,6 +526,11 @@ copyInsightButton.addEventListener("click", async () => {
     return;
   }
 
+if (!currentTailorResult) {
+  alert("Run Tailor first to include the tailoring strategy.");
+  return;
+}
+
   const insight = `
 SWAPOPT RESUME TAILORING INSIGHT
 
@@ -531,6 +577,27 @@ ${(currentJobResult.recommended_projects || []).map(x => "- " + x).join("\n")}
 
 Fit Notes / Do Not Overclaim:
 ${currentJobResult.risk_or_overclaim_warning || "N/A"}
+
+Tailoring Worth:
+${currentTailorResult?.tailoring_worth_score ?? "N/A"}/10
+
+Recommended Effort:
+${currentTailorResult?.tailoring_effort ?? "N/A"}
+
+Resume Strategy:
+${currentTailorResult?.resume_strategy ?? "N/A"}
+
+Recommended Resume Angle:
+${currentTailorResult?.recommended_resume_angle ?? "N/A"}
+
+Summary Direction:
+${currentTailorResult?.summary_direction ?? "N/A"}
+
+Skills to Emphasize:
+${(currentTailorResult?.skills_to_emphasize || []).map(x => "- " + x).join("\n")}
+
+Keywords to Add:
+${(currentTailorResult?.keywords_to_add || []).map(x => "- " + x).join("\n")}
 
 Instruction:
 Use this context to tailor my resume truthfully. Keep my same job titles, dates, structure, 3 bullets per role, exactly 2 projects, and do not invent experience.

@@ -431,10 +431,28 @@ Do not self reject.
 
 app.post("/tailor", async (req, res) => {
   try {
-    const { pageText, url } = req.body;
+    const { pageText, url, verdictScore } = req.body;
+
+const parsedVerdictScore = Number(verdictScore);
+
+if (!Number.isFinite(parsedVerdictScore)) {
+  return res.status(400).json({
+    error: "Tailor failed",
+    details: "A valid verdict score is required. Analyze the job first."
+  });
+}
+
+const normalizedVerdictScore = Math.max(
+  1,
+  Math.min(10, parsedVerdictScore)
+);
 
     const prompt = `
-Create resume tailoring strategy.
+You are SwapOpt Resume Strategy Engine.
+
+Your job is NOT to rewrite the resume.
+
+Your job is to decide HOW MUCH resume work is actually worth doing.
 
 Candidate:
 ${profile.masterProfile}
@@ -445,14 +463,25 @@ ${profile.preferences}
 URL:
 ${url}
 
-Job:
+JOB:
 ${cleanJobText(pageText)}
+SWAPOPT VERDICT SCORE:
+${normalizedVerdictScore}
+
+This score was already calculated by the SwapOpt analysis engine.
+
+Mandatory:
+- tailoring_worth_score must equal ${normalizedVerdictScore}
+- Do not calculate a new score
+- Use this supplied score to determine tailoring_effort
 
 Return JSON:
+
 {
 "job_title":"",
 "company":"",
 "tailoring_worth_score":0,
+"tailoring_effort":"",
 "resume_strategy":"",
 "recommended_resume_angle":"",
 "summary_direction":"",
@@ -468,13 +497,85 @@ Return JSON:
 "final_recommendation":""
 }
 
-Rules:
-- Do not invent experience.
-- Tailor emphasis, not identity.
-- Keep advice specific.
+Tailoring Rules
+
+Score 0-5
+
+This opportunity is NOT worth spending significant effort on.
+
+Return:
+
+tailoring_effort = "Do Not Tailor"
+
+Recommend using the existing resume or making only one small keyword adjustment.
+
+If major eligibility gaps exist, recommend skipping.
+
+--------------------------------
+
+Score 6-7
+
+Return
+
+tailoring_effort = "Strong Tailoring"
+
+Recommend:
+
+• rewrite summary
+• reorder projects
+• emphasize relevant experience
+• optimize ATS keywords
+
+Keep changes focused.
+
+--------------------------------
+
+Score 8-10
+
+Return
+
+tailoring_effort = "Maximum Effort"
+
+Assume this is an extremely valuable opportunity.
+
+Think deeply.
+
+Review every resume section.
+
+Optimize every bullet.
+
+Maximize ATS relevance.
+
+Use every truthful advantage the candidate has.
+
+Produce the strongest possible positioning without inventing experience.
+
+Rules
+
+Never invent experience.
+
+Never overclaim.
+
+Tailor emphasis, not identity.
+
+Give practical recommendations only.
+
+Do not recommend unnecessary work for low-value jobs.
 `;
 
-    res.json(await askAI(prompt));
+    const answer = await askAI(prompt);
+
+answer.tailoring_worth_score = normalizedVerdictScore;
+
+if (normalizedVerdictScore <= 5) {
+  answer.tailoring_effort = "Do Not Tailor";
+} else if (normalizedVerdictScore <= 7) {
+  answer.tailoring_effort = "Strong Tailoring";
+} else {
+  answer.tailoring_effort = "Maximum Effort";
+}
+
+res.json(answer);
 
   } catch (err) {
     console.error(err);
@@ -488,7 +589,20 @@ Rules:
 
 app.post("/resume-draft", async (req, res) => {
   try {
-    const { pageText, url } = req.body;
+    const { pageText, url, verdictScore } = req.body;
+const parsedVerdictScore = Number(verdictScore);
+
+if (!Number.isFinite(parsedVerdictScore)) {
+  return res.status(400).json({
+    error: "Resume draft failed",
+    details: "Analyze the job first."
+  });
+}
+
+const normalizedVerdictScore = Math.max(
+  1,
+  Math.min(10, parsedVerdictScore)
+);
 
     const prompt = `
 Create a truthful tailored resume draft.
@@ -506,6 +620,34 @@ ${url}
 
 JOB:
 ${cleanJobText(pageText)}
+
+SWAPOPT VERDICT SCORE:
+${normalizedVerdictScore}
+
+This score has already been calculated.
+
+Do NOT calculate a new score.
+
+Resume effort rules:
+
+Score 1-5
+- Do NOT rewrite the entire resume.
+- Keep the resume nearly unchanged.
+- Only make minimal keyword improvements.
+- If there are major eligibility blockers, recommend using the existing resume.
+
+Score 6-7
+- Create a focused tailored resume.
+- Rewrite the summary.
+- Improve ATS keywords.
+- Reorder projects if helpful.
+- Keep edits moderate.
+
+Score 8-10
+- Produce the strongest possible truthful tailored resume.
+- Optimize every section.
+- Rewrite bullets where appropriate.
+- Maximize ATS relevance.
 
 Return JSON:
 {
@@ -543,7 +685,11 @@ Return JSON:
 ],
 "keywords_added":[],
 "keywords_not_used_due_to_truthfulness":[],
-"final_note":""
+"final_note":"",
+
+  "resume_effort": "",
+  "resume_worth_score": 0
+
 }
 
 Rules:
@@ -555,7 +701,19 @@ Rules:
 - do not overclaim
 `;
 
-    res.json(await askAI(prompt));
+const answer = await askAI(prompt);
+
+answer.resume_worth_score = normalizedVerdictScore;
+
+if (normalizedVerdictScore <= 5) {
+  answer.resume_effort = "Minimal Resume Changes";
+} else if (normalizedVerdictScore <= 7) {
+  answer.resume_effort = "Focused Tailoring";
+} else {
+  answer.resume_effort = "Maximum Resume Tailoring";
+}
+
+res.json(answer);
 
   } catch (err) {
     console.error(err);

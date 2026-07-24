@@ -44,8 +44,6 @@ export async function analyzeJob({
   "current_match_percent",
   "tailored_match_percent",
   "hiring_logic_score",
-  "strengths",
-  "weaknesses",
   "missing_keywords",
   "keywords_to_emphasize",
   "decision",

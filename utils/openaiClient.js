@@ -61,7 +61,7 @@ export async function generateCompletion({
           ]
         }
       ],
-      temperature,
+// temperature removed because GPT-5 models don't support it
       max_output_tokens: maxOutputTokens,
       text: {
         format: responseFormat

@@ -51,47 +51,6 @@ function getVerdictScore(body = {}) {
   );
 }
 
-  /*
-   * Retain support for the previous verdictScore payload
-   * so older stored extension state does not immediately break.
-   */
-  if (
-    body.verdictScore !== undefined &&
-    body.verdictScore !== null &&
-    body.verdictScore !== ""
-  ) {
-    const verdictScore = Number(body.verdictScore);
-
-    if (!Number.isFinite(verdictScore)) {
-      const error = new Error(
-        "A valid verdict score is required. Analyze the job first."
-      );
-      error.status = 400;
-      throw error;
-    }
-
-    return Math.round(
-      clampScore(verdictScore)
-    );
-  }
-
-  const nestedApplyScore = Number(
-    body.swapopt_verdict?.apply_score
-  );
-
-  if (Number.isFinite(nestedApplyScore)) {
-    return Math.round(
-      clampScore(nestedApplyScore, 1, 10) * 10
-    );
-  }
-
-  const error = new Error(
-    "A valid apply score is required. Analyze the job first."
-  );
-  error.status = 400;
-  throw error;
-}
-
 function tailoringEffort(score) {
   if (score >= 8) {
     return "Maximum Effort";
@@ -124,6 +83,7 @@ function formatHunterContact(person = {}) {
 }
 
 export async function analyzeJobController(req, res) {
+console.log(req.body);
   const {
     jobDescription,
     companyName,

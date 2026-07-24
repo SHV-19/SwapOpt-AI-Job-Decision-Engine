@@ -2,7 +2,7 @@ import app from "./server.js";
 import { validateEnvironment } from "../utils/envValidation.js";
 import { validateProfileFiles } from "../utils/fileLoader.js";
 
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = Number(process.env.PORT) || 8787;
 
 async function startServer() {
   try {

@@ -1041,7 +1041,9 @@ function renderResumeDraft(data = {}) {
   prepareResultArea();
 
   const skills = data.skills || {};
-  const work = data.work_experience || {};
+  const work = Array.isArray(data.experience)
+  ? data.experience
+  : [];
 
   const projects = Array.isArray(data.projects)
     ? data.projects
@@ -1094,10 +1096,10 @@ function renderResumeDraft(data = {}) {
           margin-top:5px;
         "
       >
-        ${escapeHtml(
-          data.recommended_resume_title ||
-          "Tailored Resume Draft"
-        )}
+${escapeHtml(
+  data.notes?.recommendedResumeTitle ||
+  "Tailored Resume Draft"
+)}
       </div>
 
       <div
@@ -1107,9 +1109,17 @@ function renderResumeDraft(data = {}) {
           margin-top:6px;
         "
       >
-        ${escapeHtml(data.company || "Unknown")}
-        |
-        ${escapeHtml(data.job_title || "Unknown")}
+${escapeHtml(
+  currentJobResult?.company ||
+  currentJobResult?.companyName ||
+  "Unknown"
+)}
+|
+${escapeHtml(
+  currentJobResult?.job_title ||
+  currentJobResult?.jobTitle ||
+  "Unknown"
+)}
       </div>
     </div>
 
@@ -1118,7 +1128,7 @@ function renderResumeDraft(data = {}) {
       `
         <p style="margin:0;color:#ddd;">
           ${escapeHtml(
-            data.resume_fit_warning
+           data.notes?.resumeFitWarning
           )}
         </p>
       `
@@ -1129,7 +1139,7 @@ function renderResumeDraft(data = {}) {
       `
         <p style="margin:0;color:#ddd;">
           ${escapeHtml(
-            data.professional_summary
+            data.summary
           )}
         </p>
       `
@@ -1161,17 +1171,19 @@ function renderResumeDraft(data = {}) {
     ${section(
       "Work Experience",
       `
-        ${roleBlock(
-          work.community_dreams_foundation
-        )}
+${work
+  .map(
+    (role) => `
+      <div style="margin-top:10px;">
+        <b>${escapeHtml(role.title)}</b>
 
-        ${roleBlock(
-          work.accenture_data_analyst_ii
-        )}
+        <div>${escapeHtml(role.company)}</div>
 
-        ${roleBlock(
-          work.accenture_data_analyst_i
-        )}
+        ${bullets(role.bullets)}
+      </div>
+    `
+  )
+  .join("")}
       `
     )}
 
@@ -1182,21 +1194,19 @@ function renderResumeDraft(data = {}) {
 
     ${section(
       "Keywords Added",
-      bullets(data.keywords_added)
+     bullets(data.atsKeywords?.added)
     )}
 
     ${section(
       "Keywords Not Used",
-      bullets(
-        data.keywords_not_used_due_to_truthfulness
-      )
+     bullets(data.atsKeywords?.notUsed)
     )}
 
     ${section(
       "Final Note",
       `
         <p style="margin:0;color:#ddd;">
-          ${escapeHtml(data.final_note)}
+          ${escapeHtml(data.notes?.finalNote)}
         </p>
       `
     )}
@@ -1393,84 +1403,32 @@ function renderApplicationHelp(data = {}) {
 
   prepareResultArea();
 
+  const answers = data.recommended_answers || [];
+
   resultDiv.innerHTML = `
     ${section(
-      "Why This Company",
-      `
-        <p>
-          ${escapeHtml(
-            data.why_company ||
-            ""
-          )}
-        </p>
-      `
+      "Summary",
+      `<p>${escapeHtml(data.summary || "")}</p>`
     )}
 
-    ${section(
-      "Why This Role",
-      `
-        <p>
-          ${escapeHtml(
-            data.why_role ||
-            ""
-          )}
-        </p>
-      `
-    )}
-
-    ${section(
-      "Tell Me About Yourself",
-      `
-        <p>
-          ${escapeHtml(
-            data.tell_me_about_yourself ||
-            ""
-          )}
-        </p>
-      `
-    )}
-
-    ${section(
-      "Relevant Experience",
-      `
-        <p>
-          ${escapeHtml(
-            data.relevant_experience_answer ||
-            ""
-          )}
-        </p>
-      `
-    )}
-
-    ${section(
-      "Additional Information",
-      `
-        <p>
-          ${escapeHtml(
-            data.additional_information_box ||
-            ""
-          )}
-        </p>
-      `
-    )}
-
-    ${section(
-      "Questions To Ask Recruiter",
-      bullets(
-        data.questions_to_ask_recruiter
+    ${answers
+      .map(
+        (item) =>
+          section(
+            item.question,
+            `<p>${escapeHtml(item.answer)}</p>`
+          )
       )
+      .join("")}
+
+    ${section(
+      "Application Strategy",
+      `<p>${escapeHtml(data.application_strategy || "")}</p>`
     )}
 
     ${section(
-      "Final Application Strategy",
-      `
-        <p>
-          ${escapeHtml(
-            data.final_application_strategy ||
-            ""
-          )}
-        </p>
-      `
+      "Final Recommendation",
+      `<p>${escapeHtml(data.final_recommendation || "")}</p>`
     )}
   `;
 }
@@ -1591,16 +1549,24 @@ async function getCurrentJobPage() {
           "h1"
         ];
 
-        const companySelectors = [
-          "[data-automation-id='jobPostingCompany']",
-          "[data-testid='company-name']",
-          ".job-details-jobs-unified-top-card__company-name",
-          ".jobs-unified-top-card__company-name",
-          ".topcard__org-name-link",
-          ".jobsearch-InlineCompanyRating-companyHeader",
-          "[class*='company-name']",
-          "[class*='companyName']"
-        ];
+      const companySelectors = [
+  "[data-automation-id='jobPostingCompany']",
+  "[data-testid='company-name']",
+  ".job-details-jobs-unified-top-card__company-name",
+  ".jobs-unified-top-card__company-name",
+  ".topcard__org-name-link",
+
+  // Greenhouse
+  "[data-qa='company-name']",
+  "a[href*='/company/']",
+
+  // Lever
+  ".posting-categories .sort-by-location + div",
+
+  ".jobsearch-InlineCompanyRating-companyHeader",
+  "[class*='company-name']",
+  "[class*='companyName']"
+];
 
         const locationSelectors = [
           "[data-automation-id='locations']",
@@ -1633,6 +1599,14 @@ async function getCurrentJobPage() {
           companySelectors
         );
 
+if (!companyName) {
+  const meta =
+    document.querySelector('meta[property="og:site_name"]') ||
+    document.querySelector('meta[name="application-name"]');
+
+  companyName = meta?.content?.trim() || "";
+}
+
         const location = getFirstText(
           locationSelectors
         );
@@ -1646,17 +1620,31 @@ async function getCurrentJobPage() {
           jobTitle = titleParts[0] || "";
         }
 
-        if (!companyName && pageTitle) {
-          const titleParts = pageTitle
-            .split(/\s+[|\-–—]\s+/)
-            .map((part) => part.trim())
-            .filter(Boolean);
+      if (!companyName) {
+  const backToJobs = [...document.querySelectorAll("a")]
+    .find(a => /back to jobs/i.test(a.textContent));
 
-          companyName =
-            titleParts.length > 1
-              ? titleParts[1]
-              : "";
-        }
+  if (backToJobs) {
+    companyName =
+      backToJobs.href
+        .split("/")
+        .filter(Boolean)
+        .slice(-1)[0]
+        .replace(/-/g, " ");
+  }
+}
+
+if (!companyName && pageTitle) {
+  const titleParts = pageTitle
+    .split(/\s+[|\-–—]\s+/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+  companyName =
+    titleParts.length > 1
+      ? titleParts[1]
+      : "";
+}
 
         return {
           jobDescription: cleanText(
@@ -1746,6 +1734,7 @@ async function sendJobToBackend(
   try {
     const page =
       await getCurrentJobPage();
+console.log("SwapOpt Extracted:", page);
 
     return await callBackend(endpoint, {
       jobDescription:
@@ -1933,26 +1922,26 @@ Next Action:
 ${currentJobResult.next_action || currentJobResult.nextAction || "N/A"}
 
 Resume Strategy
-${currentTailorResult.resume_strategy || ""}
+${currentTailorResult.tailoringNotes?.resume_strategy || ""}
 
 Recommended Resume Angle
-${currentTailorResult.recommended_resume_angle || ""}
+${currentTailorResult.tailoringNotes?.recommended_resume_angle || ""}
 
 Summary Direction
-${currentTailorResult.summary_direction || ""}
+${currentTailorResult.professionalSummary || ""}
 
 Skills To Emphasize
-${(currentTailorResult.skills_to_emphasize || [])
+${(currentTailorResult.skills || [])
   .map((item) => `- ${item}`)
   .join("\n")}
 
 Keywords To Add
-${(currentTailorResult.keywords_to_add || [])
+${(currentTailorResult.atsKeywords || [])
   .map((item) => `- ${item}`)
   .join("\n")}
 
 Interview Talking Points
-${(currentTailorResult.interview_talking_points || [])
+${(currentTailorResult.tailoringNotes?.interview_talking_points || [])
   .map((item) => `- ${item}`)
   .join("\n")}
 
@@ -1962,7 +1951,12 @@ ${(
   currentJobResult.recommendedProjects ||
   []
 )
-  .map((item) => `- ${item}`)
+.map((project) =>
+  typeof project === "string"
+    ? `- ${project}`
+    : `- ${project.project_name}
+  Reason: ${project.why_recommended}`
+)
   .join("\n")}
 
 Missing Keywords

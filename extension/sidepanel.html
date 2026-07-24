@@ -1,122 +1,190 @@
 <!doctype html>
-<html>
-  <head>
-    <title>SwapOpt AI</title>
-    <style>
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        font-family: Inter, Arial, sans-serif;
-        width: 430px;
-        background: #0f0f0f;
-        color: #eeeeee;
-      }
-      .app { padding: 14px; }
-      .header {
-        background: linear-gradient(135deg, #151515, #202020);
-        border: 1px solid #303030;
-        border-radius: 16px;
-        padding: 14px;
-        margin-bottom: 12px;
-      }
-      .brand {
-        font-size: 11px;
-        letter-spacing: 1.8px;
-        color: #9a9a9a;
-        font-weight: 700;
-      }
-      .title {
-        margin-top: 6px;
-        font-size: 22px;
-        font-weight: 800;
-        color: #ffffff;
-      }
-      .subtitle {
-        margin-top: 5px;
-        font-size: 13px;
-        color: #b5b5b5;
-        line-height: 1.4;
-      }
-      .button-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-        margin-bottom: 12px;
-      }
-      button {
-        border: 1px solid #333333;
-        border-radius: 12px;
-        padding: 11px 10px;
-        background: #181818;
-        color: #eeeeee;
-        font-size: 12px;
-        font-weight: 700;
-        cursor: pointer;
-      }
-      button:hover { background: #242424; border-color: #4a4a4a; }
-      button:disabled { opacity: 0.55; cursor: not-allowed; }
-      .primary {
-        background: #f1f1f1;
-        color: #111111;
-        border-color: #f1f1f1;
-      }
-      .primary:hover { background: #ffffff; }
-      .result {
-        background: #171717;
-        border: 1px solid #303030;
-        border-radius: 14px;
-        padding: 12px;
-        min-height: 80px;
-        font-size: 13px;
-        line-height: 1.45;
-        overflow-wrap: break-word;
-      }
-      a { color: #eeeeee; }
-      ul { margin-top: 6px; padding-left: 18px; }
-      li { margin-bottom: 5px; }
-      .footer {
-        margin-top: 10px;
-        text-align: center;
-        font-size: 11px;
-        color: #777777;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="app">
-      <div class="header">
-        <div class="brand">SWAPOPT AI</div>
-        <div class="title">Job Intelligence</div>
-        <div class="subtitle">
-           Decide where to apply, how much effort to spend, and how to position yourself.
-        </div>
-      </div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwapOpt AI</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+    }
+
+    html,body{
+      margin:0;
+      padding:0;
+      width:100%;
+      background:#0f0f0f;
+      color:#f5f5f5;
+      font-family:Inter,Arial,sans-serif;
+    }
+
+    body{
+      min-width:360px;
+    }
+
+    .app{
+      padding:16px;
+    }
+
+    .header{
+      background:linear-gradient(135deg,#161616,#202020);
+      border:1px solid #303030;
+      border-radius:16px;
+      padding:16px;
+      margin-bottom:14px;
+    }
+
+    .brand{
+      font-size:11px;
+      letter-spacing:2px;
+      color:#8d8d8d;
+      font-weight:700;
+      text-transform:uppercase;
+    }
+
+    .title{
+      margin-top:6px;
+      font-size:24px;
+      font-weight:800;
+      color:#fff;
+    }
+
+    .subtitle{
+      margin-top:8px;
+      color:#b8b8b8;
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .button-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    button{
+      border:none;
+      border-radius:12px;
+      background:#1a1a1a;
+      color:#f5f5f5;
+      padding:12px;
+      font-size:13px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.15s;
+      border:1px solid #333;
+    }
+
+    button:hover{
+      background:#252525;
+      border-color:#4a4a4a;
+    }
+
+    button:disabled{
+      opacity:.5;
+      cursor:not-allowed;
+    }
+
+    .primary{
+      background:#f2f2f2;
+      color:#111;
+      border-color:#f2f2f2;
+    }
+
+    .primary:hover{
+      background:#fff;
+    }
+
+    .result{
+      background:#171717;
+      border:1px solid #303030;
+      border-radius:14px;
+      padding:14px;
+      min-height:120px;
+      font-size:13px;
+      line-height:1.5;
+      word-break:break-word;
+      overflow-wrap:anywhere;
+    }
+
+    .footer{
+      margin-top:12px;
+      text-align:center;
+      color:#777;
+      font-size:11px;
+    }
+
+    ul{
+      padding-left:18px;
+    }
+
+    li{
+      margin-bottom:5px;
+    }
+
+    a{
+      color:#fff;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="header">
+<div class="brand">SWAPOPT AI</div>
+<div class="title">Job Intelligence</div>
+<div class="subtitle">
+Analyze jobs, decide whether they're worth applying to, tailor your resume, generate application materials, and manage your job pipeline.
+</div>
+</div>
 
 <div class="button-grid">
+
 <button id="analyzeButton" class="primary">Analyze Job</button>
-<button id="tailorButton">Tailor Plan</button>
-<button id="resumeDraftButton">Draft Resume</button>
+
+<button id="tailorButton">Tailor Strategy</button>
+
+<button id="resumeDraftButton">Resume Draft</button>
+
 <button id="coverLetterButton">Cover Letter</button>
+
 <button id="networkButton">Find People</button>
-<button id="applicationHelpButton">App Answers</button>
+
+<button id="applicationHelpButton">Application Answers</button>
 
 <button id="copyInsightButton">Copy AI Context</button>
 
-<button id="saveJobButton">Save Decision</button>
+<button id="saveJobButton">Save Job</button>
 
 <button id="viewJobsButton">Recent Jobs</button>
+
 <button id="viewAllJobsButton">Job Tracker</button>
+
 <button id="viewArchivedButton">Archived</button>
 
 <button id="exportJobsButton">Export CSV</button>
+
+<button id="clearTrackerButton">Clear Tracker</button>
+
 </div>
 
-      <div id="result" class="result">
-        Ready. Open a job posting and choose an action.
-      </div>
+<div id="result" class="result">
+Ready.
 
-      <div class="footer">Built to apply smarter, not faster.</div>
-      <script src="app.js"></script>
-    </div>
-  </body>
+Open a job posting and click <b>Analyze Job</b>.
+</div>
+
+<div class="footer">
+SwapOpt AI • Local-first • Backend Required
+</div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
 </html>

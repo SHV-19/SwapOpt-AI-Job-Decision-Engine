@@ -1,0 +1,47 @@
+SWAPNIL HERWADKAR 
+Glendale, AZ | (413) 479-9181 | swapnilherwadkar98@gmail.com | LinkedIn  | GitHub | Tableau  
+PROFESSIONAL SUMMARY 
+SAP Data & Technical Analyst with 3+ years of experience supporting SAP S/4HANA 1909, SAP HANA/BW, ERP reporting, 
+release coordination, transport management, and business data workflows. Skilled in SQL, Power BI, Tableau, SAP 
+reporting, data validation, stakeholder collaboration, and process automation. Proven ability to bridge SAP technical 
+operations with business analytics to deliver reliable ERP reporting and decision-ready business insights. 
+SKILLS 
+Analytics & BI: SQL, Power BI, Tableau, Looker, SAP Reporting, KPI Reporting, Executive Dashboards, Self-Service BI 
+Data Platforms & Modeling: SAP S/4HANA 1909, SAP GUI, SAP HANA, SAP BW, SAP GTS, MySQL, Snowflake, 
+BigQuery, ERP Data, Data Modeling 
+Programming & Automation: Python, Pandas, NumPy, REST APIs, GitHub, SQL Automation, Workflow Automation, 
+Linux 
+Data Quality & Business Analysis: CHaRM, ITSM, Transport Management, Release Coordination, Hypercare, Transport 
+Requests, Data Validation, Business Rules, Agile, JIRA, Confluence 
+WORK EXPERIENCE 
+Data Analyst | Community Dreams Foundation | Oct 2024 – Oct 2025 | Contract 
+• Translated Dreamline clean-energy platform workflows for homeowner intake, contractor matching, incentives, and 
+project tracking into KPI definitions and dashboard requirements. 
+• Designed MySQL reporting views and optimized Tableau, Power BI, and Looker dashboards to improve operational 
+visibility, usability, and stakeholder decision-making. 
+• Automated reporting workflows using REST API integrations and reusable data validation checks, reducing manual 
+processing and improving reporting consistency. 
+Data Analyst II | Accenture | Nov 2022 - Jun 2023 
+• Coordinated SAP S/4HANA 1909 greenfield release cycles (R1–R4) by managing transport requests, deployment 
+readiness, release validation, production deployments, and hypercare support across enterprise SAP environments. 
+• Supported SAP HANA/BW reporting environments, SAP GUI, ERP data workflows, and transport management while 
+collaborating with ABAP, BW, GTS, and MM teams to align business requirements and reporting needs. 
+• Supported SAP Solution Manager (CHaRM) and ITSM processes by automating incident tracking, improving SLA 
+monitoring, facilitating stakeholder meetings, requirements gathering, and customer-facing release governance. 
+Data Analyst I | Accenture | Feb 2021 - Nov 2022 
+• Supported SAP/ERP data migration, SAP HANA/BW reporting, ERP data validation, and SQL-based reporting by 
+preparing analysis-ready datasets for enterprise operational reporting. 
+• Reconciled ERP, SQL, SAP HANA/BW, and reporting-layer data to improve business rule consistency, reporting 
+accuracy, and downstream analytics across SAP business processes. 
+• Assisted SAP security initiatives, SSO enablement, SAP Support issue resolution, BW reporting validation, SQL 
+optimization, and customer-facing operational support throughout project and AMS engagements. 
+PROJECTS 
+FIFA World Cup 2026 Sponsorship Analytics Platform | Snowflake, Python, Power BI, Streamlit, OpenAI | GitHub Link 
+• Built an enterprise-style analytics platform with Python ETL, Snowflake, SQL, Power BI, and AI-assisted querying to 
+support governed reporting, KPI tracking, and business insight delivery. 
+Ad Click Prediction Using Machine Learning | Python (Scikit-learn, Pandas), XGBoost, SMOTE | GitHub Link 
+• Built a predictive targeting pipeline to identify high-probability ad-click users and improve CTR analysis through feature 
+engineering, SMOTE, and XGBoost. 
+EDUCATION 
+Master of Science in Business Analytics | University of Massachusetts Amherst | Sep 2023 - Aug 2024 
+Bachelor of Engineering in Electronics | Ramdeobaba College of Engineering & Management | Jul 2016 - Aug 2020 

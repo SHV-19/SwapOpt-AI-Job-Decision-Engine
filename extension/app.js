@@ -1,16 +1,28 @@
+const API_BASE_URL = "http://localhost:8787";
+
 const resultDiv = document.getElementById("result");
+
 const analyzeButton = document.getElementById("analyzeButton");
 const tailorButton = document.getElementById("tailorButton");
 const resumeDraftButton = document.getElementById("resumeDraftButton");
 const coverLetterButton = document.getElementById("coverLetterButton");
 const networkButton = document.getElementById("networkButton");
-const applicationHelpButton = document.getElementById("applicationHelpButton");
+const applicationHelpButton = document.getElementById(
+  "applicationHelpButton"
+);
+
 const copyInsightButton = document.getElementById("copyInsightButton");
+
 const saveJobButton = document.getElementById("saveJobButton");
 const viewJobsButton = document.getElementById("viewJobsButton");
 const viewAllJobsButton = document.getElementById("viewAllJobsButton");
-const viewArchivedButton = document.getElementById("viewArchivedButton");
+const viewArchivedButton = document.getElementById(
+  "viewArchivedButton"
+);
 const exportJobsButton = document.getElementById("exportJobsButton");
+const clearTrackerButton = document.getElementById(
+  "clearTrackerButton"
+);
 
 let currentJobResult = null;
 let currentTailorResult = null;
@@ -28,837 +40,2687 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
-function listItems(items) {
-  if (!items || !Array.isArray(items) || items.length === 0) return "<li>None found</li>";
-  return items.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+function listItems(items = []) {
+  if (!Array.isArray(items) || items.length === 0) {
+    return "<li>None found</li>";
+  }
+
+  return items
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join("");
 }
 
 function bar(score, max = 10) {
   const numeric = Number(score);
-  const safeScore = Number.isFinite(numeric) ? Math.max(0, Math.min(numeric, max)) : 0;
-  const percent = (safeScore / max) * 100;
-  return `<div style="background:#2a2a2a;height:7px;border-radius:999px;overflow:hidden;margin-top:6px;">
-    <div style="width:${percent}%;height:100%;background:#e6e6e6;border-radius:999px;"></div>
-  </div>`;
+
+  const safeScore = Number.isFinite(numeric)
+    ? Math.max(0, Math.min(max, numeric))
+    : 0;
+
+  return `
+    <div
+      style="
+        background:#2a2a2a;
+        height:7px;
+        border-radius:999px;
+        overflow:hidden;
+        margin-top:6px;
+      "
+    >
+      <div
+        style="
+          width:${(safeScore / max) * 100}%;
+          height:100%;
+          background:#e6e6e6;
+          border-radius:999px;
+        "
+      ></div>
+    </div>
+  `;
 }
 
 function section(title, body) {
-  return `<div style="background:#171717;border:1px solid #303030;padding:12px;border-radius:12px;margin-top:10px;">
-    <div style="font-weight:700;color:#fff;margin-bottom:8px;">${escapeHtml(title)}</div>${body}
-  </div>`;
+  return `
+    <div
+      style="
+        background:#171717;
+        border:1px solid #303030;
+        padding:12px;
+        border-radius:12px;
+        margin-top:10px;
+      "
+    >
+      <div
+        style="
+          font-weight:700;
+          color:#fff;
+          margin-bottom:8px;
+        "
+      >
+        ${escapeHtml(title)}
+      </div>
+
+      ${body}
+    </div>
+  `;
 }
 
 function getTargetLabel(targetLevel) {
-  const v = String(targetLevel || "").toLowerCase();
-  if (v.includes("strong")) return ["STRONG TARGET", "#18a058"];
-  if (v.includes("possible")) return ["POSSIBLE TARGET", "#d6a100"];
-  if (v.includes("weak")) return ["WEAK TARGET", "#d9534f"];
-  if (v.includes("not")) return ["NOT WORTH TIME", "#d9534f"];
+  const value = String(targetLevel ?? "").toLowerCase();
+
+  if (value.includes("strong")) {
+    return ["STRONG TARGET", "#18a058"];
+  }
+
+  if (value.includes("possible")) {
+    return ["POSSIBLE TARGET", "#d6a100"];
+  }
+
+  if (value.includes("weak")) {
+    return ["WEAK TARGET", "#d9534f"];
+  }
+
+  if (value.includes("not")) {
+    return ["NOT WORTH TIME", "#d9534f"];
+  }
+
   return ["TARGET REVIEW", "#888"];
 }
 
 function scoreLine(label, value) {
-  return `<div style="margin-bottom:12px;">
-    <div style="display:flex;justify-content:space-between;">
-      <span>${escapeHtml(label)}</span><b>${escapeHtml(value ?? "—")}/10</b>
-    </div>${bar(value)}
-  </div>`;
-}
+  return `
+    <div style="margin-bottom:12px;">
+      <div
+        style="
+          display:flex;
+          justify-content:space-between;
+        "
+      >
+        <span>${escapeHtml(label)}</span>
+        <b>${escapeHtml(value ?? "—")}/10</b>
+      </div>
 
-function renderAnalysisResult(data) {
-  currentJobResult = data;
-  const [label, accent] = getTargetLabel(data.target_level);
-
-  resultDiv.style.background = "transparent";
-  resultDiv.style.padding = "0";
-  resultDiv.style.color = "#eee";
-
-  resultDiv.innerHTML = `
-    <div style="background:#101010;border-radius:14px;padding:14px;margin-top:10px;border:1px solid #303030;">
-      <div style="font-size:11px;letter-spacing:1.5px;color:#999;">SWAPOPT AI</div>
-      <div style="font-size:20px;font-weight:800;color:${accent};margin-top:5px;">${label}</div>
-      <div style="font-size:13px;color:#bbb;margin-top:6px;">${escapeHtml(data.next_action || "")}</div>
+      ${bar(value)}
     </div>
-
-    ${section("SwapOpt Verdict", `
-      <div style="font-size:34px;font-weight:800;color:#fff;">
-        ${escapeHtml(data.swapopt_verdict?.apply_score ?? data.apply_score ?? "Pending")}/10
-      </div>
-
-      <div style="font-size:18px;font-weight:700;margin-top:6px;">
-       ${escapeHtml(data.swapopt_verdict?.decision_label || data.decision || "Review")}
-      </div>
-
-      <p style="color:#ddd;">
-        ${escapeHtml(data.swapopt_verdict?.one_line_reason || "")}
-      </p>
-
-      <b>Recommended Effort:</b><br>
-      ${escapeHtml(data.swapopt_verdict?.effort_recommendation || "")}
-
-      <br><br>
-
-      <b>Why Apply:</b>
-      <ul>
-        ${listItems(data.swapopt_verdict?.top_positive_factors)}
-      </ul>
-
-      <b>Watch Outs:</b>
-      <ul>
-        ${listItems(data.swapopt_verdict?.top_risk_factors)}
-      </ul>
-
-      <p style="color:#ccc;">
-        ${escapeHtml(data.swapopt_verdict?.final_advice || "")}
-      </p>
-    `)}
-
-    <div style="display:flex;gap:8px;margin-top:10px;">
-      <div style="flex:1;background:#171717;border:1px solid #303030;border-radius:12px;padding:11px;">
-        <div style="font-size:22px;font-weight:700;">${escapeHtml(data.current_match_percent ?? "—")}%</div>
-        <div style="font-size:11px;color:#aaa;">Current Resume</div>
-      </div>
-      <div style="flex:1;background:#171717;border:1px solid #303030;border-radius:12px;padding:11px;">
-        <div style="font-size:22px;font-weight:700;">${escapeHtml(data.tailored_match_percent ?? "—")}%</div>
-        <div style="font-size:11px;color:#aaa;">After Tailoring</div>
-      </div>
-    </div>
-
-    ${section("Application Confidence", `
-      <b>${escapeHtml(data.application_confidence_score ?? "—")}/100</b>
-      <div style="margin-top:6px;color:#ccc;">
-        <b>Hiring Intent:</b> ${escapeHtml(data.hiring_intent_level || "Unknown")}<br>
-        <b>Posting Quality:</b> ${escapeHtml(data.posting_quality_level || "Unknown")}<br>
-        <b>Risk Level:</b> ${escapeHtml(data.posting_risk_level || "Unknown")}<br>
-        <b>Verdict:</b> ${escapeHtml(data.reality_check_verdict || "Unknown")}<br>
-        <b>Effort:</b> ${escapeHtml(data.recommended_effort_level || "Unknown")}
-      </div>
-    `)}
-${section("Compensation Intelligence", `
-  <b>Estimated Range:</b> 
-  ${escapeHtml(data.compensation_analysis?.estimated_market_range || "Unknown")}
-  <br><br>
-
-  <b>Suggested Application Input:</b>
-  ${escapeHtml(data.compensation_analysis?.recommended_application_salary || "Unknown")}
-  <br>
-
-  <b>Safe Maximum:</b>
-  ${escapeHtml(data.compensation_analysis?.maximum_without_screening_risk || "Unknown")}
-  <br>
-
-  <b>Negotiation Strength:</b>
-  ${escapeHtml(data.compensation_analysis?.negotiation_strength || "Unknown")}
-  <br>
-
-  <b>Confidence:</b>
-  ${escapeHtml(data.compensation_analysis?.salary_confidence_level || "Unknown")}
-
-  <p style="color:#ccc;margin-top:8px;">
-    ${escapeHtml(data.compensation_analysis?.salary_reasoning || "")}
-  </p>
-
-  <p style="color:#aaa;">
-    ${escapeHtml(data.compensation_analysis?.salary_risk_warning || "")}
-  </p>
-`)}
-
-    ${section("Confidence Explanation", `
-      <p style="margin:0;color:#ddd;">${escapeHtml(data.confidence_explanation || "No confidence explanation generated.")}</p>
-    `)}
-
-    ${section("Positive Posting Signals", `<ul>${listItems(data.positive_legitimacy_signals)}</ul>`)}
-
-    ${section("Concern Signals", `<ul>${listItems(data.concern_legitimacy_signals)}</ul>`)}
-
-    ${section("Hiring Confidence", `<b>${escapeHtml(data.hiring_logic_score ?? "—")}/10</b>${bar(data.hiring_logic_score)}`)}
-
-    ${section("Decision Context", `
-      <b>Time Priority:</b> ${escapeHtml(data.time_priority || "Unknown")}<br>
-      <b>H-1B Risk:</b> ${escapeHtml(data.h1b_risk || "Unknown")}<br>
-      <b>Decision:</b> ${escapeHtml(data.decision || "Unknown")}
-    `)}
-
-    ${section("Role", `
-      ${escapeHtml(data.job_title || "Unknown")}<br>
-      <span style="font-size:12px;color:#aaa;">${escapeHtml(data.company || "Unknown")} | ${escapeHtml(data.location || "Unknown")}</span>
-    `)}
-
-    ${section("Score Breakdown", `
-      ${scoreLine("Technical Match", data.technical_match_score ?? data.responsibility_match_score ?? "—")}
-      ${scoreLine("Responsibility Fit", data.responsibility_match_score)}
-      ${scoreLine("Experience Level", data.experience_level_score)}
-      ${scoreLine("Domain Transfer", data.domain_transfer_score)}
-      ${scoreLine("Sponsorship Fit", data.sponsorship_risk_score)}
-    `)}
-
-    ${section("Score Explanation", `<p style="margin:0;color:#ddd;">${escapeHtml(data.score_explanation || data.quick_verdict || "")}</p>`)}
-    ${section("Why They Might Hire You", `<ul>${listItems(data.why_they_might_hire)}</ul>`)}
-    ${section("Why They Might Pass", `<ul>${listItems(data.why_they_might_pass)}</ul>`)}
-    ${section("Best Resume Angle", `<p style="margin:0;color:#ddd;">${escapeHtml(data.best_resume_angle)}</p>`)}
-    ${section("Keywords to Emphasize", `<ul>${listItems(data.keywords_to_emphasize)}</ul>`)}
-    ${section("Missing Keywords", `<ul>${listItems(data.missing_keywords)}</ul>`)}
-    ${section("Recommended Projects", `<ul>${listItems(data.recommended_projects)}</ul>`)}
-    ${section("Fit Notes", `<p style="margin:0;color:#ddd;">${escapeHtml(data.risk_or_overclaim_warning)}</p>`)}
   `;
 }
 
-function renderTailorResult(data) {
-  currentTailorResult = data;
+function bullets(items) {
+  return `<ul>${listItems(items)}</ul>`;
+}
 
-  resultDiv.style.background = "transparent";
-  resultDiv.style.padding = "0";
-  resultDiv.style.color = "#eee";
+function roleBlock(role) {
+  if (!role) {
+    return "";
+  }
 
-  resultDiv.innerHTML = `
-    <div style="background:#101010;border-radius:14px;padding:14px;margin-top:10px;border:1px solid #303030;">
-      <div style="font-size:11px;letter-spacing:1.5px;color:#999;">SWAPOPT TAILORING</div>
-      <div style="font-size:20px;font-weight:800;color:#e6e6e6;margin-top:5px;">Resume Strategy</div>
-      <div style="font-size:13px;color:#bbb;margin-top:6px;">${escapeHtml(data.company || "Unknown")} | ${escapeHtml(data.job_title || "Unknown")}</div>
+  return `
+    <div style="margin-top:10px;">
+      <b>${escapeHtml(role.title_line)}</b>
+      ${bullets(role.bullets)}
     </div>
-
-    ${section("Tailoring Worth", `<b>${escapeHtml(data.tailoring_worth_score ?? "—")}/10</b>${bar(data.tailoring_worth_score)}`)}
-${section(
-  "Recommended Effort",
-  `<b>${escapeHtml(data.tailoring_effort || "Not determined")}</b>`
-)}
-    ${section("Resume Strategy", `<p style="margin:0;color:#ddd;">${escapeHtml(data.resume_strategy)}</p>`)}
-    ${section("Recommended Resume Angle", `<p style="margin:0;color:#ddd;">${escapeHtml(data.recommended_resume_angle)}</p>`)}
-    ${section("Summary Direction", `<p style="margin:0;color:#ddd;">${escapeHtml(data.summary_direction)}</p>`)}
-    ${section("Skills to Emphasize", `<ul>${listItems(data.skills_to_emphasize)}</ul>`)}
-    ${section("Keywords to Add", `<ul>${listItems(data.keywords_to_add)}</ul>`)}
-    ${section("Project Order", `<ul>${listItems(data.project_order)}</ul><p style="color:#ddd;">${escapeHtml(data.project_reasoning)}</p>`)}
-    ${section("Application Positioning", `<p style="margin:0;color:#ddd;">${escapeHtml(data.application_positioning)}</p>`)}
-    ${section("Interview Talking Points", `<ul>${listItems(data.interview_talking_points)}</ul>`)}
-    ${section("Do Not Claim", `<ul>${listItems(data.do_not_claim)}</ul>`)}
-    ${section("Final Recommendation", `<p style="margin:0;color:#ddd;">${escapeHtml(data.final_recommendation)}</p>`)}
   `;
 }
 
-function renderResumeDraft(data) {
-  currentResumeDraft = data;
-
-  resultDiv.style.background = "transparent";
-  resultDiv.style.padding = "0";
-  resultDiv.style.color = "#eee";
-
-  const skills = data.skills || {};
-  const work = data.work_experience || {};
-
-  function bullets(items) {
-    return `<ul>${listItems(items)}</ul>`;
+function setLoading(message) {
+  if (!resultDiv) {
+    return;
   }
-
-  function roleBlock(role) {
-    if (!role) return "";
-    return `<div style="margin-top:10px;"><b>${escapeHtml(role.title_line)}</b>${bullets(role.bullets)}</div>`;
-  }
-
-  const projects = Array.isArray(data.projects)
-    ? data.projects.map((p) => `<div style="margin-top:8px;"><b>${escapeHtml(p.name)}</b> | ${escapeHtml(p.tools)}<ul><li>${escapeHtml(p.bullet)}</li></ul></div>`).join("")
-    : "";
-
-  resultDiv.innerHTML = `
-    <div style="background:#101010;border-radius:14px;padding:14px;margin-top:10px;border:1px solid #303030;">
-      <div style="font-size:11px;letter-spacing:1.5px;color:#999;">SWAPOPT RESUME DRAFT</div>
-      <div style="font-size:20px;font-weight:800;color:#e6e6e6;margin-top:5px;">${escapeHtml(data.recommended_resume_title || "Targeted Resume Draft")}</div>
-      <div style="font-size:13px;color:#bbb;margin-top:6px;">${escapeHtml(data.company || "Unknown")} | ${escapeHtml(data.job_title || "Unknown")}</div>
-    </div>
-
-    ${section("Fit Warning", `<p style="margin:0;color:#ddd;">${escapeHtml(data.resume_fit_warning)}</p>`)}
-    ${section("Professional Summary", `<p style="margin:0;color:#ddd;">${escapeHtml(data.professional_summary)}</p>`)}
-
-    ${section("Skills", `
-      <b>Analytics & BI</b>${bullets(skills.analytics_bi)}
-      <b>Data Platforms & Modeling</b>${bullets(skills.data_platforms_modeling)}
-      <b>Programming & Automation</b>${bullets(skills.programming_automation)}
-      <b>Data Quality & Business Analysis</b>${bullets(skills.data_quality_business_analysis)}
-    `)}
-
-    ${section("Work Experience", `
-      ${roleBlock(work.community_dreams_foundation)}
-      ${roleBlock(work.accenture_data_analyst_ii)}
-      ${roleBlock(work.accenture_data_analyst_i)}
-    `)}
-
-    ${section("Projects", projects || "<p>No projects generated.</p>")}
-    ${section("Keywords Added", `<ul>${listItems(data.keywords_added)}</ul>`)}
-    ${section("Not Used Due to Truthfulness", `<ul>${listItems(data.keywords_not_used_due_to_truthfulness)}</ul>`)}
-    ${section("Final Note", `<p style="margin:0;color:#ddd;">${escapeHtml(data.final_note)}</p>`)}
-  `;
-}
-
-chrome.storage.local.get(["lastSwapOptResult", "lastSwapOptTailorResult", "lastSwapOptResumeDraft"], (stored) => {
-  if (stored.lastSwapOptResult) {
-    currentJobResult = stored.lastSwapOptResult;
-    renderAnalysisResult(stored.lastSwapOptResult);
-  }
-  if (stored.lastSwapOptTailorResult) currentTailorResult = stored.lastSwapOptTailorResult;
-  if (stored.lastSwapOptResumeDraft) currentResumeDraft = stored.lastSwapOptResumeDraft;
-});
-
-async function getCurrentPageText() {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-
-  const [{ result }] = await chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    func: () => {
-      const selectors = [
-        "[data-automation-id='jobPostingDescription']",
-        ".jobs-description-content__text",
-        "#jobDescriptionText",
-        ".jobsearch-JobComponent-description",
-        "[class*='job-description']",
-        "[class*='description']",
-        "main",
-        "body"
-      ];
-
-      let bestText = "";
-      for (const selector of selectors) {
-        const el = document.querySelector(selector);
-        if (el && el.innerText && el.innerText.length > bestText.length) bestText = el.innerText;
-      }
-
-      return {
-        title: document.title || "",
-        url: window.location.href,
-        text: bestText || document.body.innerText || ""
-      };
-    }
-  });
-
-  return result;
-}
-
-async function sendJobToBackend(endpoint, loadingText, extraData = {}) {
-  const buttons = [
-  analyzeButton,
-  tailorButton,
-  resumeDraftButton,
-  coverLetterButton,
-  networkButton,
-  applicationHelpButton,
-  copyInsightButton,
-  saveJobButton,
-  viewJobsButton,
-  viewAllJobsButton,
-  viewArchivedButton,
-  exportJobsButton
-];
-  buttons.forEach((b) => b.disabled = true);
 
   resultDiv.style.background = "#171717";
   resultDiv.style.color = "#eee";
   resultDiv.style.padding = "10px";
-  resultDiv.textContent = loadingText;
+  resultDiv.textContent = message;
+}
 
-  try {
-    const page = await getCurrentPageText();
+function setError(error) {
+  if (!resultDiv) {
+    return;
+  }
 
-    if (!page.text || page.text.trim().length < 200) {
-      throw new Error("Could not read enough job text. Open the full job description page and try again.");
+  resultDiv.innerHTML = `
+    <b>Error</b>
+    <p>${escapeHtml(error?.message || error)}</p>
+  `;
+}
+
+function toggleButtons(disabled) {
+  [
+    analyzeButton,
+    tailorButton,
+    resumeDraftButton,
+    coverLetterButton,
+    networkButton,
+    applicationHelpButton,
+    copyInsightButton,
+    saveJobButton,
+    viewJobsButton,
+    viewAllJobsButton,
+    viewArchivedButton,
+    exportJobsButton,
+    clearTrackerButton
+  ].forEach((button) => {
+    if (button) {
+      button.disabled = disabled;
+    }
+  });
+}
+
+function prepareResultArea() {
+  if (!resultDiv) {
+    return;
+  }
+
+  resultDiv.style.background = "transparent";
+  resultDiv.style.padding = "0";
+  resultDiv.style.color = "#eee";
+}
+
+function renderAnalysisResult(data = {}) {
+  currentJobResult = data;
+
+  prepareResultArea();
+
+  const verdict = data.swapopt_verdict || {};
+  const compensation = data.compensation_analysis || {};
+
+  const targetLevel =
+    data.target_level ||
+    data.targetLevel ||
+    verdict.decision_label ||
+    "";
+
+  const [targetLabel, accent] = getTargetLabel(targetLevel);
+
+  const applyScore =
+    verdict.apply_score ??
+    data.apply_score ??
+    data.verdictScore ??
+    "—";
+
+  const decisionLabel =
+    verdict.decision_label ||
+    data.decision ||
+    "Review";
+
+  const nextAction =
+    data.next_action ||
+    data.nextAction ||
+    verdict.final_advice ||
+    "";
+
+  const currentMatch =
+    data.current_match_percent ??
+    data.currentMatchPercent ??
+    "—";
+
+  const tailoredMatch =
+    data.tailored_match_percent ??
+    data.tailoredMatchPercent ??
+    "—";
+
+  const applicationConfidence =
+    data.application_confidence_score ??
+    data.applicationConfidenceScore ??
+    "—";
+
+  const jobTitle =
+    data.job_title ||
+    data.jobTitle ||
+    "Unknown role";
+
+  const company =
+    data.company ||
+    data.companyName ||
+    "Unknown company";
+
+  const location =
+    data.location ||
+    "Unknown location";
+
+  const strengths =
+    data.why_they_might_hire ||
+    data.strengths ||
+    verdict.top_positive_factors ||
+    [];
+
+  const weaknesses =
+    data.why_they_might_pass ||
+    data.weaknesses ||
+    verdict.top_risk_factors ||
+    [];
+
+  const keywordsToEmphasize =
+    data.keywords_to_emphasize ||
+    data.keywordsToEmphasize ||
+    [];
+
+  const missingKeywords =
+    data.missing_keywords ||
+    data.missingKeywords ||
+    [];
+
+  const recommendedProjects =
+    data.recommended_projects ||
+    data.recommendedProjects ||
+    [];
+
+  const recommendedActions =
+    data.recommendedActions ||
+    [];
+
+  const summary =
+    data.summary ||
+    data.score_explanation ||
+    data.quick_verdict ||
+    verdict.one_line_reason ||
+    "";
+
+  resultDiv.innerHTML = `
+    <div
+      style="
+        background:#101010;
+        border-radius:14px;
+        padding:14px;
+        margin-top:10px;
+        border:1px solid #303030;
+      "
+    >
+      <div
+        style="
+          font-size:11px;
+          letter-spacing:1.5px;
+          color:#999;
+        "
+      >
+        SWAPOPT AI
+      </div>
+
+      <div
+        style="
+          font-size:20px;
+          font-weight:800;
+          color:${accent};
+          margin-top:5px;
+        "
+      >
+        ${escapeHtml(targetLabel)}
+      </div>
+
+      <div
+        style="
+          font-size:13px;
+          color:#bbb;
+          margin-top:6px;
+        "
+      >
+        ${escapeHtml(nextAction)}
+      </div>
+    </div>
+
+    ${section(
+      "SwapOpt Verdict",
+      `
+        <div
+          style="
+            font-size:34px;
+            font-weight:800;
+            color:#fff;
+          "
+        >
+          ${escapeHtml(applyScore)}/10
+        </div>
+
+        <div
+          style="
+            font-size:18px;
+            font-weight:700;
+            margin-top:6px;
+          "
+        >
+          ${escapeHtml(decisionLabel)}
+        </div>
+
+        <p style="color:#ddd;">
+          ${escapeHtml(
+            verdict.one_line_reason ||
+            summary ||
+            "No verdict explanation was generated."
+          )}
+        </p>
+
+        <b>Recommended Effort:</b>
+
+        <div style="margin-top:4px;color:#ddd;">
+          ${escapeHtml(
+            verdict.effort_recommendation ||
+            data.recommended_effort_level ||
+            data.recommendedEffort ||
+            "Not determined"
+          )}
+        </div>
+
+        <div style="margin-top:14px;">
+          <b>Why Apply:</b>
+
+          <ul>
+            ${listItems(
+              verdict.top_positive_factors ||
+              strengths
+            )}
+          </ul>
+        </div>
+
+        <div style="margin-top:12px;">
+          <b>Watch Outs:</b>
+
+          <ul>
+            ${listItems(
+              verdict.top_risk_factors ||
+              weaknesses
+            )}
+          </ul>
+        </div>
+
+        ${
+          verdict.final_advice
+            ? `
+              <p style="color:#ccc;margin-bottom:0;">
+                ${escapeHtml(verdict.final_advice)}
+              </p>
+            `
+            : ""
+        }
+      `
+    )}
+
+    <div
+      style="
+        display:flex;
+        gap:8px;
+        margin-top:10px;
+      "
+    >
+      <div
+        style="
+          flex:1;
+          background:#171717;
+          border:1px solid #303030;
+          border-radius:12px;
+          padding:11px;
+        "
+      >
+        <div
+          style="
+            font-size:22px;
+            font-weight:700;
+          "
+        >
+          ${escapeHtml(currentMatch)}${
+            currentMatch === "—" ? "" : "%"
+          }
+        </div>
+
+        <div
+          style="
+            font-size:11px;
+            color:#aaa;
+          "
+        >
+          Current Resume
+        </div>
+      </div>
+
+      <div
+        style="
+          flex:1;
+          background:#171717;
+          border:1px solid #303030;
+          border-radius:12px;
+          padding:11px;
+        "
+      >
+        <div
+          style="
+            font-size:22px;
+            font-weight:700;
+          "
+        >
+          ${escapeHtml(tailoredMatch)}${
+            tailoredMatch === "—" ? "" : "%"
+          }
+        </div>
+
+        <div
+          style="
+            font-size:11px;
+            color:#aaa;
+          "
+        >
+          After Tailoring
+        </div>
+      </div>
+    </div>
+
+    ${section(
+      "Application Confidence",
+      `
+        <b>${escapeHtml(applicationConfidence)}/100</b>
+
+        ${bar(applicationConfidence, 100)}
+
+        <div
+          style="
+            margin-top:10px;
+            color:#ccc;
+            line-height:1.6;
+          "
+        >
+          <b>Hiring Intent:</b>
+          ${escapeHtml(
+            data.hiring_intent_level ||
+            data.hiringIntentLevel ||
+            "Unknown"
+          )}
+          <br>
+
+          <b>Posting Quality:</b>
+          ${escapeHtml(
+            data.posting_quality_level ||
+            data.postingQualityLevel ||
+            "Unknown"
+          )}
+          <br>
+
+          <b>Risk Level:</b>
+          ${escapeHtml(
+            data.posting_risk_level ||
+            data.postingRiskLevel ||
+            "Unknown"
+          )}
+          <br>
+
+          <b>Reality Check:</b>
+          ${escapeHtml(
+            data.reality_check_verdict ||
+            data.realityCheckVerdict ||
+            "Unknown"
+          )}
+          <br>
+
+          <b>Recommended Effort:</b>
+          ${escapeHtml(
+            data.recommended_effort_level ||
+            data.recommendedEffort ||
+            "Unknown"
+          )}
+        </div>
+      `
+    )}
+
+    ${section(
+      "Compensation Intelligence",
+      `
+        <b>Estimated Range:</b>
+        ${escapeHtml(
+          compensation.estimated_market_range ||
+          compensation.estimatedMarketRange ||
+          "Unknown"
+        )}
+
+        <br><br>
+
+        <b>Suggested Application Input:</b>
+        ${escapeHtml(
+          compensation.recommended_application_salary ||
+          compensation.recommendedApplicationSalary ||
+          "Unknown"
+        )}
+
+        <br><br>
+
+        <b>Safe Maximum:</b>
+        ${escapeHtml(
+          compensation.maximum_without_screening_risk ||
+          compensation.maximumWithoutScreeningRisk ||
+          "Unknown"
+        )}
+
+        <br><br>
+
+        <b>Negotiation Strength:</b>
+        ${escapeHtml(
+          compensation.negotiation_strength ||
+          compensation.negotiationStrength ||
+          "Unknown"
+        )}
+
+        <br><br>
+
+        <b>Confidence:</b>
+        ${escapeHtml(
+          compensation.salary_confidence_level ||
+          compensation.salaryConfidenceLevel ||
+          "Unknown"
+        )}
+
+        ${
+          compensation.salary_reasoning ||
+          compensation.salaryReasoning
+            ? `
+              <p style="color:#ccc;margin-top:10px;">
+                ${escapeHtml(
+                  compensation.salary_reasoning ||
+                  compensation.salaryReasoning
+                )}
+              </p>
+            `
+            : ""
+        }
+
+        ${
+          compensation.salary_risk_warning ||
+          compensation.salaryRiskWarning
+            ? `
+              <p style="color:#aaa;margin-bottom:0;">
+                ${escapeHtml(
+                  compensation.salary_risk_warning ||
+                  compensation.salaryRiskWarning
+                )}
+              </p>
+            `
+            : ""
+        }
+      `
+    )}
+
+    ${section(
+      "Confidence Explanation",
+      `
+        <p style="margin:0;color:#ddd;">
+          ${escapeHtml(
+            data.confidence_explanation ||
+            data.confidenceExplanation ||
+            "No confidence explanation generated."
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Positive Posting Signals",
+      `
+        <ul>
+          ${listItems(
+            data.positive_legitimacy_signals ||
+            data.positiveLegitimacySignals
+          )}
+        </ul>
+      `
+    )}
+
+    ${section(
+      "Concern Signals",
+      `
+        <ul>
+          ${listItems(
+            data.concern_legitimacy_signals ||
+            data.concernLegitimacySignals
+          )}
+        </ul>
+      `
+    )}
+
+    ${section(
+      "Hiring Confidence",
+      `
+        <b>
+          ${escapeHtml(
+            data.hiring_logic_score ??
+            data.hiringLogicScore ??
+            "—"
+          )}/10
+        </b>
+
+        ${bar(
+          data.hiring_logic_score ??
+          data.hiringLogicScore
+        )}
+      `
+    )}
+
+    ${section(
+      "Decision Context",
+      `
+        <div style="line-height:1.7;color:#ddd;">
+          <b>Time Priority:</b>
+          ${escapeHtml(
+            data.time_priority ||
+            data.timePriority ||
+            "Unknown"
+          )}
+          <br>
+
+          <b>H-1B Risk:</b>
+          ${escapeHtml(
+            data.h1b_risk ||
+            data.h1bRisk ||
+            "Unknown"
+          )}
+          <br>
+
+          <b>Decision:</b>
+          ${escapeHtml(
+            data.decision ||
+            decisionLabel ||
+            "Unknown"
+          )}
+        </div>
+      `
+    )}
+
+    ${section(
+      "Role",
+      `
+        <div>
+          ${escapeHtml(jobTitle)}
+        </div>
+
+        <span
+          style="
+            font-size:12px;
+            color:#aaa;
+          "
+        >
+          ${escapeHtml(company)} |
+          ${escapeHtml(location)}
+        </span>
+      `
+    )}
+
+    ${section(
+      "Score Breakdown",
+      `
+        ${scoreLine(
+          "Technical Match",
+          data.technical_match_score ??
+          data.technicalMatchScore ??
+          data.responsibility_match_score ??
+          data.responsibilityMatchScore
+        )}
+
+        ${scoreLine(
+          "Responsibility Fit",
+          data.responsibility_match_score ??
+          data.responsibilityMatchScore
+        )}
+
+        ${scoreLine(
+          "Experience Level",
+          data.experience_level_score ??
+          data.experienceLevelScore
+        )}
+
+        ${scoreLine(
+          "Domain Transfer",
+          data.domain_transfer_score ??
+          data.domainTransferScore
+        )}
+
+        ${scoreLine(
+          "Sponsorship Fit",
+          data.sponsorship_risk_score ??
+          data.sponsorshipRiskScore
+        )}
+      `
+    )}
+
+    ${section(
+      "Score Explanation",
+      `
+        <p style="margin:0;color:#ddd;">
+          ${escapeHtml(
+            summary ||
+            "No score explanation generated."
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Why They Might Hire You",
+      `
+        <ul>
+          ${listItems(strengths)}
+        </ul>
+      `
+    )}
+
+    ${section(
+      "Why They Might Pass",
+      `
+        <ul>
+          ${listItems(weaknesses)}
+        </ul>
+      `
+    )}
+
+    ${section(
+      "Best Resume Angle",
+      `
+        <p style="margin:0;color:#ddd;">
+          ${escapeHtml(
+            data.best_resume_angle ||
+            data.bestResumeAngle ||
+            "No resume angle generated."
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Keywords to Emphasize",
+      `
+        <ul>
+          ${listItems(keywordsToEmphasize)}
+        </ul>
+      `
+    )}
+
+    ${section(
+      "Missing Keywords",
+      `
+        <ul>
+          ${listItems(missingKeywords)}
+        </ul>
+      `
+    )}
+
+    ${section(
+      "Recommended Projects",
+      `
+        <ul>
+          ${listItems(recommendedProjects)}
+        </ul>
+      `
+    )}
+
+    ${
+      recommendedActions.length > 0
+        ? section(
+            "Recommended Actions",
+            `
+              <ul>
+                ${listItems(recommendedActions)}
+              </ul>
+            `
+          )
+        : ""
     }
 
-const response = await fetch(`http://localhost:8787/${endpoint}`, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    url: page.url,
-    pageText: `${page.title}\n\n${page.text}`,
-    ...extraData
-  })
-});
+    ${section(
+      "Fit Notes",
+      `
+        <p style="margin:0;color:#ddd;">
+          ${escapeHtml(
+            data.risk_or_overclaim_warning ||
+            data.riskOrOverclaimWarning ||
+            "No additional fit warning generated."
+          )}
+        </p>
+      `
+    )}
+  `;
+}
 
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.details || data.error || "Backend request failed.");
-    return data;
+function renderTailorResult(data = {}) {
+  currentTailorResult = data;
+
+  prepareResultArea();
+
+  const notes = data.tailoringNotes || {};
+
+  resultDiv.innerHTML = `
+    <div
+      style="
+        background:#101010;
+        border-radius:14px;
+        padding:14px;
+        margin-top:10px;
+        border:1px solid #303030;
+      "
+    >
+      <div
+        style="
+          font-size:11px;
+          letter-spacing:1.5px;
+          color:#999;
+        "
+      >
+        SWAPOPT TAILORING
+      </div>
+
+      <div
+        style="
+          font-size:20px;
+          font-weight:800;
+          color:#e6e6e6;
+          margin-top:5px;
+        "
+      >
+        Resume Strategy
+      </div>
+    </div>
+
+    ${section(
+      "Tailoring Worth",
+      `
+        <b>
+          ${escapeHtml(
+            notes.tailoring_worth_score ??
+            data.tailoring_score ??
+            "—"
+          )}/10
+        </b>
+
+        ${bar(
+          notes.tailoring_worth_score ??
+          data.tailoring_score
+        )}
+      `
+    )}
+
+    ${section(
+      "Recommended Effort",
+      `
+        <b>
+          ${escapeHtml(
+            notes.tailoring_effort ||
+            data.tailoring_effort ||
+            "Not determined"
+          )}
+        </b>
+      `
+    )}
+
+    ${section(
+      "Professional Summary Direction",
+      `
+        <p style="margin:0;color:#ddd;">
+          ${escapeHtml(
+            data.professionalSummary ||
+            "No summary recommendation generated."
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Resume Strategy",
+      `
+        <p style="margin:0;color:#ddd;">
+          ${escapeHtml(
+            notes.resume_strategy ||
+            "No resume strategy generated."
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Recommended Resume Angle",
+      `
+        <p style="margin:0;color:#ddd;">
+          ${escapeHtml(
+            notes.recommended_resume_angle ||
+            "No resume angle generated."
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Skills To Emphasize",
+      bullets(data.skills)
+    )}
+
+    ${section(
+      "Experience Recommendations",
+      bullets(data.experience)
+    )}
+
+    ${section(
+      "Project Recommendations",
+      bullets(data.projects)
+    )}
+
+    ${section(
+      "ATS Keywords",
+      bullets(data.atsKeywords)
+    )}
+
+    ${section(
+      "Application Positioning",
+      `
+        <p style="margin:0;color:#ddd;">
+          ${escapeHtml(
+            notes.application_positioning ||
+            "No application positioning generated."
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Interview Talking Points",
+      bullets(notes.interview_talking_points)
+    )}
+
+    ${section(
+      "Do Not Claim",
+      bullets(notes.do_not_claim)
+    )}
+
+    ${section(
+      "Final Recommendation",
+      `
+        <p style="margin:0;color:#ddd;">
+          ${escapeHtml(
+            notes.final_recommendation ||
+            "No final recommendation generated."
+          )}
+        </p>
+      `
+    )}
+  `;
+}
+
+function renderResumeDraft(data = {}) {
+  currentResumeDraft = data;
+
+  prepareResultArea();
+
+  const skills = data.skills || {};
+  const work = data.work_experience || {};
+
+  const projects = Array.isArray(data.projects)
+    ? data.projects
+        .map(
+          (project) => `
+            <div style="margin-top:10px;">
+              <b>${escapeHtml(project.name)}</b>
+
+              ${
+                project.tools
+                  ? ` | ${escapeHtml(project.tools)}`
+                  : ""
+              }
+
+              <ul>
+                <li>${escapeHtml(project.bullet)}</li>
+              </ul>
+            </div>
+          `
+        )
+        .join("")
+    : "<p>No projects generated.</p>";
+
+  resultDiv.innerHTML = `
+
+    <div
+      style="
+        background:#101010;
+        border-radius:14px;
+        padding:14px;
+        margin-top:10px;
+        border:1px solid #303030;
+      "
+    >
+      <div
+        style="
+          font-size:11px;
+          letter-spacing:1.5px;
+          color:#999;
+        "
+      >
+        SWAPOPT RESUME
+      </div>
+
+      <div
+        style="
+          font-size:20px;
+          font-weight:800;
+          color:#fff;
+          margin-top:5px;
+        "
+      >
+        ${escapeHtml(
+          data.recommended_resume_title ||
+          "Tailored Resume Draft"
+        )}
+      </div>
+
+      <div
+        style="
+          font-size:13px;
+          color:#bbb;
+          margin-top:6px;
+        "
+      >
+        ${escapeHtml(data.company || "Unknown")}
+        |
+        ${escapeHtml(data.job_title || "Unknown")}
+      </div>
+    </div>
+
+    ${section(
+      "Fit Warning",
+      `
+        <p style="margin:0;color:#ddd;">
+          ${escapeHtml(
+            data.resume_fit_warning
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Professional Summary",
+      `
+        <p style="margin:0;color:#ddd;">
+          ${escapeHtml(
+            data.professional_summary
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Skills",
+      `
+        <b>Analytics & BI</b>
+        ${bullets(skills.analytics_bi)}
+
+        <b>Data Platforms & Modeling</b>
+        ${bullets(
+          skills.data_platforms_modeling
+        )}
+
+        <b>Programming & Automation</b>
+        ${bullets(
+          skills.programming_automation
+        )}
+
+        <b>Data Quality & Business Analysis</b>
+        ${bullets(
+          skills.data_quality_business_analysis
+        )}
+      `
+    )}
+
+    ${section(
+      "Work Experience",
+      `
+        ${roleBlock(
+          work.community_dreams_foundation
+        )}
+
+        ${roleBlock(
+          work.accenture_data_analyst_ii
+        )}
+
+        ${roleBlock(
+          work.accenture_data_analyst_i
+        )}
+      `
+    )}
+
+    ${section(
+      "Projects",
+      projects
+    )}
+
+    ${section(
+      "Keywords Added",
+      bullets(data.keywords_added)
+    )}
+
+    ${section(
+      "Keywords Not Used",
+      bullets(
+        data.keywords_not_used_due_to_truthfulness
+      )
+    )}
+
+    ${section(
+      "Final Note",
+      `
+        <p style="margin:0;color:#ddd;">
+          ${escapeHtml(data.final_note)}
+        </p>
+      `
+    )}
+  `;
+}
+
+function renderCoverLetter(data = {}) {
+  currentCoverLetter = data;
+
+  prepareResultArea();
+
+  resultDiv.innerHTML = section(
+    "Cover Letter",
+    `
+      <p
+        style="
+          white-space:pre-line;
+          color:#ddd;
+          margin:0;
+        "
+      >
+        ${escapeHtml(
+data.coverLetter ||
+"No cover letter generated."
+        )}
+      </p>
+    `
+  );
+}
+
+function renderNetworkResult(data = {}) {
+  currentNetworkResult = data;
+
+  prepareResultArea();
+
+  const hunter = data.hunterSearch || {};
+  const outreach = data.outreachMessages || {};
+  const email = outreach.email || {};
+  const followUp = data.followUpPlan || {};
+
+  const people = Array.isArray(data.targetContacts)
+    ? data.targetContacts.map((person) => {
+        return [
+          person.targetType || "Unknown contact",
+          person.priority
+            ? `Priority: ${person.priority}`
+            : "",
+          person.reason || "",
+          person.linkedinSearch
+            ? `Search: ${person.linkedinSearch}`
+            : ""
+        ]
+          .filter(Boolean)
+          .join(" — ");
+      })
+    : [];
+
+  const contacts = Array.isArray(
+    data.discovered_contacts
+  )
+    ? data.discovered_contacts.map((contact) =>
+        [
+          contact.name || "Unknown",
+          contact.position || "Unknown role",
+          contact.email || "No email",
+          `Confidence: ${
+            contact.confidence ?? "N/A"
+          }`
+        ].join(" | ")
+      )
+    : [];
+
+  resultDiv.innerHTML = `
+    ${section(
+      "Networking Strategy",
+      `
+        <p style="margin:0;color:#ddd;">
+          ${escapeHtml(
+            data.networkStrategy ||
+            "No networking strategy generated."
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Target Contacts",
+      bullets(people)
+    )}
+
+    ${section(
+      "Hunter Recommendation",
+      `
+        <b>
+          ${
+            hunter.recommended
+              ? "Recommended"
+              : "Not Recommended"
+          }
+        </b>
+
+        <p style="color:#ddd;">
+          ${escapeHtml(
+            hunter.reason ||
+            "No Hunter explanation generated."
+          )}
+        </p>
+
+        ${
+          hunter.companyDomain
+            ? `
+              <div>
+                <b>Company Domain:</b>
+                ${escapeHtml(
+                  hunter.companyDomain
+                )}
+              </div>
+            `
+            : ""
+        }
+      `
+    )}
+
+    ${section(
+      "Discovered Contacts",
+      bullets(contacts)
+    )}
+
+    ${section(
+      "LinkedIn Connection Request",
+      `
+        <p style="white-space:pre-line;margin:0;color:#ddd;">
+          ${escapeHtml(
+            outreach.linkedinConnection ||
+            "No connection request generated."
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "LinkedIn Message",
+      `
+        <p style="white-space:pre-line;margin:0;color:#ddd;">
+          ${escapeHtml(
+            outreach.linkedinMessage ||
+            "No LinkedIn message generated."
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Email Message",
+      `
+        <b>Subject:</b>
+
+        <div style="margin-top:5px;color:#ddd;">
+          ${escapeHtml(
+            email.subject ||
+            "No subject generated."
+          )}
+        </div>
+
+        <p style="white-space:pre-line;color:#ddd;">
+          ${escapeHtml(
+            email.body ||
+            "No email body generated."
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Follow-Up Timeline",
+      bullets(followUp.timeline)
+    )}
+
+    ${section(
+      "Follow-Up Notes",
+      `
+        <p style="margin:0;color:#ddd;">
+          ${escapeHtml(
+            followUp.notes ||
+            "No follow-up notes generated."
+          )}
+        </p>
+      `
+    )}
+  `;
+}
+function renderApplicationHelp(data = {}) {
+  currentApplicationHelp = data;
+
+  prepareResultArea();
+
+  resultDiv.innerHTML = `
+    ${section(
+      "Why This Company",
+      `
+        <p>
+          ${escapeHtml(
+            data.why_company ||
+            ""
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Why This Role",
+      `
+        <p>
+          ${escapeHtml(
+            data.why_role ||
+            ""
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Tell Me About Yourself",
+      `
+        <p>
+          ${escapeHtml(
+            data.tell_me_about_yourself ||
+            ""
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Relevant Experience",
+      `
+        <p>
+          ${escapeHtml(
+            data.relevant_experience_answer ||
+            ""
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Additional Information",
+      `
+        <p>
+          ${escapeHtml(
+            data.additional_information_box ||
+            ""
+          )}
+        </p>
+      `
+    )}
+
+    ${section(
+      "Questions To Ask Recruiter",
+      bullets(
+        data.questions_to_ask_recruiter
+      )
+    )}
+
+    ${section(
+      "Final Application Strategy",
+      `
+        <p>
+          ${escapeHtml(
+            data.final_application_strategy ||
+            ""
+          )}
+        </p>
+      `
+    )}
+  `;
+}
+
+chrome.storage.local.get(
+  [
+    "lastSwapOptResult",
+    "lastSwapOptTailorResult",
+    "lastSwapOptResumeDraft"
+  ],
+  (stored) => {
+    if (stored.lastSwapOptResult) {
+      currentJobResult =
+        stored.lastSwapOptResult;
+
+      renderAnalysisResult(
+        stored.lastSwapOptResult
+      );
+    }
+
+    if (stored.lastSwapOptTailorResult) {
+      currentTailorResult =
+        stored.lastSwapOptTailorResult;
+    }
+
+    if (stored.lastSwapOptResumeDraft) {
+      currentResumeDraft =
+        stored.lastSwapOptResumeDraft;
+    }
+  }
+);
+
+async function getCurrentJobPage() {
+  const [tab] = await chrome.tabs.query({
+    active: true,
+    currentWindow: true
+  });
+
+  if (!tab?.id) {
+    throw new Error(
+      "No active browser tab was found."
+    );
+  }
+
+  const [{ result }] =
+    await chrome.scripting.executeScript({
+      target: {
+        tabId: tab.id
+      },
+      func: () => {
+        function getLongestText(selectors) {
+          let bestText = "";
+
+          for (const selector of selectors) {
+            const elements =
+              document.querySelectorAll(selector);
+
+            for (const element of elements) {
+              const text =
+                element?.innerText?.trim() ||
+                "";
+
+              if (text.length > bestText.length) {
+                bestText = text;
+              }
+            }
+          }
+
+          return bestText;
+        }
+
+        function getFirstText(selectors) {
+          for (const selector of selectors) {
+            const element =
+              document.querySelector(selector);
+
+            const text =
+              element?.innerText?.trim();
+
+            if (text) {
+              return text;
+            }
+          }
+
+          return "";
+        }
+
+        function cleanText(value) {
+          return String(value || "")
+            .replace(/\u00a0/g, " ")
+            .replace(/[ \t]+/g, " ")
+            .replace(/\n{3,}/g, "\n\n")
+            .trim();
+        }
+
+        const descriptionSelectors = [
+          "[data-automation-id='jobPostingDescription']",
+          "[data-testid='job-description']",
+          ".jobs-description-content__text",
+          ".jobs-box__html-content",
+          "#jobDescriptionText",
+          ".jobsearch-JobComponent-description",
+          ".job-description",
+          ".jobDescription",
+          "[class*='job-description']",
+          "[class*='jobDescription']",
+          "article",
+          "main"
+        ];
+
+        const titleSelectors = [
+          "[data-automation-id='jobPostingHeader'] h1",
+          "[data-testid='job-title']",
+          ".job-details-jobs-unified-top-card__job-title",
+          ".jobs-unified-top-card__job-title",
+          ".top-card-layout__title",
+          ".jobsearch-JobInfoHeader-title",
+          "h1"
+        ];
+
+        const companySelectors = [
+          "[data-automation-id='jobPostingCompany']",
+          "[data-testid='company-name']",
+          ".job-details-jobs-unified-top-card__company-name",
+          ".jobs-unified-top-card__company-name",
+          ".topcard__org-name-link",
+          ".jobsearch-InlineCompanyRating-companyHeader",
+          "[class*='company-name']",
+          "[class*='companyName']"
+        ];
+
+        const locationSelectors = [
+          "[data-automation-id='locations']",
+          "[data-testid='job-location']",
+          ".job-details-jobs-unified-top-card__primary-description-container",
+          ".jobs-unified-top-card__bullet",
+          ".topcard__flavor--bullet",
+          ".jobsearch-JobInfoHeader-subtitle div",
+          "[class*='job-location']",
+          "[class*='jobLocation']"
+        ];
+
+        let jobDescription = getLongestText(
+          descriptionSelectors
+        );
+
+        if (jobDescription.length < 200) {
+          jobDescription =
+            document.body?.innerText?.trim() ||
+            "";
+        }
+
+        const pageTitle = document.title || "";
+
+        let jobTitle = getFirstText(
+          titleSelectors
+        );
+
+        let companyName = getFirstText(
+          companySelectors
+        );
+
+        const location = getFirstText(
+          locationSelectors
+        );
+
+        if (!jobTitle && pageTitle) {
+          const titleParts = pageTitle
+            .split(/\s+[|\-–—]\s+/)
+            .map((part) => part.trim())
+            .filter(Boolean);
+
+          jobTitle = titleParts[0] || "";
+        }
+
+        if (!companyName && pageTitle) {
+          const titleParts = pageTitle
+            .split(/\s+[|\-–—]\s+/)
+            .map((part) => part.trim())
+            .filter(Boolean);
+
+          companyName =
+            titleParts.length > 1
+              ? titleParts[1]
+              : "";
+        }
+
+        return {
+          jobDescription: cleanText(
+            jobDescription
+          ),
+          jobTitle: cleanText(jobTitle),
+          companyName: cleanText(
+            companyName
+          ),
+          location: cleanText(location)
+        };
+      }
+    });
+
+  if (!result) {
+    throw new Error(
+      "Could not extract information from the current page."
+    );
+  }
+
+  if (
+    !result.jobDescription ||
+    result.jobDescription.length < 200
+  ) {
+    throw new Error(
+      "Could not read enough job-description text. Open the full job posting and try again."
+    );
+  }
+
+  return result;
+}
+
+async function callBackend(
+  endpoint,
+  payload
+) {
+  let response;
+
+  try {
+    response = await fetch(
+      `${API_BASE_URL}/${endpoint}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+        body: JSON.stringify(payload)
+      }
+    );
+  } catch {
+    throw new Error(
+      "Could not connect to the SwapOpt backend. Confirm that the server is running on localhost:8787."
+    );
+  }
+
+  let data;
+
+  try {
+    data = await response.json();
+  } catch {
+    throw new Error(
+      `The backend returned an unreadable response with status ${response.status}.`
+    );
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      data.details ||
+        data.error ||
+        data.message ||
+        `Backend request failed with status ${response.status}.`
+    );
+  }
+
+  return data;
+}
+
+async function sendJobToBackend(
+  endpoint,
+  loadingText,
+  extraData = {}
+) {
+  toggleButtons(true);
+  setLoading(loadingText);
+
+  try {
+    const page =
+      await getCurrentJobPage();
+
+    return await callBackend(endpoint, {
+      jobDescription:
+        page.jobDescription,
+      companyName: page.companyName,
+      jobTitle: page.jobTitle,
+      ...extraData
+    });
   } finally {
-    buttons.forEach((b) => b.disabled = false);
+    toggleButtons(false);
   }
 }
 
-analyzeButton.addEventListener("click", async () => {
+function getCurrentVerdictScore() {
+  if (!currentJobResult) {
+    throw new Error(
+      "Analyze the job first so SwapOpt can use the verdict score."
+    );
+  }
+
+  const score = Number(
+    currentJobResult.verdictScore ??
+      currentJobResult.swapopt_verdict
+        ?.apply_score ??
+      currentJobResult.apply_score
+  );
+
+  if (!Number.isFinite(score)) {
+    throw new Error(
+      "No valid SwapOpt verdict score was found. Analyze the job again."
+    );
+  }
+
+  return score;
+}
+
+analyzeButton?.addEventListener("click", async () => {
   try {
-    const data = await sendJobToBackend("analyze", "Analyzing job fit...");
-    chrome.storage.local.set({ lastSwapOptResult: data });
-    currentJobResult = data;
+    const data = await sendJobToBackend(
+      "analyze",
+      "Analyzing job fit..."
+    );
+
+    chrome.storage.local.set({
+      lastSwapOptResult: data
+    });
+
     renderAnalysisResult(data);
   } catch (error) {
-    resultDiv.innerHTML = `<b>Error</b><p>${escapeHtml(error.message)}</p>`;
+    setError(error);
   }
 });
 
-tailorButton.addEventListener("click", async () => {
+tailorButton?.addEventListener("click", async () => {
   try {
-    if (!currentJobResult) {
-      throw new Error("Analyze the job first so SwapOpt can use the verdict score.");
-    }
-
-    const verdictScore = Number(
-      currentJobResult.swapopt_verdict?.apply_score ??
-      currentJobResult.apply_score
-    );
-
-    if (!Number.isFinite(verdictScore)) {
-      throw new Error("No valid SwapOpt verdict score was found. Analyze the job again.");
-    }
-
     const data = await sendJobToBackend(
       "tailor",
       "Generating tailoring strategy...",
-      { verdictScore }
+{
+  applyScore: getCurrentVerdictScore()
+}
     );
 
-    chrome.storage.local.set({ lastSwapOptTailorResult: data });
-    currentTailorResult = data;
+    chrome.storage.local.set({
+      lastSwapOptTailorResult: data
+    });
+
     renderTailorResult(data);
   } catch (error) {
-    resultDiv.innerHTML = `<b>Error</b><p>${escapeHtml(error.message)}</p>`;
+    setError(error);
   }
 });
 
-resumeDraftButton.addEventListener("click", async () => {
+resumeDraftButton?.addEventListener("click", async () => {
   try {
- 
-if (!currentJobResult) {
-  throw new Error("Analyze the job first so SwapOpt can use the verdict score.");
+    const data = await sendJobToBackend(
+      "resume-draft",
+      "Generating resume draft...",
+{
+  applyScore: getCurrentVerdictScore()
 }
+    );
 
-const verdictScore = Number(
-  currentJobResult.swapopt_verdict?.apply_score ??
-  currentJobResult.apply_score
-);
+    chrome.storage.local.set({
+      lastSwapOptResumeDraft: data
+    });
 
-if (!Number.isFinite(verdictScore)) {
-  throw new Error("No valid SwapOpt verdict score was found.");
-}
-
-const data = await sendJobToBackend(
-  "resume-draft",
-  "Generating resume draft...",
-  { verdictScore }
-);
-    chrome.storage.local.set({ lastSwapOptResumeDraft: data });
-    currentResumeDraft = data;
     renderResumeDraft(data);
   } catch (error) {
-    resultDiv.innerHTML = `<b>Error</b><p>${escapeHtml(error.message)}</p>`;
+    setError(error);
   }
 });
 
-coverLetterButton.addEventListener("click", async () => {
+coverLetterButton?.addEventListener("click", async () => {
   try {
-    const data = await sendJobToBackend("cover-letter", "Generating cover letter...");
-    currentCoverLetter = data;
+    const data = await sendJobToBackend(
+      "cover-letter",
+      "Generating cover letter..."
+    );
 
-    resultDiv.innerHTML = section("Cover Letter", `
-      <p style="white-space:pre-line;color:#ddd;">${escapeHtml(data.cover_letter || "No cover letter generated.")}</p>
-    `);
+    renderCoverLetter(data);
   } catch (error) {
-    resultDiv.innerHTML = `<b>Error</b><p>${escapeHtml(error.message)}</p>`;
+    setError(error);
   }
 });
 
-networkButton.addEventListener("click", async () => {
+networkButton?.addEventListener("click", async () => {
   try {
-    const data = await sendJobToBackend("network", "Finding relevant people...");
-    currentNetworkResult = data;
+    const data = await sendJobToBackend(
+      "network",
+      "Building networking strategy..."
+    );
 
-    resultDiv.innerHTML = `
-      ${section("People to Find", `<ul>${listItems((data.people_to_find || []).map(p => `${p.target_type}: ${p.linkedin_search_query} — ${p.why_relevant}`))}</ul>`)}
-	${section("Networking Priority", `
-  	<b>${escapeHtml(data.networking_priority_level || "Unknown")}</b>
-  	(${escapeHtml(data.networking_priority_score ?? "N/A")}/10)
-  	<p>${escapeHtml(data.hunter_usage_reason || "")}</p>
-	`)}
-
-	${section("Hunter Contacts", `
-  	<ul>
-    	${listItems((data.discovered_contacts || []).map(c =>
-      	`${c.name || "Unknown"} | ${c.position || "Unknown role"} | ${c.email || "No email"} | Confidence: ${c.confidence || "N/A"}`
-    	))}
-  	</ul>
-	`)}
-      ${section("LinkedIn Notes", `
-        <b>Recruiter:</b><p>${escapeHtml(data.linkedin_connection_notes?.recruiter_note || "")}</p>
-        <b>Hiring Manager:</b><p>${escapeHtml(data.linkedin_connection_notes?.hiring_manager_note || "")}</p>
-        <b>Team Member:</b><p>${escapeHtml(data.linkedin_connection_notes?.team_member_note || "")}</p>
-        <b>Alumni:</b><p>${escapeHtml(data.linkedin_connection_notes?.alumni_note || "")}</p>
-      `)}
-      ${section("LinkedIn Message", `
-  <p>${escapeHtml(data.linkedin_message || "")}</p>
-	`)}
-
-${section("Email Message", `
-  <b>Subject:</b> ${escapeHtml(data.email_message?.subject || "")}
-  <p>${escapeHtml(data.email_message?.body || "")}</p>
-`)}
-      ${section("Networking Strategy", `<p>${escapeHtml(data.networking_strategy || "")}</p>`)}
-    `;
+    renderNetworkResult(data);
   } catch (error) {
-    resultDiv.innerHTML = `<b>Error</b><p>${escapeHtml(error.message)}</p>`;
+    setError(error);
   }
 });
 
-applicationHelpButton.addEventListener("click", async () => {
+applicationHelpButton?.addEventListener("click", async () => {
   try {
-    const data = await sendJobToBackend("application-help", "Generating application answers...");
-    currentApplicationHelp = data;
+    const data = await sendJobToBackend(
+      "application-help",
+      "Generating application answers..."
+    );
 
-    resultDiv.innerHTML = `
-      ${section("Why Company", `<p>${escapeHtml(data.why_company || "")}</p>`)}
-      ${section("Why Role", `<p>${escapeHtml(data.why_role || "")}</p>`)}
-      ${section("Tell Me About Yourself", `<p>${escapeHtml(data.tell_me_about_yourself || "")}</p>`)}
-      ${section("Relevant Experience", `<p>${escapeHtml(data.relevant_experience_answer || "")}</p>`)}
-      ${section("Additional Information", `<p>${escapeHtml(data.additional_information_box || "")}</p>`)}
-      ${section("Questions to Ask Recruiter", `<ul>${listItems(data.questions_to_ask_recruiter)}</ul>`)}
-      ${section("Final Strategy", `<p>${escapeHtml(data.final_application_strategy || "")}</p>`)}
-    `;
+    renderApplicationHelp(data);
   } catch (error) {
-    resultDiv.innerHTML = `<b>Error</b><p>${escapeHtml(error.message)}</p>`;
+    setError(error);
   }
 });
 
-copyInsightButton.addEventListener("click", async () => {
+copyInsightButton?.addEventListener("click", async () => {
   if (!currentJobResult) {
     alert("Analyze a job first.");
     return;
   }
 
-if (!currentTailorResult) {
-  alert("Run Tailor first to include the tailoring strategy.");
-  return;
-}
+  if (!currentTailorResult) {
+    alert("Run Tailor first.");
+    return;
+  }
 
   const insight = `
 SWAPOPT RESUME TAILORING INSIGHT
 
-Role: ${currentJobResult.job_title || "Unknown"}
-Company: ${currentJobResult.company || "Unknown"}
-Location: ${currentJobResult.location || "Unknown"}
+Role:
+${currentJobResult.job_title || currentJobResult.jobTitle || "Unknown"}
 
-Current Resume Match: ${currentJobResult.current_match_percent ?? "N/A"}%
-Potential After Tailoring: ${currentJobResult.tailored_match_percent ?? "N/A"}%
-Hiring Confidence: ${currentJobResult.hiring_logic_score ?? "N/A"}/10
-Tailoring Severity:
-${currentJobResult.tailoring_intensity_score ?? "N/A"}/10
+Company:
+${currentJobResult.company || currentJobResult.companyName || "Unknown"}
 
-Tailoring Level:
-${currentJobResult.tailoring_intensity_level || "N/A"}
+Location:
+${currentJobResult.location || "Unknown"}
 
-Recommended Tailoring Effort:
-${currentJobResult.tailoring_time_recommendation || "N/A"}
+Verdict Score:
+${
+  currentJobResult.swapopt_verdict?.apply_score ??
+  currentJobResult.apply_score ??
+  currentJobResult.verdictScore ??
+  "N/A"
+}/10
 
-Tailoring Strategy:
-${currentJobResult.tailoring_strategy_summary || "N/A"}
-Decision: ${currentJobResult.decision || "N/A"}
-Target Level: ${currentJobResult.target_level || "N/A"}
-Next Action: ${currentJobResult.next_action || "N/A"}
-H-1B Risk: ${currentJobResult.h1b_risk || "N/A"}
+Current Match:
+${
+  currentJobResult.current_match_percent ??
+  currentJobResult.currentMatchPercent ??
+  "N/A"
+}%
 
-Best Resume Angle:
-${currentJobResult.best_resume_angle || "N/A"}
+Potential Match:
+${
+  currentJobResult.tailored_match_percent ??
+  currentJobResult.tailoredMatchPercent ??
+  "N/A"
+}%
 
-Why They Might Hire:
-${(currentJobResult.why_they_might_hire || []).map(x => "- " + x).join("\n")}
+Decision:
+${currentJobResult.decision || "N/A"}
 
-Why They Might Pass:
-${(currentJobResult.why_they_might_pass || []).map(x => "- " + x).join("\n")}
+Target Level:
+${currentJobResult.target_level || currentJobResult.targetLevel || "N/A"}
 
-Keywords to Emphasize:
-${(currentJobResult.keywords_to_emphasize || []).map(x => "- " + x).join("\n")}
+Next Action:
+${currentJobResult.next_action || currentJobResult.nextAction || "N/A"}
 
-Missing Keywords:
-${(currentJobResult.missing_keywords || []).map(x => "- " + x).join("\n")}
+Resume Strategy
+${currentTailorResult.resume_strategy || ""}
 
-Recommended Projects:
-${(currentJobResult.recommended_projects || []).map(x => "- " + x).join("\n")}
+Recommended Resume Angle
+${currentTailorResult.recommended_resume_angle || ""}
 
-Fit Notes / Do Not Overclaim:
-${currentJobResult.risk_or_overclaim_warning || "N/A"}
+Summary Direction
+${currentTailorResult.summary_direction || ""}
 
-Tailoring Worth:
-${currentTailorResult?.tailoring_worth_score ?? "N/A"}/10
+Skills To Emphasize
+${(currentTailorResult.skills_to_emphasize || [])
+  .map((item) => `- ${item}`)
+  .join("\n")}
 
-Recommended Effort:
-${currentTailorResult?.tailoring_effort ?? "N/A"}
+Keywords To Add
+${(currentTailorResult.keywords_to_add || [])
+  .map((item) => `- ${item}`)
+  .join("\n")}
 
-Resume Strategy:
-${currentTailorResult?.resume_strategy ?? "N/A"}
+Interview Talking Points
+${(currentTailorResult.interview_talking_points || [])
+  .map((item) => `- ${item}`)
+  .join("\n")}
 
-Recommended Resume Angle:
-${currentTailorResult?.recommended_resume_angle ?? "N/A"}
+Projects
+${(
+  currentJobResult.recommended_projects ||
+  currentJobResult.recommendedProjects ||
+  []
+)
+  .map((item) => `- ${item}`)
+  .join("\n")}
 
-Summary Direction:
-${currentTailorResult?.summary_direction ?? "N/A"}
+Missing Keywords
+${(
+  currentJobResult.missing_keywords ||
+  currentJobResult.missingKeywords ||
+  []
+)
+  .map((item) => `- ${item}`)
+  .join("\n")}
 
-Skills to Emphasize:
-${(currentTailorResult?.skills_to_emphasize || []).map(x => "- " + x).join("\n")}
+Instruction
 
-Keywords to Add:
-${(currentTailorResult?.keywords_to_add || []).map(x => "- " + x).join("\n")}
+Tailor my resume truthfully.
 
-Instruction:
-Use this context to tailor my resume truthfully. Keep my same job titles, dates, structure, 3 bullets per role, exactly 2 projects, and do not invent experience.
+• Keep the same work history.
+• Keep the same dates.
+• Keep the same employers.
+• Keep exactly 3 bullets per role.
+• Keep exactly 2 projects.
+• Never invent experience.
 `.trim();
 
-  await navigator.clipboard.writeText(insight);
-  alert("Insight copied.");
+  try {
+    await navigator.clipboard.writeText(insight);
+    alert("Resume tailoring insight copied.");
+  } catch {
+    alert("Could not copy the insight to the clipboard.");
+  }
 });
 
-saveJobButton.addEventListener("click", () => {
+saveJobButton?.addEventListener("click", async () => {
   if (!currentJobResult) {
     alert("Analyze a job before saving.");
     return;
   }
 
-  chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
-    chrome.storage.local.get(["savedJobs"], (stored) => {
-      const jobs = stored.savedJobs || [];
+  const [tab] = await chrome.tabs.query({
+    active: true,
+    currentWindow: true
+  });
 
-      jobs.unshift({
+  chrome.storage.local.get(["savedJobs"], (stored) => {
+    const jobs = Array.isArray(stored.savedJobs)
+      ? stored.savedJobs
+      : [];
 
+    const now = new Date().toLocaleString();
 
+    const job = {
+      id: crypto.randomUUID(),
 
-        id: crypto.randomUUID(),
-        fullAnalysis: currentJobResult,
-        tailorAnalysis: currentTailorResult,
-        resumeDraft: currentResumeDraft,
-        company: currentJobResult.company,
-	coverLetter: currentCoverLetter,
-	networkResult: currentNetworkResult,
-	applicationHelp: currentApplicationHelp,
-	title: currentJobResult.job_title,
-        location: currentJobResult.location,
-        url: tab?.url || "",
-        currentMatch: currentJobResult.current_match_percent,
-        tailoredMatch: currentJobResult.tailored_match_percent,
-        hiringScore: currentJobResult.hiring_logic_score,
-        decision: currentJobResult.decision,
-        target: currentJobResult.target_level,
-        status: "Interested",
-        notes: "",
-        savedAt: new Date().toLocaleString(),
-        updatedAt: new Date().toLocaleString()
-      });
+      company:
+        currentJobResult.company ||
+        currentJobResult.companyName ||
+        "",
 
-      chrome.storage.local.set({ savedJobs: jobs }, () => alert("Job saved!"));
-    });
+      title:
+        currentJobResult.job_title ||
+        currentJobResult.jobTitle ||
+        "",
+
+      location:
+        currentJobResult.location ||
+        "",
+
+      url:
+        tab?.url ||
+        "",
+
+      currentMatch:
+        currentJobResult.current_match_percent ??
+        currentJobResult.currentMatchPercent ??
+        "",
+
+      tailoredMatch:
+        currentJobResult.tailored_match_percent ??
+        currentJobResult.tailoredMatchPercent ??
+        "",
+
+      hiringScore:
+        currentJobResult.hiring_logic_score ??
+        currentJobResult.hiringLogicScore ??
+        "",
+
+      decision:
+        currentJobResult.decision ||
+        "",
+
+      target:
+        currentJobResult.target_level ||
+        currentJobResult.targetLevel ||
+        "",
+
+      fullAnalysis: currentJobResult,
+      tailorAnalysis: currentTailorResult,
+      resumeDraft: currentResumeDraft,
+      coverLetter: currentCoverLetter,
+      networkResult: currentNetworkResult,
+      applicationHelp: currentApplicationHelp,
+
+      status: "Interested",
+      notes: "",
+      savedAt: now,
+      updatedAt: now
+    };
+
+    jobs.unshift(job);
+
+    chrome.storage.local.set(
+      {
+        savedJobs: jobs
+      },
+      () => {
+        alert("Job saved!");
+      }
+    );
   });
 });
 
 function updateJobStatus(id, status) {
-  chrome.storage.local.get(["savedJobs"], (stored) => {
-    const updatedJobs = (stored.savedJobs || []).map((job) =>
-      job.id === id ? { ...job, status, updatedAt: new Date().toLocaleString() } : job
-    );
+  chrome.storage.local.get(
+    ["savedJobs"],
+    (stored) => {
+      const jobs = (stored.savedJobs || []).map(
+        (job) => {
+          if (job.id !== id) {
+            return job;
+          }
 
-    chrome.storage.local.set({ savedJobs: updatedJobs }, () => viewJobsButton.click());
-  });
+          return {
+            ...job,
+            status,
+            updatedAt: new Date().toLocaleString()
+          };
+        }
+      );
+
+      chrome.storage.local.set(
+        {
+          savedJobs: jobs
+        },
+        () => renderSavedJobs(jobs)
+      );
+    }
+  );
 }
 
-function renderJobs(jobs, title, subtitle) {
-  resultDiv.style.background = "transparent";
-  resultDiv.style.padding = "0";
-  resultDiv.style.color = "#eee";
+function calculateRepostInfo(job, jobs) {
+  const similarJobs = jobs.filter((other) => {
+    if (other.id === job.id) {
+      return false;
+    }
 
-  if (jobs.length === 0) {
-    resultDiv.innerHTML = section(title, "<p>No jobs found.</p>");
+    const companyMatch =
+      String(other.company || "").toLowerCase() ===
+      String(job.company || "").toLowerCase();
+
+    if (!companyMatch) {
+      return false;
+    }
+
+    const titleA = String(other.title || "")
+      .toLowerCase();
+
+    const titleB = String(job.title || "")
+      .toLowerCase();
+
+    return (
+      titleA.includes(titleB.slice(0, 12)) ||
+      titleB.includes(titleA.slice(0, 12))
+    );
+  });
+
+  const seenCount = similarJobs.length + 1;
+
+  let repostRisk = "Low";
+
+  if (seenCount >= 3) {
+    repostRisk = "High";
+  } else if (seenCount === 2) {
+    repostRisk = "Moderate";
+  }
+
+  return {
+    seenCount,
+    repostRisk,
+    previousStatuses: [
+      ...new Set(
+        similarJobs
+          .map((job) => job.status)
+          .filter(Boolean)
+      )
+    ]
+  };
+}
+
+function renderSavedJobs(
+  jobs = [],
+  title = "Saved Jobs",
+  subtitle = ""
+) {
+  prepareResultArea();
+
+  if (!jobs.length) {
+    resultDiv.innerHTML = section(
+      title,
+      "<p>No jobs found.</p>"
+    );
     return;
   }
 
   resultDiv.innerHTML = `
-    <div style="background:#101010;border-radius:14px;padding:14px;margin-top:10px;border:1px solid #303030;">
-      <div style="font-size:11px;letter-spacing:1.5px;color:#999;">SWAPOPT TRACKER</div>
-      <div style="font-size:20px;font-weight:800;color:#e6e6e6;margin-top:5px;">${escapeHtml(title)}</div>
-      <div style="font-size:13px;color:#bbb;margin-top:6px;">${escapeHtml(subtitle)}</div>
-</div>
-
-<input
-  id="jobSearchInput"
-  placeholder="Search company, role, location, status..."
-  style="width:100%;margin-top:10px;padding:10px;border-radius:10px;border:1px solid #333;background:#111;color:#eee;"
-/>
-
-${jobs.map((job) => {
-  const similarJobs = jobs.filter(j =>
-    j.id !== job.id &&
-    String(j.company || "").toLowerCase() === String(job.company || "").toLowerCase() &&
-    (
-      String(j.title || "").toLowerCase().includes(String(job.title || "").toLowerCase().slice(0, 12)) ||
-      String(job.title || "").toLowerCase().includes(String(j.title || "").toLowerCase().slice(0, 12))
-    )
-  );
-
-  const seenCount = similarJobs.length + 1;
-  const previousStatuses = [...new Set(similarJobs.map(j => j.status).filter(Boolean))];
-
-  let repostRisk = "Low";
-  if (seenCount >= 3) repostRisk = "High";
-  else if (seenCount === 2) repostRisk = "Moderate";
-
-  return `
-      <div data-job-card style="background:#171717;border:1px solid #303030;padding:12px;border-radius:12px;margin-top:10px;">
-        <b>${escapeHtml(job.title)}</b><br>
-        <span style="font-size:12px;color:#aaa;">${escapeHtml(job.company)} | ${escapeHtml(job.location)}</span>
-
-        <div style="margin-top:8px;">
-          Match: ${escapeHtml(job.currentMatch)}% -> ${escapeHtml(job.tailoredMatch)}%<br>
-          Hiring: ${escapeHtml(job.hiringScore)}/10<br>
-          Decision: ${escapeHtml(job.decision)}<br>
-          Target: ${escapeHtml(job.target)}<br>
-          Status: <b>${escapeHtml(job.status || "Interested")}</b><br>
-Seen Similar: <b>${escapeHtml(seenCount)}</b><br>
-Previous Statuses: ${escapeHtml(previousStatuses.length ? previousStatuses.join(", ") : "None")}<br>
-Repost Risk: <b>${escapeHtml(repostRisk)}</b>
-        </div>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;">
-          <button class="statusButton" data-id="${escapeHtml(job.id)}" data-status="Applied">Applied</button>
-          <button class="statusButton" data-id="${escapeHtml(job.id)}" data-status="Interview">Interview</button>
-          <button class="statusButton" data-id="${escapeHtml(job.id)}" data-status="Rejected">Rejected</button>
-          <button class="statusButton" data-id="${escapeHtml(job.id)}" data-status="Archived">Archive</button>
-        </div>
-
-        <div style="margin-top:8px;font-size:11px;color:#aaa;">Saved: ${escapeHtml(job.savedAt)}</div>
-        <div style="margin-top:4px;font-size:11px;color:#aaa;">Updated: ${escapeHtml(job.updatedAt || job.savedAt)}</div>
-        <div style="margin-top:8px;display:grid;gap:6px;">
-  ${
-    job.fullAnalysis
-      ? `<button class="viewAnalysisButton" data-id="${escapeHtml(job.id)}">
-          View Saved Analysis
-        </button>`
-      : ""
-  }
-
-  ${
-    job.tailorAnalysis
-      ? `<button class="viewTailorButton" data-id="${escapeHtml(job.id)}">
-          View Tailoring Strategy
-        </button>`
-      : ""
-  }
-
-  ${
-    job.resumeDraft
-      ? `<button class="viewResumeButton" data-id="${escapeHtml(job.id)}">
-          View Resume Draft
-        </button>`
-      : ""
-  }
-
-  ${
-    job.url
-      ? `<a href="${escapeHtml(job.url)}" target="_blank">Open Job</a>`
-      : ""
-  }
-</div>
+    <div
+      style="
+        background:#101010;
+        border-radius:14px;
+        padding:14px;
+        margin-top:10px;
+        border:1px solid #303030;
+      "
+    >
+      <div
+        style="
+          font-size:11px;
+          letter-spacing:1.5px;
+          color:#999;
+        "
+      >
+        SWAPOPT TRACKER
       </div>
-    `;
-}).join("")}
+
+      <div
+        style="
+          font-size:20px;
+          font-weight:800;
+          color:#fff;
+          margin-top:5px;
+        "
+      >
+        ${escapeHtml(title)}
+      </div>
+
+      <div
+        style="
+          font-size:13px;
+          color:#bbb;
+          margin-top:6px;
+        "
+      >
+        ${escapeHtml(subtitle)}
+      </div>
+    </div>
+
+    <input
+      id="jobSearchInput"
+      placeholder="Search company, role, location, status..."
+      style="
+        width:100%;
+        margin-top:10px;
+        padding:10px;
+        border-radius:10px;
+        border:1px solid #333;
+        background:#111;
+        color:#eee;
+      "
+    />
+
+    ${jobs
+      .map((job) => {
+        const repost =
+          calculateRepostInfo(job, jobs);
+
+        return `
+          <div
+            data-job-card
+            style="
+              background:#171717;
+              border:1px solid #303030;
+              padding:12px;
+              border-radius:12px;
+              margin-top:10px;
+            "
+          >
+            <b>${escapeHtml(job.title)}</b>
+
+            <br>
+
+            <span
+              style="
+                font-size:12px;
+                color:#aaa;
+              "
+            >
+              ${escapeHtml(job.company)}
+              |
+              ${escapeHtml(job.location)}
+            </span>
+
+            <div
+              style="
+                margin-top:8px;
+                line-height:1.6;
+              "
+            >
+              Match:
+              ${escapeHtml(job.currentMatch)}%
+              →
+              ${escapeHtml(job.tailoredMatch)}%
+
+              <br>
+
+              Hiring:
+              ${escapeHtml(job.hiringScore)}/10
+
+              <br>
+
+              Decision:
+              ${escapeHtml(job.decision)}
+
+              <br>
+
+              Target:
+              ${escapeHtml(job.target)}
+
+              <br>
+
+              Status:
+              <b>${escapeHtml(job.status)}</b>
+
+              <br>
+
+              Seen Similar:
+              <b>${repost.seenCount}</b>
+
+              <br>
+
+              Previous Statuses:
+              ${
+                repost.previousStatuses.length
+                  ? escapeHtml(
+                      repost.previousStatuses.join(", ")
+                    )
+                  : "None"
+              }
+
+              <br>
+
+              Repost Risk:
+              <b>${escapeHtml(repost.repostRisk)}</b>
+            </div>
+
+            <div
+              style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:6px;
+                margin-top:10px;
+              "
+            >
+
+              <button
+                class="status-btn"
+                data-id="${job.id}"
+                data-status="Interested"
+              >
+                Interested
+              </button>
+
+              <button
+                class="status-btn"
+                data-id="${job.id}"
+                data-status="Applied"
+              >
+                Applied
+              </button>
+
+              <button
+                class="status-btn"
+                data-id="${job.id}"
+                data-status="Interview"
+              >
+                Interview
+              </button>
+
+              <button
+                class="status-btn"
+                data-id="${job.id}"
+                data-status="Rejected"
+              >
+                Rejected
+              </button>
+            </div>
+
+            <div
+              style="
+                display:flex;
+                gap:8px;
+                margin-top:10px;
+                flex-wrap:wrap;
+              "
+            >
+              <button
+                class="open-job-btn"
+                data-url="${escapeHtml(job.url)}"
+              >
+                Open Posting
+              </button>
+
+              <button
+                class="copy-analysis-btn"
+                data-id="${job.id}"
+              >
+                Copy Analysis
+              </button>
+
+              <button
+                class="delete-job-btn"
+                data-id="${job.id}"
+              >
+                Delete
+              </button>
+            </div>
+
+            <div
+              style="
+                margin-top:10px;
+              "
+            >
+              <textarea
+                class="job-note"
+                data-id="${job.id}"
+                placeholder="Notes..."
+                style="
+                  width:100%;
+                  min-height:70px;
+                  background:#111;
+                  color:#eee;
+                  border:1px solid #333;
+                  border-radius:8px;
+                  padding:8px;
+                "
+              >${escapeHtml(job.notes || "")}</textarea>
+
+              <button
+                class="save-note-btn"
+                data-id="${job.id}"
+                style="margin-top:6px;"
+              >
+                Save Notes
+              </button>
+            </div>
+          </div>
+        `;
+      })
+      .join("")}
   `;
 
-const searchInput = document.getElementById("jobSearchInput");
-
-document.querySelectorAll(".statusButton").forEach((button) => {
-  button.addEventListener("click", () => updateJobStatus(button.dataset.id, button.dataset.status));
-});
-
-if (searchInput) {
-  searchInput.addEventListener("input", () => {
-    const q = searchInput.value.toLowerCase();
-
-    document.querySelectorAll("[data-job-card]").forEach((card) => {
-      const text = card.innerText.toLowerCase();
-      card.style.display = text.includes(q) ? "block" : "none";
+  document
+    .querySelectorAll(".status-btn")
+    .forEach((button) => {
+      button.addEventListener(
+        "click",
+        () => {
+          updateJobStatus(
+            button.dataset.id,
+            button.dataset.status
+          );
+        }
+      );
     });
-  });
+
+  document
+    .querySelectorAll(".delete-job-btn")
+    .forEach((button) => {
+      button.addEventListener(
+        "click",
+        () => {
+          chrome.storage.local.get(
+            ["savedJobs"],
+            (stored) => {
+              const jobs = (
+                stored.savedJobs || []
+              ).filter(
+                (job) =>
+                  job.id !==
+                  button.dataset.id
+              );
+
+              chrome.storage.local.set(
+                {
+                  savedJobs: jobs
+                },
+                () =>
+                  renderSavedJobs(jobs)
+              );
+            }
+          );
+        }
+      );
+    });
+
+  document
+    .querySelectorAll(".open-job-btn")
+    .forEach((button) => {
+      button.addEventListener(
+        "click",
+        () => {
+          chrome.tabs.create({
+            url: button.dataset.url
+          });
+        }
+      );
+    });
+
+  document
+    .querySelectorAll(".save-note-btn")
+    .forEach((button) => {
+      button.addEventListener(
+        "click",
+        () => {
+          const textarea =
+            document.querySelector(
+              `.job-note[data-id="${button.dataset.id}"]`
+            );
+
+          chrome.storage.local.get(
+            ["savedJobs"],
+            (stored) => {
+              const jobs = (
+                stored.savedJobs || []
+              ).map((job) => {
+                if (
+                  job.id !==
+                  button.dataset.id
+                ) {
+                  return job;
+                }
+
+                return {
+                  ...job,
+                  notes:
+                    textarea?.value || "",
+                  updatedAt:
+                    new Date().toLocaleString()
+                };
+              });
+
+              chrome.storage.local.set({
+                savedJobs: jobs
+              });
+            }
+          );
+        }
+      );
+    });
+
+  document
+    .querySelectorAll(".copy-analysis-btn")
+    .forEach((button) => {
+      button.addEventListener(
+        "click",
+        async () => {
+          chrome.storage.local.get(
+            ["savedJobs"],
+            async (stored) => {
+              const job = (
+                stored.savedJobs || []
+              ).find(
+                (item) =>
+                  item.id ===
+                  button.dataset.id
+              );
+
+              if (!job) return;
+
+              try {
+                await navigator.clipboard.writeText(
+                  JSON.stringify(
+                    job,
+                    null,
+                    2
+                  )
+                );
+
+                alert(
+                  "Analysis copied."
+                );
+              } catch {
+                alert(
+                  "Unable to copy."
+                );
+              }
+            }
+          );
+        }
+      );
+    });
+
+  const searchInput =
+    document.getElementById(
+      "jobSearchInput"
+    );
+
+  searchInput?.addEventListener(
+    "input",
+    () => {
+      const value =
+        searchInput.value.toLowerCase();
+
+      document
+        .querySelectorAll(
+          "[data-job-card]"
+        )
+        .forEach((card) => {
+          const text =
+            card.textContent.toLowerCase();
+
+          card.style.display =
+            text.includes(value)
+              ? ""
+              : "none";
+        });
+    }
+  );
 }
-document.querySelectorAll(".viewAnalysisButton").forEach((button) => {
-  button.addEventListener("click", () => {
-    const job = jobs.find(j => j.id === button.dataset.id);
 
-    if (job?.fullAnalysis) {
-      currentJobResult = job.fullAnalysis;
-      renderAnalysisResult(job.fullAnalysis);
-    }
+viewJobsButton?.addEventListener(
+  "click",
+  () => {
+    chrome.storage.local.get(
+      ["savedJobs"],
+      (stored) => {
+        renderSavedJobs(
+          stored.savedJobs || []
+        );
+      }
+    );
+  }
+);
+
+viewAllJobsButton?.addEventListener("click", () => {
+  chrome.storage.local.get(["savedJobs"], ({ savedJobs = [] }) => {
+    renderSavedJobs(
+      savedJobs,
+      "All Jobs",
+      `${savedJobs.length} total jobs`
+    );
   });
 });
 
+viewArchivedButton?.addEventListener("click", () => {
+  chrome.storage.local.get(["savedJobs"], ({ savedJobs = [] }) => {
+    const archived = savedJobs.filter(
+      (job) =>
+        String(job.status).toLowerCase() === "rejected" ||
+        String(job.status).toLowerCase() === "archived"
+    );
 
-document.querySelectorAll(".viewTailorButton").forEach((button) => {
-  button.addEventListener("click", () => {
-    const job = jobs.find(j => j.id === button.dataset.id);
-
-    if (job?.tailorAnalysis) {
-      currentTailorResult = job.tailorAnalysis;
-      renderTailorResult(job.tailorAnalysis);
-    }
+    renderSavedJobs(
+      archived,
+      "Archived Jobs",
+      `${archived.length} archived`
+    );
   });
 });
 
-
-document.querySelectorAll(".viewResumeButton").forEach((button) => {
-  button.addEventListener("click", () => {
-    const job = jobs.find(j => j.id === button.dataset.id);
-
-    if (job?.resumeDraft) {
-      currentResumeDraft = job.resumeDraft;
-      renderResumeDraft(job.resumeDraft);
-    }
-  });
-});
-}
-
-viewJobsButton.addEventListener("click", () => {
-  chrome.storage.local.get(["savedJobs"], (stored) => {
-    const all = stored.savedJobs || [];
-    const active = all.filter(job => job.status !== "Archived").slice(0, 5);
-    renderJobs(active, "Last 5 Active Jobs", `${active.length} shown | Archived hidden`);
-  });
-});
-
-viewAllJobsButton.addEventListener("click", () => {
-  chrome.storage.local.get(["savedJobs"], (stored) => {
-    const active = (stored.savedJobs || []).filter(job => job.status !== "Archived");
-    renderJobs(active, "All Active Jobs", `${active.length} active job(s)`);
-  });
-});
-
-viewArchivedButton.addEventListener("click", () => {
-  chrome.storage.local.get(["savedJobs"], (stored) => {
-    const archived = (stored.savedJobs || []).filter(job => job.status === "Archived");
-    renderJobs(archived, "Archived Jobs", `${archived.length} archived job(s)`);
-  });
-});
-
-exportJobsButton.addEventListener("click", () => {
-  chrome.storage.local.get(["savedJobs"], (stored) => {
-    const jobs = stored.savedJobs || [];
-    if (jobs.length === 0) {
-      alert("No saved jobs to export.");
+exportJobsButton?.addEventListener("click", () => {
+  chrome.storage.local.get(["savedJobs"], ({ savedJobs = [] }) => {
+    if (!savedJobs.length) {
+      alert("No jobs to export.");
       return;
     }
 
-    const headers = ["Company", "Title", "Location", "URL", "Current Match", "Tailored Match", "Hiring Score", "Decision", "Target", "Status", "Saved At", "Updated At"];
-    const rows = jobs.map((job) => [
-      job.company || "", job.title || "", job.location || "", job.url || "",
-      job.currentMatch || "", job.tailoredMatch || "", job.hiringScore || "",
-      job.decision || "", job.target || "", job.status || "", job.savedAt || "", job.updatedAt || ""
-    ]);
+    const rows = [
+      [
+        "Company",
+        "Title",
+        "Location",
+        "Current Match",
+        "Tailored Match",
+        "Hiring Score",
+        "Decision",
+        "Target",
+        "Status",
+        "Saved At",
+        "Updated At",
+        "URL",
+        "Notes"
+      ]
+    ];
 
-    const csv = [
-      headers.join(","),
-      ...rows.map((row) => row.map((value) => `"${String(value).replaceAll('"', '""')}"`).join(","))
-    ].join("\n");
+    savedJobs.forEach((job) => {
+      rows.push([
+        job.company || "",
+        job.title || "",
+        job.location || "",
+        job.currentMatch || "",
+        job.tailoredMatch || "",
+        job.hiringScore || "",
+        job.decision || "",
+        job.target || "",
+        job.status || "",
+        job.savedAt || "",
+        job.updatedAt || "",
+        job.url || "",
+        (job.notes || "").replace(/\r?\n/g, " ")
+      ]);
+    });
 
-    const blob = new Blob([csv], { type: "text/csv" });
+    const csv = rows
+      .map((row) =>
+        row
+          .map((value) => `"${String(value).replace(/"/g, '""')}"`)
+          .join(",")
+      )
+      .join("\n");
+
+    const blob = new Blob([csv], {
+      type: "text/csv"
+    });
+
     const url = URL.createObjectURL(blob);
+
     const a = document.createElement("a");
     a.href = url;
-    a.download = `swapopt_saved_jobs_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.download = `swapopt_jobs_${new Date()
+      .toISOString()
+      .slice(0, 10)}.csv`;
+
+    document.body.appendChild(a);
     a.click();
+    a.remove();
+
     URL.revokeObjectURL(url);
   });
 });
+
+clearTrackerButton?.addEventListener("click", () => {
+  if (
+    !confirm(
+      "Delete every saved job from your SwapOpt tracker?"
+    )
+  ) {
+    return;
+  }
+
+  chrome.storage.local.remove(
+    ["savedJobs"],
+    () => {
+      renderSavedJobs(
+        [],
+        "Saved Jobs",
+        "Tracker cleared."
+      );
+
+      alert("Tracker cleared.");
+    }
+  );
+});
+

@@ -1,0 +1,49 @@
+SWAPNIL HERWADKAR 
+Glendale, AZ | (413) 479-9181 | swapnilherwadkar98@gmail.com | LinkedIn | GitHub | Tableau  
+PROFESSIONAL SUMMARY 
+Data Analyst / BI Analyst with 3+ years of experience building SQL-backed datasets, KPI dashboards, and automated 
+reporting solutions. Skilled in SQL, Power BI, Tableau, Python, Snowflake, ETL, and stakeholder reporting. Saved 60+ 
+hours/month and reduced reporting turnaround by 30% through automation. 
+SKILLS 
+Analytics & BI: SQL, Power BI, Tableau, Looker, Excel, KPI Reporting, Executive Dashboards, Interactive Dashboards 
+Data Platforms & Modeling: Snowflake, MySQL, Redshift, BigQuery, SAP HANA, SAP BW, Azure Data Factory, Alteryx, 
+Data Modeling, Reporting Views, Data Mapping 
+Programming & Automation: Python, Pandas, NumPy, Scikit-learn, REST APIs, SQL Workflow Automation, ETL 
+Pipelines, Logistic Regression, Excel 
+Data Quality & Business Analysis: Data Validation, Data Governance, QA Checks, Root Cause Analysis, Requirements 
+Gathering, Stakeholder Management, UAT, Agile, JIRA, Confluence 
+WORK EXPERIENCE 
+Data Analyst | Community Dreams Foundation | Oct 2024 – Oct 2025 | Contract 
+• Translated Dreamline workflows for homeowner intake, contractor matching, incentives, and project status into KPI 
+definitions, reporting requirements, and dashboard acceptance criteria. 
+• Automated SQL-driven reporting workflows and sustainability KPI tracking, reducing manual data processing effort by 
+25% and improving access to operational insights. 
+• Optimized MySQL reporting datasets and reusable BI logic using query tuning and standardized calculations, 
+improving dashboard performance and self-service reporting. 
+Data Analyst II | Accenture | Nov 2022 - Jun 2023 
+• Developed SQL and Power BI KPI dashboards for recurring operational reporting, reducing report turnaround by 30% 
+and improving decision speed by 20%. 
+• Automated SQL ETL/reporting pipelines with scheduling, error handling, retries, alerts, and QA checks, saving 60+ 
+hours/month and reducing inconsistencies by 35%. 
+• Standardized KPI definitions, data mappings, validation rules, and reporting documentation, cutting 
+reporting/compliance errors by 40%. 
+Data Analyst I | Accenture | Feb 2021 - Nov 2022 
+• Optimized high-volume SQL queries using indexing, partitioning, CTE refactors, and window functions, reducing query 
+execution time by 15%. 
+• Integrated SAP HANA/BW, ERP, and source-system data into reporting layers, improving workflow efficiency by 35% 
+for operational analytics. 
+• Reconciled ERP, SQL, and reporting-layer data to resolve client-vendor inconsistencies, improving accuracy by 10% 
+and reducing discrepancies by 20%. 
+PROJECTS 
+FIFA World Cup 2026 Sponsorship Analytics Platform | Snowflake, Python, Power BI, Streamlit, OpenAI | GitHub Link 
+• Built an end-to-end BI platform using Python ETL, Snowflake, SQL, Power BI, and Streamlit to centralize sponsorship 
+data and support executive KPI reporting. 
+SwapOpt AI – Job Intelligence Platform | JavaScript, Node.js, Express, OpenAI API | GitHub Link 
+• Built an AI-powered Chrome extension that analyzes job postings, generates ATS-optimized resumes, cover letters, 
+networking outreach, and tracks applications through an intelligent workflow. 
+Ad Click Prediction Using Machine Learning | Python (Scikit-learn, Pandas), XGBoost, SMOTE | GitHub Link 
+• Built a predictive targeting pipeline to identify high-probability ad-click users and improve CTR analysis through feature 
+engineering, SMOTE, and XGBoost. 
+EDUCATION 
+Master of Science in Business Analytics | University of Massachusetts Amherst | Sep 2023 - Aug 2024 
+Bachelor of Engineering in Electronics | Ramdeobaba College of Engineering & Management | Jul 2016 - Aug 2020 

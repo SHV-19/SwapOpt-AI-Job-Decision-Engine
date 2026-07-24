@@ -1,0 +1,7 @@
+Analytics & BI: SQL, Power BI, Tableau, Looker, SAP Reporting, KPI Reporting, Executive Dashboards, Self-Service BI 
+Data Platforms & Modeling: SAP S/4HANA 1909, SAP GUI, SAP HANA, SAP BW, SAP GTS, MySQL, Snowflake, 
+BigQuery, ERP Data, Data Modeling 
+Programming & Automation: Python, Pandas, NumPy, REST APIs, GitHub, SQL Automation, Workflow Automation, 
+Linux 
+Data Quality & Business Analysis: CHaRM, ITSM, Transport Management, Release Coordination, Hypercare, Transport 
+Requests, Data Validation, Business Rules, Agile, JIRA, Confluence 

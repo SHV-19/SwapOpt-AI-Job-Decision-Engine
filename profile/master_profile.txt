@@ -1,0 +1,1799 @@
+SWAPOPT MASTER PROFILE
+======================
+
+VERSION
+=======
+Version: 1.0 (Permanent)
+Purpose: Primary Candidate Knowledge Base
+Last Updated: Final Product Release
+
+This document serves as the authoritative source of truth for all AI-generated
+outputs within SwapOpt.
+
+Every resume, cover letter, networking message, application response, and job
+analysis must rely on the information contained in this document.
+
+Never contradict the information contained here.
+
+Never fabricate information beyond what is documented in this profile.
+
+===========================================================================
+CANDIDATE IDENTITY
+===========================================================================
+
+Full Name:
+Swapnil Herwadkar
+
+Current Location:
+Glendale, Arizona, USA
+
+Work Authorization:
+Requires H-1B sponsorship.
+
+Employment Preference:
+Full-time employment.
+
+Preferred Work Models:
+- Remote
+- Hybrid
+- Onsite
+
+Preferred Locations:
+- Dallas / Fort Worth
+- Phoenix Metropolitan Area
+- Arizona
+- Texas
+- Major U.S. technology hubs
+- Remote opportunities throughout the United States
+
+Linked Professional Profiles:
+- LinkedIn
+- GitHub
+- Tableau Public
+
+===========================================================================
+CAREER SUMMARY
+===========================================================================
+
+Swapnil Herwadkar is a Business Analytics and Data Analytics professional with
+approximately three years of experience delivering business intelligence,
+reporting, SQL analytics, dashboard development, automation, and operational
+analytics solutions.
+
+His experience combines enterprise consulting, nonprofit analytics, and
+graduate-level business analytics education to solve business problems through
+data-driven decision making.
+
+Throughout his career he has focused on transforming operational and business
+data into actionable insights by developing SQL-backed reporting solutions,
+interactive dashboards, KPI frameworks, automated reporting workflows, and
+decision-support analytics.
+
+His technical foundation includes SQL, Python, Power BI, Tableau, Snowflake,
+SAP HANA, SAP BW, MySQL, ETL concepts, business intelligence, statistical
+analysis, and machine learning fundamentals.
+
+He is particularly interested in roles where business understanding and data
+analytics intersect, allowing him to work closely with stakeholders,
+decision-makers, and cross-functional teams to improve business performance.
+
+===========================================================================
+TARGET ROLES
+===========================================================================
+
+Highest Priority
+
+- Data Analyst
+- Business Data Analyst
+- Business Intelligence Analyst
+- BI Developer
+- Reporting Analyst
+- Product Analyst
+- Customer Analytics Analyst
+- Marketing Analytics Analyst
+- Operations Analyst
+- Supply Chain Analyst
+- Commercial Analytics Analyst
+- Sales Analytics Analyst
+- Pricing Analyst
+- Revenue Analyst
+- Decision Support Analyst
+
+Strong Secondary Targets
+
+- Junior Product Analytics
+- Analytics Consultant
+- Data Consultant
+- Business Systems Analyst
+- Decision Science Analyst
+- Strategy Analytics
+- Customer Insights Analyst
+- Digital Analytics Analyst
+- Workforce Analytics Analyst
+
+Conditional Roles
+
+Only recommend these when requirements closely match existing experience.
+
+- Analytics Engineer
+- Data Science (Business-focused)
+- AI Business Analyst
+- Business Intelligence Engineer
+
+===========================================================================
+LOW PRIORITY / AVOID ROLES
+===========================================================================
+
+Avoid recommending roles that primarily require:
+
+- Principal-level ownership
+- Lead-level management
+- Staff-level engineering
+- Software engineering
+- Backend engineering
+- Frontend engineering
+- DevOps
+- Site Reliability Engineering
+- Production ML Engineering
+- Deep Learning Research
+- AI Research
+- Heavy Data Engineering ownership
+- Cloud Architecture ownership
+- Infrastructure Engineering
+- Security Engineering
+
+Also avoid recommending roles where success depends primarily on:
+
+- Government security clearance
+- Specialized medical licensing
+- CPA certification
+- Unrelated engineering disciplines
+- More than seven years of required experience unless clearly flexible
+
+===========================================================================
+PROFESSIONAL PROFILE
+===========================================================================
+
+Current Career Level
+
+Early to Mid-Level Analytics Professional
+
+Estimated Professional Experience
+
+Approximately 3 years of analytics and business intelligence experience across
+enterprise consulting and nonprofit organizations.
+
+Primary Professional Strengths
+
+- SQL development
+- Business analytics
+- Dashboard development
+- KPI reporting
+- Business intelligence
+- Reporting automation
+- Data storytelling
+- Stakeholder communication
+- Business process improvement
+- Operational analytics
+- Data quality validation
+- Requirements gathering
+- Cross-functional collaboration
+- Business reporting
+- Decision support
+
+Professional Brand
+
+Focus on solving business problems through practical analytics rather than
+building highly complex engineering systems.
+
+The strongest value proposition is the ability to combine technical analysis
+with business understanding to improve reporting, operational visibility,
+process efficiency, and executive decision-making.
+
+===========================================================================
+CORE STRENGTHS
+===========================================================================
+
+Technical Strengths
+
+- SQL querying
+- Data transformation
+- Dashboard development
+- Interactive reporting
+- Data visualization
+- KPI development
+- ETL concepts
+- Business intelligence
+- Reporting automation
+- Statistical analysis
+- Exploratory data analysis
+- Machine learning fundamentals
+- Predictive analytics
+- Data validation
+- Data quality improvement
+
+Business Strengths
+
+- Translating business requirements into analytics solutions
+- Identifying operational improvement opportunities
+- Building stakeholder-friendly dashboards
+- Supporting business decisions using data
+- Creating reusable reporting frameworks
+- Communicating technical findings to non-technical audiences
+- Standardizing reporting processes
+- Improving reporting efficiency through automation
+
+Personal Working Style
+
+- Structured
+- Detail-oriented
+- Analytical
+- Business-focused
+- Collaborative
+- Process-driven
+- Documentation-oriented
+- Continuous learner
+- Strong ownership mindset
+- Practical problem solver
+
+===========================================================================
+PROFESSIONAL EXPERIENCE
+===========================================================================
+
+PROFESSIONAL OVERVIEW
+=====================
+
+Swapnil has approximately three years of professional experience delivering
+business analytics, business intelligence, operational reporting, SQL
+development, dashboarding, reporting automation, ERP analytics, and
+stakeholder-focused analytical solutions.
+
+His experience spans enterprise consulting and nonprofit organizations,
+working with operational teams, business stakeholders, technical teams, and
+decision-makers to improve reporting quality, operational visibility, and
+business processes.
+
+Throughout his career he has consistently focused on building reliable,
+business-oriented analytics solutions rather than purely technical software
+systems.
+
+---------------------------------------------------------------------------
+COMMUNITY DREAMS FOUNDATION
+---------------------------------------------------------------------------
+
+Position:
+Data Analyst
+
+Employment Type:
+Contract
+
+Duration:
+October 2024 – October 2025
+
+Organization Overview
+
+Community Dreams Foundation is a nonprofit organization focused on community
+development and clean-energy initiatives through the Dreamline platform.
+
+Primary Responsibilities
+
+- Worked closely with business stakeholders to understand operational
+  workflows and reporting requirements.
+
+- Translated business processes into measurable reporting metrics.
+
+- Designed KPI definitions supporting operational decision making.
+
+- Developed reporting requirements for executive dashboards.
+
+- Automated SQL-based reporting workflows.
+
+- Built reusable reporting logic for recurring analytics.
+
+- Improved operational visibility through business intelligence solutions.
+
+- Optimized reporting datasets for dashboard performance.
+
+- Standardized reusable calculations for business reporting.
+
+- Supported sustainability reporting initiatives.
+
+Technologies Used
+
+- SQL
+- MySQL
+- Power BI
+- Tableau
+- Looker
+- KPI Reporting
+- Dashboard Development
+- Reporting Automation
+
+Business Contributions
+
+- Reduced manual reporting effort.
+
+- Improved operational reporting consistency.
+
+- Increased accessibility of business insights.
+
+- Enhanced dashboard performance through optimized reporting datasets.
+
+Demonstrated Skills
+
+- Business Analysis
+
+- Dashboard Design
+
+- Stakeholder Communication
+
+- SQL Development
+
+- Reporting Automation
+
+- KPI Framework Design
+
+- Operational Analytics
+
+---------------------------------------------------------------------------
+ACCENTURE
+---------------------------------------------------------------------------
+
+Position
+
+Data Analyst II
+
+Duration
+
+November 2022 – June 2023
+
+Primary Responsibilities
+
+- Developed SQL-powered operational reporting solutions.
+
+- Built Power BI KPI dashboards supporting recurring business reporting.
+
+- Automated ETL and reporting workflows.
+
+- Developed reusable reporting pipelines.
+
+- Standardized KPI calculations.
+
+- Created reporting documentation.
+
+- Improved reporting quality through validation processes.
+
+- Worked with cross-functional business and technical stakeholders.
+
+- Supported enterprise reporting initiatives.
+
+Technologies Used
+
+- SQL
+
+- Power BI
+
+- ETL
+
+- Reporting Automation
+
+- Data Validation
+
+- KPI Dashboards
+
+Business Contributions
+
+- Reduced reporting turnaround time.
+
+- Improved reporting consistency.
+
+- Saved significant manual reporting effort through automation.
+
+- Improved reporting quality and documentation standards.
+
+Demonstrated Skills
+
+- SQL Development
+
+- Power BI
+
+- ETL Concepts
+
+- Business Intelligence
+
+- Automation
+
+- Reporting Optimization
+
+- KPI Development
+
+---------------------------------------------------------------------------
+ACCENTURE
+---------------------------------------------------------------------------
+
+Position
+
+Data Analyst I
+
+Duration
+
+February 2021 – November 2022
+
+Primary Responsibilities
+
+- Optimized high-volume SQL queries.
+
+- Integrated SAP and ERP reporting data.
+
+- Supported SAP HANA and SAP BW reporting.
+
+- Performed reporting-layer validation.
+
+- Improved reporting accuracy through reconciliation.
+
+- Supported operational analytics initiatives.
+
+- Assisted with business reporting improvements.
+
+- Worked with ERP and enterprise reporting systems.
+
+Technologies Used
+
+- SQL
+
+- SAP HANA
+
+- SAP BW
+
+- ERP Reporting
+
+- Power BI
+
+- Reporting Views
+
+- Data Validation
+
+Business Contributions
+
+- Improved SQL performance.
+
+- Increased reporting accuracy.
+
+- Enhanced operational reporting.
+
+- Improved workflow efficiency.
+
+Demonstrated Skills
+
+- SQL Optimization
+
+- SAP Analytics
+
+- ERP Reporting
+
+- Business Intelligence
+
+- Operational Analytics
+
+===========================================================================
+EDUCATION
+===========================================================================
+
+MASTER OF SCIENCE
+
+Business Analytics
+
+University of Massachusetts Amherst
+
+Graduation
+
+August 2024
+
+Academic Focus
+
+- Business Analytics
+
+- Data Analytics
+
+- Statistical Analysis
+
+- Machine Learning
+
+- Predictive Analytics
+
+- Data Visualization
+
+- Business Intelligence
+
+- Decision Support
+
+--------------------------------------------------------------------------
+
+BACHELOR OF ENGINEERING
+
+Electronics Engineering
+
+Ramdeobaba College of Engineering & Management
+
+Graduation
+
+August 2020
+
+===========================================================================
+CERTIFICATIONS
+===========================================================================
+
+Professional Certifications
+
+None.
+
+Do not claim certifications unless they are officially earned.
+
+Never fabricate certifications.
+
+===========================================================================
+INDUSTRY EXPERIENCE
+===========================================================================
+
+Primary Industries
+
+- Consulting
+
+- Business Services
+
+- Nonprofit
+
+- Business Intelligence
+
+- Enterprise Analytics
+
+Project Industry Experience
+
+- Sports Analytics
+
+- Marketing Analytics
+
+- Customer Analytics
+
+- Product Analytics
+
+- Healthcare Analytics
+
+- Supply Chain Analytics
+
+- Inventory Analytics
+
+- Sustainability / ESG Analytics
+
+- Operations Analytics
+
+- Business Reporting
+
+- Enterprise Reporting
+
+- ERP Analytics
+
+===========================================================================
+TECHNICAL SKILLS
+===========================================================================
+
+DATABASES
+
+- SQL
+
+- MySQL
+
+- Snowflake
+
+- BigQuery
+
+- SAP HANA
+
+- SAP BW
+
+- Redshift
+
+--------------------------------------------------------------------------
+
+PROGRAMMING
+
+- Python
+
+- SQL
+
+- R
+
+- JavaScript
+
+--------------------------------------------------------------------------
+
+PYTHON LIBRARIES
+
+- Pandas
+
+- NumPy
+
+- Scikit-learn
+
+- XGBoost
+
+--------------------------------------------------------------------------
+
+BUSINESS INTELLIGENCE
+
+- Power BI
+
+- Tableau
+
+- Looker
+
+- Executive Dashboards
+
+- Interactive Dashboards
+
+- KPI Reporting
+
+- Self-Service Reporting
+
+--------------------------------------------------------------------------
+
+DATA ENGINEERING EXPOSURE
+
+- ETL Concepts
+
+- Data Pipelines
+
+- Data Mapping
+
+- Reporting Views
+
+- Data Modeling
+
+- Workflow Automation
+
+- REST API Integration
+
+--------------------------------------------------------------------------
+
+ENTERPRISE SYSTEMS
+
+- SAP S/4HANA
+
+- SAP GUI
+
+- SAP BW
+
+- SAP HANA
+
+- SAP GTS
+
+- ERP Reporting
+
+- CHaRM
+
+- ITSM
+
+--------------------------------------------------------------------------
+
+ANALYTICS
+
+- Exploratory Data Analysis
+
+- Business Analysis
+
+- Statistical Analysis
+
+- Regression
+
+- Classification
+
+- Forecasting
+
+- Hypothesis Testing
+
+- Predictive Analytics
+
+--------------------------------------------------------------------------
+
+DATA QUALITY
+
+- Data Validation
+
+- QA Checks
+
+- Root Cause Analysis
+
+- Data Governance
+
+- Business Rule Validation
+
+- Reconciliation
+
+--------------------------------------------------------------------------
+
+BUSINESS TOOLS
+
+- Excel
+
+- JIRA
+
+- Confluence
+
+- GitHub
+
+- REST APIs
+
+- OpenAI API
+
+===========================================================================
+
+===========================================================================
+SOFT SKILLS
+===========================================================================
+
+Communication
+
+- Translate technical analysis into business language.
+- Present analytical findings to non-technical stakeholders.
+- Explain KPIs and reporting logic clearly.
+- Document analytical processes and business rules.
+- Communicate effectively across technical and business teams.
+
+Business Thinking
+
+- Business problem solving.
+- Data-driven decision making.
+- Process optimization.
+- Operational improvement.
+- KPI identification.
+- Reporting strategy.
+- Business process analysis.
+- Requirements gathering.
+
+Professional Strengths
+
+- Analytical mindset.
+- Detail-oriented.
+- Strong ownership.
+- Organized.
+- Adaptable.
+- Collaborative.
+- Continuous learner.
+- Business focused.
+- Reliable.
+- Process driven.
+- Solution oriented.
+
+Working Style
+
+- Prefers understanding business problems before selecting technical solutions.
+- Prioritizes maintainable and scalable analytical solutions.
+- Focuses on measurable business value instead of unnecessary technical complexity.
+- Values documentation, consistency, and repeatable workflows.
+- Uses data to support business decisions rather than assumptions.
+
+===========================================================================
+PREFERRED TECHNOLOGIES
+===========================================================================
+
+Most Comfortable
+
+- SQL
+- Power BI
+- Python
+- Tableau
+- Excel
+
+Strong Working Knowledge
+
+- Snowflake
+- MySQL
+- SAP HANA
+- SAP BW
+- BigQuery
+- REST APIs
+- GitHub
+- OpenAI API
+
+Comfortable Learning
+
+- New BI platforms
+- Cloud data warehouses
+- Enterprise reporting tools
+- AI-powered analytics platforms
+- Modern analytics workflows
+
+===========================================================================
+PROJECT PORTFOLIO
+===========================================================================
+
+Projects should only be referenced when they genuinely strengthen the
+application.
+
+Never fabricate project scope, responsibilities, technologies,
+or measurable outcomes.
+
+Select projects based on relevance to the target job.
+
+===========================================================================
+PROJECT 1
+===========================================================================
+
+Project Name
+
+SwapOpt AI – AI Job Intelligence Platform
+
+Priority
+
+★★★★★ (Highest)
+
+Relevant For
+
+- Data Analyst
+- Business Analyst
+- Business Intelligence
+- Product Analyst
+- AI Applications
+- Automation
+- Process Improvement
+- Internal Tools
+- Productivity Platforms
+- Full-Stack Analytics
+
+Business Problem
+
+Modern job searching requires candidates to repeatedly analyze job
+descriptions, tailor resumes, generate cover letters, answer application
+questions, network with recruiters, and track applications.
+
+These repetitive tasks consume significant time while often producing
+inconsistent application materials.
+
+The objective was to build a unified AI-powered platform that automates
+the complete application workflow while maintaining factual accuracy,
+ATS compatibility, and personalized recommendations.
+
+Overview
+
+Designed and developed a complete AI-powered Chrome Extension supported
+by a Node.js backend that automates the end-to-end job application
+process.
+
+The platform evaluates job descriptions, scores hiring fit, generates
+ATS-focused resumes, drafts cover letters, assists with application
+questions, creates recruiter outreach messages, discovers recruiters,
+and manages application tracking through a centralized workflow.
+
+Responsibilities
+
+- Designed overall product architecture.
+- Built backend APIs.
+- Developed Chrome Extension interface.
+- Engineered reusable AI prompts.
+- Integrated OpenAI API.
+- Integrated Hunter.io recruiter lookup.
+- Built reusable candidate profile system.
+- Designed ATS resume tailoring workflow.
+- Implemented application tracking.
+- Built CSV export functionality.
+- Created modular service architecture.
+- Designed realistic hiring-fit scoring.
+
+Technology Stack
+
+Frontend
+
+- Chrome Extensions API
+- HTML
+- CSS
+- JavaScript
+
+Backend
+
+- Node.js
+- Express.js
+
+Artificial Intelligence
+
+- OpenAI API
+- Prompt Engineering
+- Context Engineering
+- Structured Prompt Chaining
+
+Other Technologies
+
+- REST APIs
+- Hunter.io API
+- JSON
+- CSV Export
+
+Demonstrated Skills
+
+- Product Design
+- Full-Stack Development
+- AI Integration
+- Prompt Engineering
+- REST API Development
+- Workflow Automation
+- UX Design
+- Business Process Optimization
+- Modular Architecture
+- Technical Documentation
+
+Business Value
+
+- Automates repetitive application tasks.
+- Produces ATS-aware application materials.
+- Improves consistency across resumes and cover letters.
+- Reduces manual application effort.
+- Centralizes job search workflow.
+
+Use This Project When Jobs Mention
+
+- Artificial Intelligence
+- Automation
+- Product Analytics
+- Internal Tools
+- JavaScript
+- Node.js
+- OpenAI
+- Chrome Extensions
+- REST APIs
+- Productivity Platforms
+- SaaS
+- Business Applications
+
+===========================================================================
+PROJECT 2
+===========================================================================
+
+Project Name
+
+FIFA World Cup 2026 Sponsorship Analytics Platform
+
+Priority
+
+★★★★★
+
+Relevant For
+
+- Business Intelligence
+- Marketing Analytics
+- Product Analytics
+- Sports Analytics
+- Executive Reporting
+- Dashboard Development
+
+Business Problem
+
+Organizations managing sponsorship programs require centralized reporting
+to monitor sponsorship performance, campaign effectiveness, engagement,
+and executive KPIs.
+
+The objective was to design an analytics platform capable of supporting
+executive decision-making through integrated reporting and interactive
+dashboards.
+
+Overview
+
+Developed an end-to-end sponsorship analytics platform combining ETL,
+cloud data warehousing, SQL analytics, business intelligence dashboards,
+and AI-assisted querying.
+
+The platform demonstrates enterprise-style reporting workflows designed
+to support executive KPI monitoring and business insight generation.
+
+Technology
+
+- Snowflake
+- SQL
+- Python
+- Power BI
+- Streamlit
+- OpenAI API
+
+Demonstrated Skills
+
+- ETL
+- Dashboard Design
+- KPI Development
+- Data Warehousing
+- Executive Reporting
+- Data Storytelling
+- SQL Analytics
+- Business Intelligence
+
+Business Value
+
+- Centralized sponsorship reporting.
+- Improved visibility into business KPIs.
+- Demonstrated enterprise reporting architecture.
+- Supported executive decision-making through interactive dashboards.
+
+Use This Project When Jobs Mention
+
+- Power BI
+- SQL
+- Snowflake
+- Dashboards
+- KPI Reporting
+- Business Intelligence
+- Executive Reporting
+- Marketing Analytics
+- Sports Analytics
+
+===========================================================================
+
+===========================================================================
+PROJECT 3
+===========================================================================
+
+Project Name
+
+Ad Click Prediction Using Machine Learning
+
+Priority
+
+★★★★★
+
+Relevant For
+
+- Marketing Analytics
+- Customer Analytics
+- Product Analytics
+- Predictive Analytics
+- Machine Learning
+- Business Analytics
+
+Business Problem
+
+Digital advertising platforms require accurate prediction of customer click
+behavior to improve campaign performance, optimize advertising spend, and
+increase conversion opportunities.
+
+The objective was to build a predictive machine learning solution capable of
+identifying users with a higher probability of clicking advertisements.
+
+Overview
+
+Designed and implemented an end-to-end machine learning workflow for binary
+classification using feature engineering, class balancing techniques, model
+training, evaluation, and business-focused interpretation of results.
+
+Technologies
+
+- Python
+- Pandas
+- NumPy
+- Scikit-learn
+- XGBoost
+- SMOTE
+
+Machine Learning Concepts
+
+- Binary Classification
+- Feature Engineering
+- Data Preprocessing
+- Model Evaluation
+- Imbalanced Data Handling
+- Predictive Analytics
+
+Demonstrated Skills
+
+- Machine Learning
+- Predictive Modeling
+- Data Cleaning
+- Feature Engineering
+- Statistical Thinking
+- Business Interpretation
+
+Business Value
+
+- Demonstrated practical predictive analytics workflow.
+- Showed understanding of customer behavior modeling.
+- Applied machine learning to marketing decision support.
+
+Use This Project When Jobs Mention
+
+- Machine Learning
+- Predictive Analytics
+- Marketing Analytics
+- Customer Analytics
+- Python
+- Classification
+- Model Development
+- Data Science
+
+===========================================================================
+PROJECT 4
+===========================================================================
+
+Project Name
+
+Airbnb Dallas Listings Analysis
+
+Priority
+
+★★★★☆
+
+Relevant For
+
+- Marketplace Analytics
+- Business Analytics
+- Operations Analytics
+- Pricing Analytics
+- Customer Analytics
+
+Business Problem
+
+Marketplace platforms require continuous analysis of pricing, property
+distribution, customer demand, and geographic trends to support business
+decisions.
+
+Overview
+
+Performed exploratory business analysis on Airbnb listings within the Dallas
+market to identify pricing patterns, geographic trends, and operational
+insights.
+
+Technologies
+
+- Python
+
+- SQL
+
+- Tableau
+
+- Excel
+
+Demonstrated Skills
+
+- Exploratory Data Analysis
+
+- Business Recommendations
+
+- Visualization
+
+- Data Storytelling
+
+- Statistical Analysis
+
+Business Value
+
+- Identified pricing patterns.
+
+- Explored geographic trends.
+
+- Generated business recommendations using analytical findings.
+
+Use This Project When Jobs Mention
+
+- Marketplace Analytics
+
+- Pricing
+
+- Operations
+
+- Customer Insights
+
+- Business Analytics
+
+===========================================================================
+PROJECT 5
+===========================================================================
+
+Project Name
+
+Sustainability Index Analysis
+
+Priority
+
+★★★★☆
+
+Relevant For
+
+- ESG Analytics
+
+- Sustainability Reporting
+
+- Enterprise Reporting
+
+- Business Intelligence
+
+Business Problem
+
+Organizations require measurable sustainability indicators to evaluate
+environmental performance and support strategic reporting.
+
+Overview
+
+Developed an analytical framework to evaluate sustainability indicators and
+support reporting through measurable business metrics.
+
+Technologies
+
+- SQL
+
+- Power BI
+
+- Excel
+
+Demonstrated Skills
+
+- KPI Development
+
+- Metric Design
+
+- Business Reporting
+
+- Dashboard Development
+
+Business Value
+
+- Demonstrated ESG reporting concepts.
+
+- Built analytical reporting framework.
+
+- Supported sustainability measurement.
+
+Use This Project When Jobs Mention
+
+- ESG
+
+- Sustainability
+
+- Reporting
+
+- Business Intelligence
+
+===========================================================================
+PROJECT 6
+===========================================================================
+
+Project Name
+
+ARV / HIV-HRDT Treatment Distribution Analysis
+
+Priority
+
+★★★★☆
+
+Relevant For
+
+- Healthcare Analytics
+
+- Supply Chain Analytics
+
+- Operations Analytics
+
+Business Problem
+
+Healthcare organizations require efficient treatment distribution and inventory
+visibility to support operational effectiveness and improve healthcare delivery.
+
+Overview
+
+Analyzed treatment distribution patterns to identify operational insights,
+inventory opportunities, and reporting improvements.
+
+Technologies
+
+- SQL
+
+- Excel
+
+- Power BI
+
+Demonstrated Skills
+
+- Healthcare Analytics
+
+- Distribution Analysis
+
+- Operational Reporting
+
+- Inventory Analytics
+
+Business Value
+
+- Improved reporting visibility.
+
+- Supported operational decision making.
+
+- Demonstrated healthcare analytics workflow.
+
+Use This Project When Jobs Mention
+
+- Healthcare
+
+- Supply Chain
+
+- Distribution
+
+- Inventory
+
+- Operations
+
+===========================================================================
+PROJECT 7
+===========================================================================
+
+Project Name
+
+ABS Inventory Analysis
+
+Priority
+
+★★★★☆
+
+Relevant For
+
+- Inventory Analytics
+
+- Supply Chain
+
+- Operations
+
+- Reporting
+
+Business Problem
+
+Inventory operations require continuous monitoring to improve stock visibility,
+resource utilization, and operational efficiency.
+
+Overview
+
+Performed inventory analysis to identify optimization opportunities and support
+operational reporting.
+
+Technologies
+
+- SQL
+
+- Excel
+
+- Power BI
+
+Demonstrated Skills
+
+- Inventory Reporting
+
+- KPI Analysis
+
+- Operational Analytics
+
+- Process Improvement
+
+Business Value
+
+- Supported inventory optimization.
+
+- Improved operational reporting.
+
+- Demonstrated supply chain analytics concepts.
+
+Use This Project When Jobs Mention
+
+- Inventory
+
+- Supply Chain
+
+- Operations
+
+- Reporting
+
+===========================================================================
+PROJECT SELECTION STRATEGY
+===========================================================================
+
+Always prioritize projects based on business relevance rather than listing every
+project.
+
+Preferred order:
+
+1. SwapOpt AI
+2. FIFA World Cup 2026 Sponsorship Analytics
+3. Ad Click Prediction Using Machine Learning
+4. Airbnb Dallas Listings Analysis
+5. ARV / HIV-HRDT Treatment Distribution Analysis
+6. Sustainability Index Analysis
+7. ABS Inventory Analysis
+
+Maximum projects on one resume:
+
+- 2 if space is limited.
+- 3 if highly relevant.
+- Never include unrelated projects simply to fill space.
+
+When tailoring resumes:
+
+- Select projects that align with the employer's business domain.
+- Prefer business impact over technical complexity.
+- Never modify project scope or invent responsibilities.
+
+===========================================================================
+RESUME PHILOSOPHY
+===========================================================================
+
+The primary objective of every resume is not to maximize keyword matching,
+but to maximize the probability of receiving an interview while remaining
+factually accurate.
+
+Every resume generated by SwapOpt must tell a believable professional story.
+
+Guiding Principles
+
+- Tailor for relevance, not deception.
+- Optimize for both ATS and human recruiters.
+- Prioritize business impact over technical jargon.
+- Highlight measurable outcomes whenever available.
+- Keep language concise, professional, and defensible.
+- Every bullet point should answer either:
+    - What business problem was solved?
+    - What was improved?
+    - Why should an employer care?
+
+Never
+
+- Invent technologies.
+- Invent certifications.
+- Invent metrics.
+- Invent projects.
+- Invent responsibilities.
+- Invent leadership experience.
+- Invent management responsibilities.
+- Invent cloud experience.
+- Invent production engineering ownership.
+- Invent software engineering experience.
+
+Allowed
+
+- Reword existing experience.
+- Strengthen grammar.
+- Improve action verbs.
+- Reorder accomplishments.
+- Prioritize relevant skills.
+- Combine related responsibilities.
+- Expand existing accomplishments without changing meaning.
+
+===========================================================================
+COVER LETTER PHILOSOPHY
+===========================================================================
+
+Cover letters should sound human.
+
+Avoid corporate buzzwords.
+
+Avoid unnecessary enthusiasm.
+
+Avoid generic introductions.
+
+Preferred opening:
+
+Hi Recruiting Team,
+
+I'm applying for the [Role] position at [Company].
+
+The first paragraph should connect directly to the company's business problem.
+
+The second paragraph should connect real experience to the job.
+
+The third paragraph should summarize the value brought to the organization.
+
+Never write long essays.
+
+Ideal length:
+
+Approximately three short paragraphs.
+
+Avoid phrases such as:
+
+- I am thrilled...
+- Dream opportunity...
+- Passionate since childhood...
+- I believe I am the perfect candidate...
+- My diverse skillset uniquely positions me...
+
+Focus instead on
+
+- solving business problems
+- improving reporting
+- supporting stakeholders
+- automation
+- operational improvement
+- analytics
+
+Always finish with
+
+Sincerely,
+
+Swapnil Herwadkar
+
+===========================================================================
+NETWORKING PHILOSOPHY
+===========================================================================
+
+Networking messages should be short.
+
+Never immediately ask for a referral.
+
+Primary objective
+
+Start a professional conversation.
+
+Preferred structure
+
+- Greeting
+
+- Introduce yourself
+
+- Mention shared interest
+
+- Explain why you're reaching out
+
+- Thank them
+
+Ideal length
+
+75–150 words.
+
+Tone
+
+Professional.
+
+Respectful.
+
+Conversational.
+
+Never sound AI generated.
+
+===========================================================================
+APPLICATION QUESTION PHILOSOPHY
+===========================================================================
+
+Application answers should
+
+- remain factual
+- remain concise
+- remain confident
+- remain interview defensible
+
+If the application asks about experience that does not exist,
+
+acknowledge transferable experience rather than fabricating expertise.
+
+===========================================================================
+INTERVIEW PHILOSOPHY
+===========================================================================
+
+Every generated document must prepare the candidate for interviews.
+
+Never include statements that cannot be confidently defended.
+
+Prioritize
+
+- honesty
+- clarity
+- business value
+- measurable impact
+- transferable experience
+
+Interview success is more important than keyword matching.
+
+===========================================================================
+HIRING PHILOSOPHY
+===========================================================================
+
+The central hiring question is
+
+"Would this employer realistically hire Swapnil for this role?"
+
+Every recommendation should consider
+
+- business fit
+
+- technical fit
+
+- seniority
+
+- sponsorship likelihood
+
+- interview defensibility
+
+rather than ATS score alone.
+
+===========================================================================
+SPONSORSHIP STRATEGY
+===========================================================================
+
+Candidate requires H-1B sponsorship.
+
+This should significantly influence recommendations.
+
+High Priority
+
+- Large organizations
+
+- Established consulting firms
+
+- Fortune 500 companies
+
+- Technology companies
+
+- Healthcare organizations
+
+- Retail enterprises
+
+- Financial institutions
+
+- Analytics consulting firms
+
+Lower Priority
+
+- Small startups with limited sponsorship history
+
+- Contract positions
+
+- Temporary employment
+
+- Government roles
+
+- Organizations requiring unrestricted work authorization
+
+===========================================================================
+APPLICATION STRATEGY
+===========================================================================
+
+Recommend
+
+"Apply Today"
+
+When
+
+- Strong technical fit
+
+- Appropriate experience level
+
+- Sponsorship reasonably possible
+
+- Business domain aligns
+
+- Candidate can confidently interview
+
+Recommend
+
+"Tailor Resume First"
+
+When
+
+- Good opportunity
+
+- Resume improvements likely increase interview probability
+
+Recommend
+
+"Quick Apply"
+
+When
+
+- Match is reasonable
+
+- Tailoring effort provides limited additional value
+
+Recommend
+
+"Save for Later"
+
+When
+
+- Company is attractive
+
+- Current fit is moderate
+
+Recommend
+
+"Skip"
+
+When
+
+- Seniority mismatch
+
+- Sponsorship extremely unlikely
+
+- Domain mismatch
+
+- Required experience significantly exceeds candidate profile
+
+===========================================================================
+SCORING PHILOSOPHY
+===========================================================================
+
+Scores should remain realistic.
+
+Approximate interpretation
+
+90–100
+
+Extremely rare.
+
+Only when almost every requirement aligns.
+
+80–89
+
+Excellent opportunity.
+
+Strong recommendation.
+
+70–79
+
+Good opportunity.
+
+Likely worth tailoring.
+
+60–69
+
+Possible opportunity.
+
+Apply selectively.
+
+Below 60
+
+Generally not recommended.
+
+ATS score should never be the only deciding factor.
+
+Business logic matters more.
+
+===========================================================================
+AI WRITING RULES
+===========================================================================
+
+Always
+
+- Use factual information.
+- Prioritize clarity.
+- Be concise.
+- Use strong action verbs.
+- Maintain consistency.
+- Write naturally.
+- Sound human.
+
+Never
+
+- Hallucinate.
+- Exaggerate.
+- Repeat unnecessary information.
+- Use buzzwords excessively.
+- Add filler.
+- Claim unsupported expertise.
+
+===========================================================================
+PERMANENT CONSTRAINTS
+===========================================================================
+
+This document is the permanent knowledge base for SwapOpt.
+
+Every AI-generated output must remain consistent with this profile.
+
+Hierarchy of truth
+
+1. This master profile
+2. Resume selected for tailoring
+3. Experience files
+4. Skills files
+5. User instructions
+6. Job description
+
+If conflicting information exists,
+
+prefer the highest source in the hierarchy.
+
+Never generate information that conflicts with this profile.
+
+When uncertain,
+
+omit rather than invent.
+
+===========================================================================
+END OF MASTER PROFILE
+===========================================================================

@@ -1,0 +1,14 @@
+Data Analyst II | Accenture | Nov 2022 - Jun 2023 
+• Developed SQL and Power BI KPI dashboards for recurring operational reporting, reducing report turnaround by 30% 
+and improving decision speed by 20%. 
+• Automated SQL ETL/reporting pipelines with scheduling, error handling, retries, alerts, and QA checks, saving 60+ 
+hours/month and reducing inconsistencies by 35%. 
+• Standardized KPI definitions, data mappings, validation rules, and reporting documentation, cutting 
+reporting/compliance errors by 40%. 
+Data Analyst I | Accenture | Feb 2021 - Nov 2022 
+• Optimized high-volume SQL queries using indexing, partitioning, CTE refactors, and window functions, reducing query 
+execution time by 15%. 
+• Integrated SAP HANA/BW, ERP, and source-system data into reporting layers, improving workflow efficiency by 35% 
+for operational analytics. 
+• Reconciled ERP, SQL, and reporting-layer data to resolve client-vendor inconsistencies, improving accuracy by 10% 
+and reducing discrepancies by 20%. 

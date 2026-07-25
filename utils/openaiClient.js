@@ -32,15 +32,23 @@ export function getModel() {
 export async function generateCompletion({
   systemPrompt,
   userPrompt,
-  temperature = 0.3,
+  reasoningEffort = "low",
   maxOutputTokens = 3500,
-  responseFormat = { type: "json_object" }
+  responseFormat = { type: "json_object" },
+  feature = "unknown"
 }) {
   const openai = getOpenAIClient();
+
+  const startTime = Date.now();
 
   try {
     const response = await openai.responses.create({
       model: getModel(),
+
+      reasoning: {
+        effort: reasoningEffort
+      },
+
       input: [
         {
           role: "system",
@@ -61,11 +69,36 @@ export async function generateCompletion({
           ]
         }
       ],
-// temperature removed because GPT-5 models don't support it
+
       max_output_tokens: maxOutputTokens,
+
       text: {
         format: responseFormat
       }
+    });
+
+    const durationMs = Date.now() - startTime;
+
+    console.log({
+      feature,
+      model: getModel(),
+      durationMs,
+
+      inputTokens:
+        response.usage?.input_tokens ?? 0,
+
+      cachedInputTokens:
+        response.usage?.input_tokens_details?.cached_tokens ?? 0,
+
+      outputTokens:
+        response.usage?.output_tokens ?? 0,
+
+      reasoningTokens:
+        response.usage?.output_tokens_details?.reasoning_tokens ?? 0,
+
+      totalTokens:
+        (response.usage?.input_tokens ?? 0) +
+        (response.usage?.output_tokens ?? 0)
     });
 
     const output =
@@ -78,7 +111,9 @@ export async function generateCompletion({
     }
 
     return output;
+
   } catch (error) {
+
     if (error?.status === 401) {
       throw new Error(
         "OpenAI authentication failed."

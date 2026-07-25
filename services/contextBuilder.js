@@ -15,15 +15,9 @@ export function buildContext({
   return {
     candidate,
 
-    profile: candidate.masterProfile,
+profile: candidate.masterProfile,
 
-    preferences: candidate.preferences,
-
-    resume: candidate.resume,
-
-    skills: candidate.skills,
-
-    experience: candidate.experience,
+resume: candidate.resume,
 
     job: {
       description: String(jobDescription).trim(),

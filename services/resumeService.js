@@ -34,10 +34,14 @@ export async function generateResume({
     resumeType: context.resumeType
   });
 
-  const response = await generateJSON({
-    systemPrompt: prompt.system,
-    userPrompt: prompt.user
-  });
+const response = await generateJSON({
+  systemPrompt: prompt.system,
+  userPrompt: prompt.user,
+
+  feature: "resume",
+  reasoningEffort: "low",
+  maxOutputTokens: 2200
+});
 
   return requireFields(
     parseJsonResponse(response),

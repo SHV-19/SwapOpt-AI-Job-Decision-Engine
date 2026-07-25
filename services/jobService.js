@@ -34,20 +34,25 @@ export async function analyzeJob({
 
   const response = await generateJSON({
     systemPrompt: prompt.system,
-    userPrompt: prompt.user
+    userPrompt: prompt.user,
+
+    // Cost optimisation
+    feature: "analyze",
+    reasoningEffort: "low",
+    maxOutputTokens: 2000
   });
 
   return requireFields(
     parseJsonResponse(response),
-[
-  "swapopt_verdict",
-  "current_match_percent",
-  "tailored_match_percent",
-  "hiring_logic_score",
-  "missing_keywords",
-  "keywords_to_emphasize",
-  "decision",
-  "next_action"
-]
+    [
+      "swapopt_verdict",
+      "current_match_percent",
+      "tailored_match_percent",
+      "hiring_logic_score",
+      "missing_keywords",
+      "keywords_to_emphasize",
+      "decision",
+      "next_action"
+    ]
   );
 }

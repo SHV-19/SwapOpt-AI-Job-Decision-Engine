@@ -32,10 +32,14 @@ export async function generateCoverLetter({
     resumeType: context.resumeType
   });
 
-  const response = await generateJSON({
-    systemPrompt: prompt.system,
-    userPrompt: prompt.user
-  });
+const response = await generateJSON({
+  systemPrompt: prompt.system,
+  userPrompt: prompt.user,
+
+  feature: "coverLetter",
+  reasoningEffort: "low",
+  maxOutputTokens: 1200
+});
 
   return requireFields(
     parseJsonResponse(response),

@@ -131,11 +131,8 @@ export function loadCandidateContext({
     .trim()
     .toLowerCase();
 
-  return {
-    masterProfile: loadMasterProfile(),
-    preferences: loadPreferences(),
-    resume: loadResume(normalizedType),
-    skills: loadSkills(normalizedType),
-    experience: loadExperience()
-  };
+return {
+  masterProfile: loadMasterProfile(),
+  resume: loadResume(normalizedType)
+};
 }

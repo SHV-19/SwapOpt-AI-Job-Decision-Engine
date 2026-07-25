@@ -34,10 +34,14 @@ export async function tailorResume({
     resumeType: context.resumeType
   });
 
-  const response = await generateJSON({
-    systemPrompt: prompt.system,
-    userPrompt: prompt.user
-  });
+const response = await generateJSON({
+  systemPrompt: prompt.system,
+  userPrompt: prompt.user,
+
+  feature: "tailor",
+  reasoningEffort: "low",
+  maxOutputTokens: 1800
+});
 
   return requireFields(
     parseJsonResponse(response),

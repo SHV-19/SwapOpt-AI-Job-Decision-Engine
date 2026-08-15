@@ -34,3 +34,9 @@ coverage/
 # Temporary files
 *.tmp
 *.temp
+# Private SwapOpt data
+profile/
+.env
+.swapopt-batch-backup/
+.swapopt-fix-backup/
+SwapOpt-Storage/

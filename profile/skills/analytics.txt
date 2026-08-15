@@ -1,7 +1,0 @@
-Analytics & BI: SQL, Power BI, Tableau, Looker, Excel, KPI Reporting, Executive Dashboards, Interactive Dashboards 
-Data Platforms & Modeling: Snowflake, MySQL, Redshift, BigQuery, SAP HANA, SAP BW, Azure Data Factory, Alteryx, 
-Data Modeling, Reporting Views, Data Mapping 
-Programming & Automation: Python, Pandas, NumPy, Scikit-learn, REST APIs, SQL Workflow Automation, ETL 
-Pipelines, Logistic Regression, Excel 
-Data Quality & Business Analysis: Data Validation, Data Governance, QA Checks, Root Cause Analysis, Requirements 
-Gathering, Stakeholder Management, UAT, Agile, JIRA, Confluence 

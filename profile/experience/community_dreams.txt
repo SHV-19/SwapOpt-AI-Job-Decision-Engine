@@ -1,7 +1,0 @@
-Data Analyst | Community Dreams Foundation | Oct 2024 – Oct 2025 | Contract 
-• Translated Dreamline workflows for homeowner intake, contractor matching, incentives, and project status into KPI 
-definitions, reporting requirements, and dashboard acceptance criteria. 
-• Automated SQL-driven reporting workflows and sustainability KPI tracking, reducing manual data processing effort by 
-25% and improving access to operational insights. 
-• Optimized MySQL reporting datasets and reusable BI logic using query tuning and standardized calculations, 
-improving dashboard performance and self-service reporting. 

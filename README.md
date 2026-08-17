@@ -1,5 +1,7 @@
 # SwapOpt
 
+[![V4 Showcase CI](https://github.com/SHV-19/SwapOpt-AI-Job-Decision-Engine/actions/workflows/v4-showcase-ci.yml/badge.svg)](https://github.com/SHV-19/SwapOpt-AI-Job-Decision-Engine/actions/workflows/v4-showcase-ci.yml)
+
 ### AI Career Decision & Outcome Intelligence
 
 **SwapOpt is a browser-first career intelligence system that helps a job seeker decide where to invest effort, execute applications more consistently, and learn from real outcomes over time.**
@@ -258,6 +260,38 @@ SwapOpt is built around a small set of permanent rules:
 
 ---
 
+## Selected Public V4 Source
+
+The repository includes a **curated, sanitized slice of the real V4 backend intelligence** rather than a copy of the private runtime environment.
+
+The public source currently focuses on the compounding decision layer:
+
+- Career Evidence Graph foundations and provenance policy
+- Career Outcome Engine
+- Decision Learning Loop
+- Personal Learning
+- Market Intelligence normalization and aggregation
+- Application behavior intelligence
+- adaptive job-analysis policy
+- repository boundaries required by those services
+
+Representative tests use synthetic data and verify behaviors such as:
+
+- preserving interview evidence after a later rejection
+- exposing recommendation calibration without claiming causality
+- preventing weak outcome samples from changing recommendations
+- keeping explicit sponsorship evidence authoritative over historical patterns
+- preventing resume coverage from exceeding 100%
+- separating observed demand, submitted applications, and outcomes
+- preventing cross-user Market Intelligence access
+
+The provider-specific ATS answer catalog and user-specific application-answer policy are intentionally **not** part of the public source snapshot because those areas can contain sensitive candidate preferences.
+
+See [Public Source Map](docs/PUBLIC_SOURCE_MAP.md) for the exact boundary.
+
+
+---
+
 ## Demo & Case Study
 
 ### Video Walkthrough
@@ -343,29 +377,36 @@ The public repository exists to demonstrate product thinking, architecture, engi
 
 ---
 
-## Local Development
+## Validate the Public V4 Intelligence Slice
 
-The original public prototype can be run from the repository root.
+The curated V4 source is intentionally dependency-light and can be validated without API credentials.
 
-```bash
-npm install
-npm start
-```
-
-The backend uses port `8787` by default when configured that way.
-
-Environment variables should be stored in `.env` and must never be committed.
-
-To load the extension:
+Requirements:
 
 ```text
-chrome://extensions
-→ Developer mode
-→ Load unpacked
-→ Select the extension directory
+Node.js 22+
 ```
 
-> The sanitized public showcase may not include every private V4 runtime dependency or user-specific configuration used in the active development environment.
+Run the public-source privacy boundary check:
+
+```bash
+node scripts/verify-public-showcase.mjs
+```
+
+Run the representative V4 tests:
+
+```bash
+node --test \
+  tests/unit/services/application-behavior-intelligence.test.js \
+  tests/unit/services/career-learning-loop-intelligence.test.js \
+  tests/unit/services/career-outcome-engine-service.test.js \
+  tests/unit/services/market-intelligence-service.test.js \
+  tests/unit/services/personal-market-strategy.test.js
+```
+
+These tests exercise the public intelligence slice only. The private V4 runtime includes additional application, ATS, browser, provider, and user-specific components that are intentionally not mirrored into this repository.
+
+The earlier prototype remains useful as project history, while the `backend/` V4 source demonstrates the current decision/outcome architecture.
 
 ---
 

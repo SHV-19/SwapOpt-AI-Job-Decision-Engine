@@ -33,19 +33,19 @@ The product connects verified career evidence, job intelligence, application exe
 
 ```text
 Career Evidence
-      â†“
+      ↓
 Opportunity
-      â†“
+      ↓
 Decision
-      â†“
+      ↓
 Action
-      â†“
+      ↓
 Application / ATS
-      â†“
+      ↓
 Outcome
-      â†“
+      ↓
 Learning
-      â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–º Better Next Decision
+      └──────────────► Better Next Decision
 ```
 
 > **Repository note:** this is a sanitized public showcase of SwapOpt. Personal candidate data, resumes, application history, secrets, and private operational state are intentionally excluded.
@@ -76,7 +76,7 @@ SwapOpt treats those questions as one connected decision system instead of a col
 
 SwapOpt V4 is organized around five connected product systems.
 
-### 1. Decide â€” Job Intelligence
+### 1. Decide — Job Intelligence
 
 Evaluates an observed role using structured evidence rather than keyword matching alone.
 
@@ -99,7 +99,7 @@ with an explanation of why.
 
 ---
 
-### 2. Prepare â€” Truthful Application Material
+### 2. Prepare — Truthful Application Material
 
 SwapOpt supports:
 
@@ -114,7 +114,7 @@ Truthfulness is a hard constraint. The system is designed to strengthen verified
 
 ---
 
-### 3. Execute â€” ATS & Application Assistance
+### 3. Execute — ATS & Application Assistance
 
 The application layer reduces repetitive form work while preserving explicit user control.
 
@@ -133,19 +133,19 @@ SwapOpt does **not** autonomously submit applications.
 
 ---
 
-### 4. Track â€” Application Lifecycle Intelligence
+### 4. Track — Application Lifecycle Intelligence
 
 SwapOpt tracks the journey from opportunity to outcome.
 
 ```text
 Observed
-   â†“
+   ↓
 Proceed
-   â†“
+   ↓
 Applied
-   â†“
+   ↓
 Interview
-   â†“
+   ↓
 Offer / Rejected / Withdrawn
 ```
 
@@ -153,7 +153,7 @@ This allows application activity to become structured evidence rather than disap
 
 ---
 
-### 5. Learn â€” Personal Market & Outcome Intelligence
+### 5. Learn — Personal Market & Outcome Intelligence
 
 This is the layer that makes SwapOpt more than an AI writing assistant.
 
@@ -213,7 +213,7 @@ Builds a private view of the user's actual labor market from observed opportunit
 Audits:
 
 ```text
-Recommendation â†’ User Action â†’ Outcome â†’ Learning
+Recommendation → User Action → Outcome → Learning
 ```
 
 A competitor can copy a screen or prompt. It cannot instantly recreate a user's accumulated evidence, decision history, ATS interactions, and longitudinal outcomes.
@@ -227,31 +227,31 @@ See [Defensibility](docs/DEFENSIBILITY.md).
 SwapOpt follows a modular, backend-owned architecture.
 
 ```text
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚     Chrome Extension      â”‚
-â”‚  capture + interaction    â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-              â”‚
-              â”‚ versioned JSON APIs
-              â–¼
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚      Node.js Backend      â”‚
-â”‚ validation + orchestrationâ”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-              â”‚
-      â”Œâ”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-      â–¼       â–¼        â–¼          â–¼
+┌───────────────────────────┐
+│     Chrome Extension      │
+│  capture + interaction    │
+└─────────────┬─────────────┘
+              │
+              │ versioned JSON APIs
+              ▼
+┌───────────────────────────┐
+│      Node.js Backend      │
+│ validation + orchestration│
+└─────────────┬─────────────┘
+              │
+      ┌───────┼────────┬──────────┐
+      ▼       ▼        ▼          ▼
    Career   Decision   ATS      Market
    Evidence Engines  Intel.     Intel.
-      â”‚       â”‚        â”‚          â”‚
-      â””â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”˜
-                            â–¼
+      │       │        │          │
+      └───────┴────────┴────┬─────┘
+                            ▼
                   Application Lifecycle
-                            â”‚
-                            â–¼
+                            │
+                            ▼
                      Outcome Learning
-                            â”‚
-                            â””â”€â”€â”€â”€â–º Next Decision
+                            │
+                            └────► Next Decision
 ```
 
 The extension remains a lightweight client. Business rules, persistence, AI orchestration, and sensitive decision logic belong in backend services.
@@ -264,14 +264,14 @@ See [Architecture](docs/ARCHITECTURE_V4.md).
 
 SwapOpt is built around a small set of permanent rules:
 
-- **Truth above everything** â€” never fabricate candidate evidence.
-- **Decision-first AI** â€” reasoning precedes generation.
-- **Backend-owned intelligence** â€” clients stay lightweight.
-- **Reuse before rebuild** â€” extend working modules rather than creating competing systems.
-- **Modular growth** â€” features should strengthen architecture over time.
-- **Cost-aware AI** â€” deterministic logic is preferred when AI is unnecessary.
-- **Explicit user control** â€” no autonomous mass application submission.
-- **Outcome learning without false causality** â€” historical patterns inform decisions conservatively.
+- **Truth above everything** — never fabricate candidate evidence.
+- **Decision-first AI** — reasoning precedes generation.
+- **Backend-owned intelligence** — clients stay lightweight.
+- **Reuse before rebuild** — extend working modules rather than creating competing systems.
+- **Modular growth** — features should strengthen architecture over time.
+- **Cost-aware AI** — deterministic logic is preferred when AI is unnecessary.
+- **Explicit user control** — no autonomous mass application submission.
+- **Outcome learning without false causality** — historical patterns inform decisions conservatively.
 
 ---
 
@@ -317,7 +317,7 @@ The video shows the earlier browser workflow: live job analysis, resume strategy
 
 ### Technical Case Study
 
-[Medium â€” â€œI Had No Other Choice, So I Built an AI to Judge My Job Applicationsâ€](https://medium.com/@swapnilherwadkar/i-had-no-other-choice-so-i-built-an-ai-to-judge-my-job-applications-0367e561eba5)
+[Medium — “I Had No Other Choice, So I Built an AI to Judge My Job Applications”](https://medium.com/@swapnilherwadkar/i-had-no-other-choice-so-i-built-an-ai-to-judge-my-job-applications-0367e561eba5)
 
 ### Historical Design Report
 
@@ -449,15 +449,15 @@ The core V4 architecture now focuses on a compounding loop:
 
 ```text
 Evidence
-  â†“
+  ↓
 Decision
-  â†“
+  ↓
 Execution
-  â†“
+  ↓
 Outcome
-  â†“
+  ↓
 Learning
-  â†“
+  ↓
 Better Decision
 ```
 

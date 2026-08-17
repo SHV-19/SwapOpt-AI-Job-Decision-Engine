@@ -4,6 +4,15 @@
 
 ### AI Career Decision & Outcome Intelligence
 
+<!-- SWAPOPT_PUBLIC_V4_STATUS_START -->
+[![V4 Showcase CI](https://github.com/SHV-19/SwapOpt-AI-Job-Decision-Engine/actions/workflows/v4-showcase-ci.yml/badge.svg)](https://github.com/SHV-19/SwapOpt-AI-Job-Decision-Engine/actions/workflows/v4-showcase-ci.yml)
+[![Public Snapshot](https://img.shields.io/badge/public%20snapshot-curated%20V4-2f81f7)](docs/PUBLIC_SOURCE_MAP.md)
+
+**Public V4 engineering snapshot:** a curated, sanitized implementation slice covering career evidence, outcome intelligence, decision learning, personal learning, and market intelligence. Public CI runs privacy verification plus 24 representative tests.
+
+[Architecture](docs/ARCHITECTURE_V4.md) | [Public Source Map](docs/PUBLIC_SOURCE_MAP.md) | [Defensibility](docs/DEFENSIBILITY.md) | [Privacy](docs/PRIVACY.md) | [Historical V1](docs/HISTORICAL_V1.md)
+<!-- SWAPOPT_PUBLIC_V4_STATUS_END -->
+
 **SwapOpt is a browser-first career intelligence system that helps a job seeker decide where to invest effort, execute applications more consistently, and learn from real outcomes over time.**
 
 Most career tools begin with:

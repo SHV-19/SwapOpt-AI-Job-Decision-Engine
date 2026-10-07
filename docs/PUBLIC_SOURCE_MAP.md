@@ -71,3 +71,34 @@ Public showcase HEAD before Phase 2:
 ```
 
 The source candidate explicitly recorded that the private V4 working tree contained local changes. This public slice therefore represents the reviewed filesystem state of that candidate, not a claim that every included file existed in the source repository's HEAD commit.
+
+
+## Final release relationship
+
+The public implementation slice documented above remains a reviewed, sanitized snapshot and should not be confused with the complete private runtime.
+
+The private production runtime continued evolving after the 2026-08-17 public-source candidate and reached its consolidated final V29 + V30 release on 2026-10-06.
+
+Private final release checkpoint:
+
+```text
+aec44add07f2bae018e52aa49da8f780a2661a28
+feat(v30): release interview lifecycle and product proof
+```
+
+Private final release validation:
+
+```text
+3,244 / 3,244 automated tests passed
+0 failures
+0 skipped
+0 cancelled
+24 modules / 257 validated registry paths
+manual browser/runtime acceptance passed
+```
+
+These numbers are **release evidence for the private runtime**, not the test count of this public source snapshot.
+
+The public repository intentionally describes additional final capabilities — including Opportunity Discovery, Role Identity, longitudinal Candidate Identity, Network DNA, explicit interview/offer lifecycle, and V30 Product Proof — without publishing private personal data or claiming that every corresponding production source file is public.
+
+See [Release Evidence](RELEASE_EVIDENCE.md) for the exact distinction.

@@ -167,3 +167,79 @@ The public repository must not include:
 - recovery backups.
 
 The public showcase demonstrates architecture and product engineering without exposing user-owned career data.
+
+
+## Final Private Runtime — V29/V30 Additions
+
+The private final runtime extends the public architecture shown above with additional evidence and lifecycle systems that are described here but are not fully mirrored into this sanitized repository.
+
+### Opportunity Discovery and Role Identity
+
+Public job observations flow through explicit source contracts and canonicalization before becoming role evidence.
+
+```text
+Public Source
+   ↓
+Observation
+   ↓
+Canonical Opportunity
+   ↓
+Role Identity
+   ↓
+Candidate ↔ Role Comparison
+   ↓
+Opportunity Intelligence / Queue
+```
+
+Role Identity preserves source provenance, explicit requirements, grouped alternatives, unknowns, and revision history rather than reducing a role to one opaque score.
+
+### Longitudinal Candidate Identity
+
+Candidate Identity composes verified career evidence and correction history into a revisioned view suitable for downstream comparison.
+
+Only decision-eligible evidence enters matching. Archived or unsupported claims may remain visible in history without becoming active capability evidence.
+
+### Network DNA
+
+Exact visible professional-profile/job references can become owner-scoped network evidence and bounded network context.
+
+Network evidence is secondary to factual role fit and must not imply:
+
+- referral willingness;
+- hiring authority;
+- relationship strength beyond evidence;
+- autonomous outreach.
+
+### Explicit Interview / Offer Lifecycle
+
+The final V29 lifecycle introduces typed lifecycle events with scheduled, occurred, and outcome timestamps.
+
+Key semantics:
+
+```text
+scheduled != occurred
+canceled != occurred
+accepted offer != placement
+direct offer does not require an invented interview
+correction/revocation remain visible
+```
+
+### V30 Product Proof
+
+V30 connects exact references across the journey where evidence exists:
+
+```text
+Opportunity
+  → Decision
+  → Application / Action
+  → Interview
+  → Outcome
+  → Evidence
+  → Review Proposal
+```
+
+Sparse journeys remain sparse.
+
+Metrics preserve denominators and unknown populations. Outcome associations remain observational and use `causalClaim=false`.
+
+See [Technical Blueprint](TECHNICAL_BLUEPRINT.md), [Function Map](FUNCTION_MAP.md), and [Release Evidence](RELEASE_EVIDENCE.md).

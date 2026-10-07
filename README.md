@@ -1,15 +1,17 @@
 # SwapOpt
 
-### AI Career Decision & Outcome Intelligence
+### Evidence-Grounded AI Career Operating System
 
 <!-- SWAPOPT_PUBLIC_V4_STATUS_START -->
 [![V4 Showcase CI](https://github.com/SHV-19/SwapOpt-AI-Job-Decision-Engine/actions/workflows/v4-showcase-ci.yml/badge.svg)](https://github.com/SHV-19/SwapOpt-AI-Job-Decision-Engine/actions/workflows/v4-showcase-ci.yml)
-[![Public Snapshot](https://img.shields.io/badge/public%20snapshot-curated%20V4-2f81f7)](docs/PUBLIC_SOURCE_MAP.md)
-[![Release](https://img.shields.io/github/v/release/SHV-19/SwapOpt-AI-Job-Decision-Engine?label=release)](https://github.com/SHV-19/SwapOpt-AI-Job-Decision-Engine/releases/tag/v4.0.0)
+[![Public Snapshot](https://img.shields.io/badge/public%20snapshot-sanitized%20showcase-2f81f7)](docs/PUBLIC_SOURCE_MAP.md)
+[![Final Runtime](https://img.shields.io/badge/private%20runtime-FULL__RELEASE__2%20released-1f883d)](docs/RELEASE_EVIDENCE.md)
 
-**Public V4 engineering snapshot:** a curated, sanitized implementation slice covering career evidence, outcome intelligence, decision learning, personal learning, and market intelligence. Public CI runs privacy verification plus 24 representative tests.
+**Public final-release showcase:** this repository is a curated, sanitized view of SwapOpt. The private production runtime reached its consolidated V29 + V30 release on 2026-10-06 at commit `aec44ad`. The exact release tree passed **3,244 / 3,244 automated tests**, module validation at **24 modules / 257 validated paths**, whitespace validation, and manual browser/runtime acceptance for the new lifecycle and product-proof flows.
 
-[Architecture](docs/ARCHITECTURE_V4.md) | [Public Source Map](docs/PUBLIC_SOURCE_MAP.md) | [Defensibility](docs/DEFENSIBILITY.md) | [Privacy](docs/PRIVACY.md) | [Historical V1](docs/HISTORICAL_V1.md)
+The public source slice remains intentionally smaller than the private runtime. It demonstrates selected decision/outcome intelligence and architecture without publishing personal career data, private operational state, provider secrets, or user-specific policy.
+
+[Product Case Study](docs/PRODUCT_CASE_STUDY.md) · [Technical Blueprint](docs/TECHNICAL_BLUEPRINT.md) · [Function Map](docs/FUNCTION_MAP.md) · [Release Evidence](docs/RELEASE_EVIDENCE.md) · [Building With AI](docs/BUILDING_WITH_AI.md) · [Public Source Map](docs/PUBLIC_SOURCE_MAP.md)
 <!-- SWAPOPT_PUBLIC_V4_STATUS_END -->
 
 <!-- SWAPOPT_V4_HERO_START -->
@@ -49,6 +51,34 @@ Learning
 ```
 
 > **Repository note:** this is a sanitized public showcase of SwapOpt. Personal candidate data, resumes, application history, secrets, and private operational state are intentionally excluded.
+
+---
+
+## Final Release at a Glance
+
+The final private runtime is a local-first, single-user career operating system built around **decision quality rather than application volume**.
+
+It connects:
+
+- opportunity discovery and structured Role Identity;
+- longitudinal Candidate Identity grounded in verified evidence;
+- deterministic Candidate ↔ Role comparison before AI explanation;
+- truthful resume and application workflows;
+- Network DNA and evidence-backed networking context;
+- explicit application, interview, offer, rejection, withdrawal, correction, and placement lifecycle events;
+- market intelligence and personal learning;
+- V30 product-proof journeys that preserve unknowns and remain observational rather than claiming causal lift.
+
+Permanent rules include:
+
+- missing evidence stays **UNKNOWN** rather than becoming a failure;
+- scheduled interview ≠ occurred interview;
+- accepted offer ≠ placement;
+- a job requirement never becomes a candidate skill merely because it appeared in the posting;
+- candidate-evidence proposals require explicit review;
+- no autonomous application submission or outreach.
+
+See [Release Evidence](docs/RELEASE_EVIDENCE.md) for the exact release boundary and [Technical Blueprint](docs/TECHNICAL_BLUEPRINT.md) for the final architecture.
 
 ---
 

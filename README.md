@@ -2,6 +2,8 @@
 
 ### Evidence-Grounded AI Career Operating System
 
+> **Explore the broader decision-systems portfolio:** [Interactive portfolio](https://shv-19.github.io/swapnil-herwadkar-portfolio/) · [FPL Decision Engine](https://github.com/SHV-19/FPL-Decision-Engine) · [FIFA 2026 Sponsorship Analytics](https://github.com/SHV-19/FIFA-2026-AI-Sponsorship-Analytics-Platform). SwapOpt remains the flagship; each project has its own decision domain and verified scope.
+
 <!-- SWAPOPT_PUBLIC_V4_STATUS_START -->
 [![V4 Showcase CI](https://github.com/SHV-19/SwapOpt-AI-Job-Decision-Engine/actions/workflows/v4-showcase-ci.yml/badge.svg)](https://github.com/SHV-19/SwapOpt-AI-Job-Decision-Engine/actions/workflows/v4-showcase-ci.yml)
 [![Public Snapshot](https://img.shields.io/badge/public%20snapshot-sanitized%20showcase-2f81f7)](docs/PUBLIC_SOURCE_MAP.md)
